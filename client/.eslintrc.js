@@ -36,11 +36,19 @@ module.exports = {
     'react/require-default-props': [0],
   },
   settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
+    'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
     'import/resolver': {
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
-      typescript: {},
+
+      typescript: {
+        alwaysTryTypes: true,
+        project: './client/tsconfig.json',
+      },
     },
   },
 };
