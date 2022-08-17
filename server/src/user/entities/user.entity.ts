@@ -1,5 +1,6 @@
 import { OAuthOriginEnum } from 'src/common/enums/oAuthOrigin.enum';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import UserRegion from 'src/region/entities/userRegion.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export default class User {
@@ -14,4 +15,7 @@ export default class User {
 
   @Column({ type: 'varchar' })
   oAuthId: string;
+
+  @OneToMany(() => UserRegion, (userRegion) => userRegion.user)
+  regions: UserRegion[];
 }
