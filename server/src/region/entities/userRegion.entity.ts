@@ -1,9 +1,18 @@
-import User from 'src/user/entities/user.entity';
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-import Region from './region.entity';
+import { User } from 'src/user/entities/user.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Region } from './region.entity';
 
 @Entity()
-export default class UserRegion {
+export class UserRegion {
+  @PrimaryGeneratedColumn()
+  id: number;
+
   @Column({ type: 'int' })
   regionId: number;
 

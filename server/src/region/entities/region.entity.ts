@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import UserRegion from './userRegion.entity';
+import { UserRegion } from './userRegion.entity';
 
 @Entity()
 export class Region {
