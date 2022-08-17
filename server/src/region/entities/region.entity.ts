@@ -2,7 +2,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import UserRegion from './userRegion.entity';
 
 @Entity()
-export default class Region {
+export class Region {
   @PrimaryGeneratedColumn()
   id: number;
 
