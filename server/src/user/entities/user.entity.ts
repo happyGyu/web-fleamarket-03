@@ -1,9 +1,9 @@
 import { OAuthOriginEnum } from 'src/common/enums/oAuthOrigin.enum';
-import UserRegion from 'src/region/entities/userRegion.entity';
+import { UserRegion } from 'src/region/entities/userRegion.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export default class User {
+export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
