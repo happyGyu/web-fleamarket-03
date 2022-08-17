@@ -1,4 +1,12 @@
-import { Controller, Post, Body, Res, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Res,
+  HttpStatus,
+  Get,
+  Query,
+} from '@nestjs/common';
 import { Response } from 'express';
 import { RegionService } from './region.service';
 import { CreateRegionDto } from './dto/createRegion.dto';
@@ -11,5 +19,14 @@ export class RegionController {
   async create(@Res() res: Response, @Body() createRegionDto: CreateRegionDto) {
     const regionId = await this.regionService.create(createRegionDto);
     return res.status(HttpStatus.CREATED).json({ ok: true, regionId });
+  }
+
+  @Get('search')
+  async searchByKeyword(
+    @Res() res: Response,
+    @Query('keyword') keyword: string,
+  ) {
+    const regions = await this.regionService.searchByKeyword(keyword);
+    return res.status(HttpStatus.OK).json({ ok: true, regions });
   }
 }

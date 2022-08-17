@@ -6,7 +6,7 @@ export class Region {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 45 })
+  @Column({ type: 'varchar', length: 45, unique: true })
   address: string;
 
   @OneToMany(() => UserRegion, (userRegion) => userRegion.region)

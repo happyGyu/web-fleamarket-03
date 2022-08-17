@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { CreateRegionDto } from './dto/createRegion.dto';
 import { Region } from './entities/region.entity';
 
@@ -15,5 +15,13 @@ export class RegionService {
     const newRegion = this.regionRepository.create(createRegionDto);
     await this.regionRepository.save(newRegion);
     return newRegion.id;
+  }
+
+  async searchByKeyword(keyword: string) {
+    return await this.regionRepository.find({
+      where: {
+        address: Like(`%${keyword}%`),
+      },
+    });
   }
 }
