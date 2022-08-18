@@ -20,7 +20,9 @@
       "@constants/*": ["./src/constants/*"],
       "@components/*": ["./src/components/*"],
       "@pages/*": ["./src/pages/*"],
-      "@style/*": ["./src/style/*"]
+      "@style/*": ["./src/style/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@hooks/*": ["./src/hooks/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.mdx", "**/*.svg"],

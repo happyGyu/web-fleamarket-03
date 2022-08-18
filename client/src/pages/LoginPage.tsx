@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import BasicButton from '@components/common/BasicButton';
-import { redirectToAuthUrl, OAuthOriginType } from '@/utils/oAuth';
+import { redirectToAuthUrl, OAuthOriginType } from '@utils/oAuth';
 
 export default function LoginPage() {
   const handleClickOauthButton = async (oAuthOrigin: OAuthOriginType) => {
