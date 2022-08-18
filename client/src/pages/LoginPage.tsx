@@ -1,14 +1,41 @@
-import BasicButton from '@components/common/BasicButton';
 import styled from 'styled-components';
+import BasicButton from '@components/common/BasicButton';
+import { baseUrl } from '@/constants/env';
 
+type OAuthOriginType = 'GITHUB' | 'NAVER';
+
+enum AuthUrlEnum {
+  GITHUB = 'https://github.com/login/oauth/authorize',
+  NAVER = '',
+}
 export default function LoginPage() {
+  const handleClickOauthButton = async (oAuthOrigin: OAuthOriginType) => {
+    const authUrl = AuthUrlEnum[oAuthOrigin];
+
+    if (!process.env.REACT_APP_CLIENT_ID) {
+      throw new Error('Cannot find client id');
+    }
+
+    const queryConfig = {
+      scope: 'read:user',
+      client_id: process.env.REACT_APP_CLIENT_ID,
+      redirect_uri: `${baseUrl}/oauth-redirect`,
+    };
+
+    const searchParamsObj = new URLSearchParams(queryConfig);
+    const queryString = `?${searchParamsObj.toString()}`;
+
+    const githubLoginUrl = authUrl + queryString;
+    window.location.href = githubLoginUrl;
+  };
+
   return (
     <LoginPageWrapper>
       <Logo src="./goldmarket-logo.png" />
       <WelcomeMessage>간편하게 황금마켓을 시작하세요</WelcomeMessage>
       <StartButtonWrapper>
         <BasicButton text="카카오톡으로 시작" onClick={() => alert('카카오톡로 시작')} />
-        <BasicButton text="깃허브로 시작" onClick={() => alert('깃허브로 시작')} />
+        <BasicButton text="깃허브로 시작" onClick={() => handleClickOauthButton('GITHUB')} />
         <BasicButton text="네이버로 시작" onClick={() => alert('네이버로 시작')} />
       </StartButtonWrapper>
     </LoginPageWrapper>
