@@ -1,4 +1,4 @@
-import { BASE_URL } from '@/constants/env';
+import { BASE_URL } from '@constants/env';
 
 export type OAuthOriginType = 'GITHUB' | 'NAVER';
 
