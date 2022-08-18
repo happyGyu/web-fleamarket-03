@@ -1,4 +1,4 @@
-import { Controller, Res, HttpStatus, Get, Post, Body } from '@nestjs/common';
+import { Controller, Res, HttpStatus, Post, Body } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthenticationService } from './authentication.service';
 
@@ -11,7 +11,12 @@ export class AuthenticationController {
     @Res() res: Response,
     @Body() oauthDto: { oAuthOrigin: string; code: string },
   ) {
-    const user = this.authenticationService.loginWithOAuth(oauthDto);
-    return res.status(HttpStatus.OK).json({ ok: true, user });
+    const { user, refreshToken, accessToken, isExist } =
+      await this.authenticationService.loginWithOAuth(oauthDto);
+
+    const refreshCookie = `Refresh=${refreshToken}; HttpOnly; Path=/;}`;
+    res.setHeader('SET-COOKIE', refreshCookie);
+
+    return res.status(HttpStatus.OK).json({ isExist, user, accessToken });
   }
 }
