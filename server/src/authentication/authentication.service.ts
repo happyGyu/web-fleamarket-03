@@ -40,7 +40,7 @@ export class AuthenticationService {
 
     return {
       isExist: Boolean(clientUser),
-      user: clientUser,
+      user: { ...clientUser, oAuthOrigin, oAuthId: resourceServerUser.id },
       accessToken,
       refreshToken,
     };
