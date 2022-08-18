@@ -1,28 +1,27 @@
-import { BASE_URL } from '@constants/env';
+import { OAuthOriginType, OAuthBaseUrlEnum } from '@customTypes/oAuth';
+import { CLIENT_URL } from '@constants/env';
+import { OAUTH_SCOPE } from '@constants/policy';
+import { makeQueryString } from './queryParser';
 
-export type OAuthOriginType = 'GITHUB' | 'NAVER';
-
-enum AuthUrlEnum {
-  GITHUB = 'https://github.com/login/oauth/authorize',
-  NAVER = '',
-}
-
-export const redirectToAuthUrl = (oAuthOrigin: OAuthOriginType) => {
-  const authUrl = AuthUrlEnum[oAuthOrigin];
-
-  if (!process.env.REACT_APP_CLIENT_ID) {
+export function redirectToOAuthUrl(oAuthOrigin: OAuthOriginType) {
+  const clientId = process.env.REACT_APP_CLIENT_ID;
+  if (!clientId) {
     throw new Error('Cannot find client id');
   }
 
+  const oAuthUrl = makeOAuthUrl(oAuthOrigin, clientId);
+  window.location.href = oAuthUrl;
+}
+
+function makeOAuthUrl(oAuthOrigin: OAuthOriginType, clinetId: string) {
+  const oAuthUrl = OAuthBaseUrlEnum[oAuthOrigin];
+
   const queryConfig = {
-    scope: 'read:user',
-    client_id: process.env.REACT_APP_CLIENT_ID,
-    redirect_uri: `${BASE_URL}/oauth-redirect?origin=${oAuthOrigin}`,
+    scope: OAUTH_SCOPE,
+    client_id: clinetId,
+    redirect_uri: `${CLIENT_URL}/oauth-redirect?origin=${oAuthOrigin}`,
   };
 
-  const searchParamsObj = new URLSearchParams(queryConfig);
-  const queryString = `?${searchParamsObj.toString()}`;
-
-  const githubLoginUrl = authUrl + queryString;
-  window.location.href = githubLoginUrl;
-};
+  const queryString = makeQueryString(queryConfig);
+  return oAuthUrl + queryString;
+}
