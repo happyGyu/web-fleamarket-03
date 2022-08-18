@@ -21,8 +21,7 @@ export default function useLogin() {
         setAccessTokenOnHeader(loginResponse.accessToken);
         navigate('/');
       } else {
-        const { oAuthId, oAuthOrigin } = loginResponse.user;
-        navigate('/signUp', { state: { oAuthId, oAuthOrigin } });
+        navigate('/signUp', { state: { ...loginResponse.user } });
       }
     } catch (e) {
       navigate('/error');

@@ -21,6 +21,7 @@ export default function App() {
 }
 
 const Display = styled.div`
+  position: relative;
   width: 26rem;
   height: 56rem;
   border: 5px solid black;
