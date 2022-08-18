@@ -17,7 +17,7 @@ export const redirectToAuthUrl = (oAuthOrigin: OAuthOriginType) => {
   const queryConfig = {
     scope: 'read:user',
     client_id: process.env.REACT_APP_CLIENT_ID,
-    redirect_uri: `${BASE_URL}/oauth-redirect?orgin=${oAuthOrigin}`,
+    redirect_uri: `${BASE_URL}/oauth-redirect?origin=${oAuthOrigin}`,
   };
 
   const searchParamsObj = new URLSearchParams(queryConfig);
