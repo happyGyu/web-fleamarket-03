@@ -1,10 +1,8 @@
-import { OAuthOriginType } from './auth';
+import { OAuthUserInfo } from './auth';
 import { IRegion } from './region';
 
-export interface IUser {
+export interface IUser extends OAuthUserInfo {
   name: string;
-  oAuthId: string;
-  oAuthOrigin: OAuthOriginType;
   regions: IRegion[];
 }
 
