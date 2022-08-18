@@ -6,9 +6,9 @@ export default function useLogin() {
   };
 
   const login = async (code: string, oAuthOrigin: string) => {
-    const result = await axios.post('/api/login', { code, oAuthOrigin });
+    const loginUrl = `${process.env.REACT_APP_SERVER_URL}/login`
+    const result = await axios.post(loginUrl, { code, oAuthOrigin });
     const accessToken = result.headers['access-token'];
-    console.log(result);
     setAccessTokenOnHeader(accessToken);
   };
 
