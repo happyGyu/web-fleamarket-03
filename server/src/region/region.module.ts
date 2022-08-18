@@ -7,6 +7,6 @@ import { UserRegionRepository } from './repository/userRegion.repository';
 @Module({
   controllers: [RegionController],
   providers: [RegionService, RegionRepository, UserRegionRepository],
-  exports: [RegionService],
+  exports: [RegionService, UserRegionRepository],
 })
 export class RegionModule {}

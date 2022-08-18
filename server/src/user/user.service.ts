@@ -1,23 +1,27 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { RegionService } from 'src/region/region.service';
-import { Repository } from 'typeorm';
-import { CreateUserDto } from './dto/createUser.dto';
-import { User } from './entities/user.entity';
+import { UserRegionRepository } from 'src/region/repository/userRegion.repository';
+import { CreateUserRequestDto } from './dto/createUserRequset.dto';
+import { UserRepository } from './repository/user.repository';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
-    private regionService: RegionService,
+    private userRepository: UserRepository,
+    private regionRepository: UserRegionRepository,
   ) {}
 
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserRequestDto) {
     const { name, oAuthOrigin, oAuthId, regionId } = createUserDto;
-    const newUser = this.userRepository.create({ name, oAuthOrigin, oAuthId });
-    const newUserId = await (await this.userRepository.save(newUser)).id;
-    this.regionService.createUserRegion({ userId: newUserId, regionId });
-    return newUserId;
+    const newUser = await this.userRepository.create({
+      name,
+      oAuthOrigin,
+      oAuthId,
+    });
+
+    await this.regionRepository.create({
+      userId: newUser.id,
+      regionId,
+    });
+    return newUser;
   }
 }
