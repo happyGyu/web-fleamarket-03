@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -21,10 +17,12 @@
     "baseUrl": ".",
     "jsx": "react-jsx",
     "paths": {
+      "@constants/*": ["./src/constants/*"],
       "@components/*": ["./src/components/*"],
-      "@/*": ["./src/*"],
-		},
+      "@pages/*": ["./src/pages/*"],
+      "@style/*": ["./src/style/*"]
+    }
   },
-  "include": [ "**/*.ts", "**/*.tsx", "**/*.mdx", "**/*.svg"],
+  "include": ["**/*.ts", "**/*.tsx", "**/*.mdx", "**/*.svg"],
   "exclude": ["node_modules"]
 }
