@@ -24,4 +24,8 @@ export class UserService {
     });
     return newUser;
   }
+
+  async getOneByOAuthId(id: string) {
+    return await this.userRepository.findOneByOAuthId(id);
+  }
 }
