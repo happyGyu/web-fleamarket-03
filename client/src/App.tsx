@@ -1,7 +1,18 @@
-import React from 'react';
+import GlobalStyle from '@style/GlobalStyle';
+import Routes from '@pages/Routes';
+import styled from 'styled-components';
 
-function App() {
-  return <div className="App">hi</div>;
+export default function App() {
+  return (
+    <Display>
+      <GlobalStyle />
+      <Routes />
+    </Display>
+  );
 }
 
-export default App;
+const Display = styled.div`
+  width: 26rem;
+  height: 56rem;
+  border: 5px solid black;
+`;
