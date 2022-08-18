@@ -1,4 +1,4 @@
-import { OAuthOriginType, OAuthBaseUrlEnum } from '@customTypes/oAuth';
+import { OAuthOriginType, OAuthBaseUrlEnum } from '@customTypes/auth';
 import { CLIENT_URL } from '@constants/env';
 import { OAUTH_SCOPE } from '@constants/policy';
 import { makeQueryString } from './queryParser';
