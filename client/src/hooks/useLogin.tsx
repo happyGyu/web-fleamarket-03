@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { LoginAPIResponseDto } from '@customTypes/user';
-import { IRegion } from '@customTypes/region';
 
 export default function useLogin() {
   const navigate = useNavigate();
@@ -17,11 +16,11 @@ export default function useLogin() {
         targetOAuthOrigin,
       });
 
-      if (loginResponse.isExist) {
+      if (loginResponse.isRegistered) {
         setAccessTokenOnHeader(loginResponse.accessToken);
         navigate('/');
       } else {
-        navigate('/signUp', { state: { ...loginResponse.user } });
+        navigate('/signUp', { state: { ...loginResponse.oAuthInfo } });
       }
     } catch (e) {
       navigate('/error');

@@ -11,12 +11,14 @@ export class AuthenticationController {
     @Res() res: Response,
     @Body() oauthDto: { oAuthOrigin: string; code: string },
   ) {
-    const { user, refreshToken, accessToken, isExist } =
+    const { isRegistered, refreshToken, ...loginResult } =
       await this.authenticationService.loginWithOAuth(oauthDto);
 
-    const refreshCookie = `Refresh=${refreshToken}; HttpOnly; Path=/;}`;
-    res.setHeader('SET-COOKIE', refreshCookie);
+    if (isRegistered) {
+      const refreshCookie = `Refresh=${refreshToken}; HttpOnly; Path=/;}`;
+      res.setHeader('SET-COOKIE', refreshCookie);
+    }
 
-    return res.status(HttpStatus.OK).json({ isExist, user, accessToken });
+    return res.status(HttpStatus.OK).json({ isRegistered, ...loginResult });
   }
 }

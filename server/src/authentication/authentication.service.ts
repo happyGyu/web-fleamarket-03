@@ -31,18 +31,27 @@ export class AuthenticationService {
       resourceServerUser.id,
     );
 
-    let accessToken;
-    let refreshToken;
+    const oAuthInfo = {
+      oAuthOrigin,
+      oAuthId: resourceServerUser.id,
+    };
+
     if (clientUser) {
-      accessToken = await this.getAccessToken(clientUser.oAuthId);
-      refreshToken = await this.getRefreshToken(clientUser.oAuthId);
+      const { oAuthId } = oAuthInfo;
+      const accessToken = await this.getAccessToken(oAuthId);
+      const refreshToken = await this.getRefreshToken(oAuthId);
+      return {
+        isRegistered: true,
+        user: clientUser,
+        oAuthInfo,
+        accessToken,
+        refreshToken,
+      };
     }
 
     return {
-      isExist: Boolean(clientUser),
-      user: { ...clientUser, oAuthOrigin, oAuthId: resourceServerUser.id },
-      accessToken,
-      refreshToken,
+      isRegistered: false,
+      oAuthInfo,
     };
   }
 

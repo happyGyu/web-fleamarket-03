@@ -4,7 +4,7 @@ export enum OAuthBaseUrlEnum {
   GITHUB = 'https://github.com/login/oauth/authorize',
 }
 
-export interface OAuthUserInfo {
+export interface IOAuthUserInfo {
   oAuthOrigin: OAuthOriginType;
   oAuthId: string;
 }

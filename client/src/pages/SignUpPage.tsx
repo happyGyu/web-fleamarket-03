@@ -3,14 +3,14 @@ import useRegionModal from '@hooks/useRegionModal';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { OAuthUserInfo } from '@customTypes/auth';
+import { IOAuthUserInfo } from '@customTypes/auth';
 import { useState } from 'react';
 
 export default function SignUpPage() {
   const { isModalOpen, toggleModalOpen, selectedRegion, selectRegion } = useRegionModal();
   const [userName, setUserName] = useState<string>('');
   const { state } = useLocation();
-  const oAuthInfo = state as OAuthUserInfo;
+  const oAuthInfo = state as IOAuthUserInfo;
 
   const signUp = () => {
     axios.post('/user/sign-up', {
