@@ -1,16 +1,15 @@
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+
 import axios from 'axios';
 import { UserService } from 'src/user/user.service';
-import { IAccessTokenInfo } from './types';
+import { TokenService } from './token.service';
+import { IAccessTokenInfo } from '../types';
 
 @Injectable()
 export class AuthenticationService {
   constructor(
     private readonly userService: UserService,
-    private readonly jwtService: JwtService,
-    private readonly configService: ConfigService,
+    private readonly tokenService: TokenService,
   ) {}
   async loginWithOAuth({
     oAuthOrigin,
@@ -38,8 +37,8 @@ export class AuthenticationService {
 
     if (clientUser) {
       const { oAuthId } = oAuthInfo;
-      const accessToken = await this.getAccessToken(oAuthId);
-      const refreshToken = await this.getRefreshToken(oAuthId);
+      const accessToken = await this.tokenService.getAccessToken(oAuthId);
+      const refreshToken = await this.tokenService.getRefreshToken(oAuthId);
       return {
         isRegistered: true,
         user: clientUser,
@@ -57,48 +56,20 @@ export class AuthenticationService {
 
   async getUserDataFromResourceServer(accessToken: string) {
     const url = 'https://api.github.com/user';
-    const response = await axios.get(url, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    const user = response.data;
-    return user;
-  }
-
-  async getAccessToken(userId: string) {
-    const tokenSecret = this.configService.get('JWT_ACCESS_TOKEN_SECRET');
-    const expirationTime = this.configService.get(
-      'JWT_ACCESS_TOKEN_EXPIRATION_TIME',
-    );
-
-    return this.getToken({ userId, tokenSecret, expirationTime });
-  }
-
-  async getRefreshToken(userId: string) {
-    const tokenSecret = this.configService.get('JWT_REFRESH_TOKEN_SECRET');
-    const expirationTime = this.configService.get(
-      'JWT_REFRESH_TOKEN_EXPIRATION_TIME',
-    );
-
-    return this.getToken({ userId, tokenSecret, expirationTime });
-  }
-
-  async getToken({
-    userId,
-    tokenSecret,
-    expirationTime,
-  }: {
-    userId: string;
-    tokenSecret: string;
-    expirationTime: number;
-  }) {
-    const payload = { userId };
-    const token = this.jwtService.sign(payload, {
-      secret: tokenSecret,
-      expiresIn: `${expirationTime}s`,
-    });
-    return token;
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      const user = response.data;
+      return user;
+    } catch (error) {
+      throw new HttpException(
+        'not found user in github',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
   async getResourceServerAccessToken(code: string): Promise<IAccessTokenInfo> {
