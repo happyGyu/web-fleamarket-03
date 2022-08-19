@@ -1,19 +1,15 @@
 import styled from 'styled-components';
 import BasicButton from '@components/common/BasicButton';
-import { redirectToAuthUrl, OAuthOriginType } from '@/utils/oAuth';
+import { redirectToOAuthUrl } from '@utils/oAuth';
 
 export default function LoginPage() {
-  const handleClickOauthButton = async (oAuthOrigin: OAuthOriginType) => {
-    redirectToAuthUrl(oAuthOrigin);
-  };
-
   return (
     <LoginPageWrapper>
       <Logo src="./goldmarket-logo.png" />
       <WelcomeMessage>간편하게 황금마켓을 시작하세요</WelcomeMessage>
       <StartButtonWrapper>
         <BasicButton text="카카오톡으로 시작" onClick={() => alert('카카오톡로 시작')} />
-        <BasicButton text="깃허브로 시작" onClick={() => handleClickOauthButton('GITHUB')} />
+        <BasicButton text="깃허브로 시작" onClick={() => redirectToOAuthUrl('GITHUB')} />
         <BasicButton text="네이버로 시작" onClick={() => alert('네이버로 시작')} />
       </StartButtonWrapper>
     </LoginPageWrapper>

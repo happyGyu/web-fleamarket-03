@@ -1,4 +1,13 @@
-export const BASE_URL =
-  process.env.NODE_ENV === 'development' ? process.env.REACT_APP_CLIENT_DEV_URL : '';
+const {
+  NODE_ENV,
+  REACT_APP_DEV_SERVER_URL,
+  REACT_APP_PROD_SERVER_URL,
+  REACT_APP_DEV_CLIENT_URL,
+  REACT_APP_PROD_CLIENT_URL,
+} = process.env;
 
-export const TEST = '';
+export const CLIENT_URL =
+  NODE_ENV === 'development' ? REACT_APP_DEV_CLIENT_URL : REACT_APP_PROD_CLIENT_URL;
+
+export const SERVER_URL =
+  NODE_ENV === 'development' ? REACT_APP_DEV_SERVER_URL : REACT_APP_PROD_SERVER_URL;
