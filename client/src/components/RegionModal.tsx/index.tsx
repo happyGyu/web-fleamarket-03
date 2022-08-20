@@ -1,21 +1,35 @@
+import NavigationBar from '@components/common/NavigationBar';
+import colors from '@constants/colors';
 import { IRegion } from '@customTypes/region';
+import { debounce } from '@utils/common';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
+import RegionSearchList from './RegionSearchList';
 
 interface RegionModalProps {
   isModalOpen: boolean;
   toggleModalOpen: () => void;
-  selectRegion: (region: IRegion) => void;
+  setSelectedRegion: React.Dispatch<IRegion>;
 }
 
 export default function RegionModal({
   isModalOpen,
   toggleModalOpen,
-  selectRegion,
+  setSelectedRegion,
 }: RegionModalProps) {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchResult, setSearchResult] = useState<IRegion[]>([]);
+
+  const searchRegion = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchKeyword(event.target.value);
+  };
+
+  const selectRegion = (region: IRegion) => {
+    setSelectedRegion(region);
+    toggleModalOpen();
+  };
+
   useEffect(() => {
     axios
       .get(`/region/search?keyword=${searchKeyword}`)
@@ -24,25 +38,30 @@ export default function RegionModal({
 
   return (
     <RegionModalWrapper isModalOpen={isModalOpen}>
-      <input
-        type="text"
-        placeholder="동네 검색"
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchKeyword(e.target.value)}
-      />
-      {searchResult.map((region) => (
-        <button tabIndex={0} type="button" onClick={() => selectRegion(region)}>
-          {region.address}
-        </button>
-      ))}
+      <NavigationBar title="동네 찾기" navigationButtonHandler={toggleModalOpen} />
+      <ContentWrapper>
+        <input
+          type="text"
+          placeholder="동명(읍, 면)으로 검색 (ex.방이동)"
+          onChange={debounce(searchRegion, 1000)}
+        />
+        <RegionSearchList
+          searchKeyword={searchKeyword}
+          searchResult={searchResult}
+          selectRegion={selectRegion}
+        />
+      </ContentWrapper>
     </RegionModalWrapper>
   );
 }
 
 const RegionModalWrapper = styled.div<{ isModalOpen: boolean }>`
   position: absolute;
+  top: 0;
   width: 100%;
   height: 100%;
   transition: transform 0.3s ease-in;
+  background-color: ${colors.offWhite};
   ${({ isModalOpen }) =>
     isModalOpen
       ? css`
@@ -51,4 +70,8 @@ const RegionModalWrapper = styled.div<{ isModalOpen: boolean }>`
       : css`
           transform: translateX(100%);
         `};
+`;
+
+const ContentWrapper = styled.div`
+  padding-top: 10rem;
 `;

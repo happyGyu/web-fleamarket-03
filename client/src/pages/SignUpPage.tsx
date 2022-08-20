@@ -7,7 +7,7 @@ import { IOAuthUserInfo } from '@customTypes/auth';
 import { useState } from 'react';
 
 export default function SignUpPage() {
-  const { isModalOpen, toggleModalOpen, selectedRegion, selectRegion } = useRegionModal();
+  const { isModalOpen, toggleModalOpen, selectedRegion, setSelectedRegion } = useRegionModal();
   const [userName, setUserName] = useState<string>('');
   const { state } = useLocation();
   const oAuthInfo = state as IOAuthUserInfo;
@@ -42,7 +42,7 @@ export default function SignUpPage() {
       <RegionModal
         isModalOpen={isModalOpen}
         toggleModalOpen={toggleModalOpen}
-        selectRegion={selectRegion}
+        setSelectedRegion={setSelectedRegion}
       />
       <button type="submit" onClick={signUp}>
         회원가입
