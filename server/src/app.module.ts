@@ -8,6 +8,7 @@ import { RegionModule } from './region/region.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from './core/exception.filter';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { HttpExceptionFilter } from './core/exception.filter';
         database: configService.get('DATABASE_NAME'),
         entities: [__dirname + '/**/entities/*.entity.{js,ts}'],
         synchronize: true,
+        namingStrategy: new SnakeNamingStrategy(),
       }),
     }),
     UserModule,
