@@ -10,7 +10,8 @@
       "@hooks/*": ["./hooks/*"],
       "@stores/*": ["./stores/*"],
       "@customTypes/*": ["./customTypes/*"],
-      "@assets/*": ["./assets/*"]
+      "@assets/*": ["./assets/*"],
+      "@apis/*": ["./apis/*"]
     }
   }
 }
