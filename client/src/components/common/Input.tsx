@@ -1,4 +1,5 @@
 import colors from '@constants/colors';
+import { fontSize } from '@constants/fonts';
 import styled from 'styled-components';
 
 const inputSizeMap = {
@@ -23,7 +24,7 @@ const Input = styled.input<{ sizeType?: InputSizeType }>`
   background-color: ${colors.white};
   border-radius: 0.5rem;
   border: 1px solid ${colors.grey3};
-
+  font-size: ${fontSize.xsmall};
   ::placeholder {
     color: ${colors.grey1};
   }
