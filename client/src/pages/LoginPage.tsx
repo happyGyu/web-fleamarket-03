@@ -1,16 +1,24 @@
 import styled from 'styled-components';
-import BasicButton from '@components/common/BasicButton';
 import { redirectToOAuthUrl } from '@utils/oAuth';
+import NavigationBar from '@components/common/NavigationBar';
+import Button from '@components/common/Button';
 
 export default function LoginPage() {
   return (
     <LoginPageWrapper>
+      <NavigationBar title="로그인" />
       <Logo src="./goldmarket-logo.png" />
       <WelcomeMessage>간편하게 황금마켓을 시작하세요</WelcomeMessage>
       <StartButtonWrapper>
-        <BasicButton text="카카오톡으로 시작" onClick={() => alert('카카오톡로 시작')} />
-        <BasicButton text="깃허브로 시작" onClick={() => redirectToOAuthUrl('GITHUB')} />
-        <BasicButton text="네이버로 시작" onClick={() => alert('네이버로 시작')} />
+        <Button type="button" size="large" onClick={() => alert('카카오톡으로 시작')}>
+          카카오톡으로 시작
+        </Button>
+        <Button type="button" size="large" onClick={() => redirectToOAuthUrl('GITHUB')}>
+          깃허브로 시작
+        </Button>
+        <Button type="button" size="large" onClick={() => alert('네이버로 시작')}>
+          네이버로 시작
+        </Button>
       </StartButtonWrapper>
     </LoginPageWrapper>
   );
@@ -42,5 +50,6 @@ const StartButtonWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1rem;
 `;
