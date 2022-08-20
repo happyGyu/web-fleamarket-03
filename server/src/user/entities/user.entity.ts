@@ -1,4 +1,5 @@
-import { OAuthOriginEnum } from 'src/common/enums/oAuthOrigin.enum';
+import { Product } from './../../product/entities/product.entity';
+import { OAuthOriginEnum } from 'src/common/enums';
 import { UserRegion } from 'src/region/entities/userRegion.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -18,4 +19,7 @@ export class User {
 
   @OneToMany(() => UserRegion, (userRegion) => userRegion.user)
   regions: UserRegion[];
+
+  @OneToMany(() => Product, (product) => product.seller)
+  products: Product[];
 }
