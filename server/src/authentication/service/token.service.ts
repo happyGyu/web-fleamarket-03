@@ -8,6 +8,7 @@ export class TokenService {
     private configService: ConfigService,
     private jwtService: JwtService,
   ) {}
+
   async getAccessToken(userId: string) {
     const tokenSecret = this.configService.get('JWT_ACCESS_TOKEN_SECRET');
     const expirationTime = this.configService.get(
@@ -38,6 +39,7 @@ export class TokenService {
       secret: tokenSecret,
       expiresIn: `${expirationTime}s`,
     });
+
     return token;
   }
 }
