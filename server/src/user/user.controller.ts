@@ -1,4 +1,12 @@
-import { Controller, Post, Body, Res, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Res,
+  HttpStatus,
+  Get,
+  Query,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { Response } from 'express';
 import { CreateUserRequestDto } from './dto/createUserRequset.dto';
@@ -14,5 +22,14 @@ export class UserController {
   ) {
     const userId = await this.userService.create(createUserDto);
     return res.status(HttpStatus.CREATED).json({ ok: true, userId });
+  }
+
+  @Get('')
+  async searchByNickname(
+    @Res() res: Response,
+    @Query('nickname') nickname: string,
+  ) {
+    const data = await this.userService.checkDuplicatedUserByNickname(nickname);
+    return res.status(HttpStatus.OK).json({ ok: true, data });
   }
 }

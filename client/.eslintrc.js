@@ -37,6 +37,16 @@ module.exports = {
         tsx: 'never',
       },
     ],
+    'jsx-a11y/label-has-associated-control': [
+      2,
+      {
+        labelComponents: [],
+        labelAttributes: [],
+        controlComponents: ['Input'],
+        assert: 'both',
+        depth: 3,
+      },
+    ],
     'no-use-before-define': 'off',
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
