@@ -13,12 +13,21 @@ export default function App() {
   }, []);
 
   return (
-    <Display ref={displayRef}>
-      <GlobalStyle />
-      <Routes />
-    </Display>
+    <AppWrapper>
+      <Display ref={displayRef}>
+        <GlobalStyle />
+        <Routes />
+      </Display>
+    </AppWrapper>
   );
 }
+
+const AppWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
 
 const Display = styled.div`
   position: relative;
