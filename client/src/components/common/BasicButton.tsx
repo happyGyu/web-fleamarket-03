@@ -18,7 +18,7 @@ export default function BasicButton({ width, height, text, onClick }: BasicButto
 
 const BasicButtonWrapper = styled.button<{ width?: string; height?: string }>`
   padding: 0.625rem 1rem;
-  background-color: ${colors.blue};
+  background-color: ${colors.primary};
   color: ${colors.offWhite};
   width: ${({ width }) => width || '100%'};
   height: ${({ height }) => height || '2.625rem'};
