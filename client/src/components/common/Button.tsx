@@ -8,7 +8,7 @@ const buttonSizeMap = {
     height: '2.25rem',
   },
   large: {
-    width: '18.125rem',
+    width: '100%',
     height: '2.625rem',
   },
 };
