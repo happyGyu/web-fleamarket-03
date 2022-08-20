@@ -1,6 +1,6 @@
 import { Controller, Res, HttpStatus, Post, Body } from '@nestjs/common';
 import { Response } from 'express';
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from './service/authentication.service';
 
 @Controller('login')
 export class AuthenticationController {
@@ -9,7 +9,7 @@ export class AuthenticationController {
   @Post()
   async oAuthLogin(
     @Res() res: Response,
-    @Body() oauthDto: { oAuthOrigin: string; code: string },
+    @Body() oauthDto: { targetOAuthOrigin: string; code: string },
   ) {
     const { isRegistered, refreshToken, ...loginResult } =
       await this.authenticationService.loginWithOAuth(oauthDto);
