@@ -1,28 +1,26 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { OauthStrategyFactory } from './../strategy/oauthStrategy.factory';
+import { Injectable } from '@nestjs/common';
 
-import axios from 'axios';
 import { UserService } from 'src/user/user.service';
 import { TokenService } from './token.service';
-import { IAccessTokenInfo } from '../types';
 
 @Injectable()
 export class AuthenticationService {
   constructor(
     private readonly userService: UserService,
     private readonly tokenService: TokenService,
+    private readonly strategyFactory: OauthStrategyFactory,
   ) {}
   async loginWithOAuth({
-    oAuthOrigin,
+    targetOAuthOrigin,
     code,
   }: {
-    oAuthOrigin: string;
+    targetOAuthOrigin: string;
     code: string;
   }) {
-    const resourceServerAccessToken = await this.getResourceServerAccessToken(
-      code,
-    );
-
-    const resourceServerUser = await this.getUserDataFromResourceServer(
+    const strategy = this.strategyFactory.build(targetOAuthOrigin);
+    const resourceServerAccessToken = await strategy.getToken(code);
+    const resourceServerUser = await strategy.requestLogin(
       resourceServerAccessToken.access_token,
     );
 
@@ -31,7 +29,7 @@ export class AuthenticationService {
     );
 
     const oAuthInfo = {
-      oAuthOrigin,
+      targetOAuthOrigin,
       oAuthId: resourceServerUser.id,
     };
 
@@ -52,45 +50,5 @@ export class AuthenticationService {
       isRegistered: false,
       oAuthInfo,
     };
-  }
-
-  async getUserDataFromResourceServer(accessToken: string) {
-    const url = 'https://api.github.com/user';
-    try {
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      const user = response.data;
-      return user;
-    } catch (error) {
-      throw new HttpException(
-        'not found user in github',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-  }
-
-  async getResourceServerAccessToken(code: string): Promise<IAccessTokenInfo> {
-    const githubUrl = 'https://github.com/login/oauth/access_token';
-
-    const queryConfig = {
-      client_id: process.env['GITHUB_CLIENT_ID'],
-      client_secret: process.env['GITHUB_CLIENT_SECRET'],
-      code,
-    };
-
-    const paramsObj = new URLSearchParams(queryConfig);
-    const queryString = `?${paramsObj.toString()}`;
-    const url = githubUrl + queryString;
-    try {
-      const token = await axios.post<IAccessTokenInfo>(githubUrl, queryConfig, {
-        headers: {
-          Accept: 'application/json',
-        },
-      });
-      return token.data;
-    } catch (error) {}
   }
 }
