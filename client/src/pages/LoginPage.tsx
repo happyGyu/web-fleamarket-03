@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { redirectToOAuthUrl } from '@utils/oAuth';
 import NavigationBar from '@components/common/NavigationBar';
 import Button from '@components/common/Button';
+import mixin from '@style/mixin';
 
 export default function LoginPage() {
   return (
@@ -25,10 +26,7 @@ export default function LoginPage() {
 }
 
 const LoginPageWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  ${mixin.flexMixin({ direction: 'column', justify: 'center', align: 'center' })}
   height: 100%;
   padding: 1rem;
 `;
@@ -48,8 +46,6 @@ const WelcomeMessage = styled.h1`
 
 const StartButtonWrapper = styled.div`
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  ${mixin.flexMixin({ direction: 'column', align: 'center' })}
   gap: 1rem;
 `;

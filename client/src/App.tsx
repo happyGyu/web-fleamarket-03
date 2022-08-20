@@ -3,6 +3,7 @@ import Routes from '@pages/Routes';
 import styled from 'styled-components';
 import portalUtil from '@utils/portal';
 import { useRef, useEffect } from 'react';
+import mixin from '@style/mixin';
 
 export default function App() {
   const displayRef = useRef<HTMLDivElement | null>(null);
@@ -23,9 +24,7 @@ export default function App() {
 }
 
 const AppWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${mixin.flexMixin({ justify: 'center', align: 'center' })};
   height: 100vh;
 `;
 

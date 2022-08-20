@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Text } from '@components/common/Text';
 import ChevronLeft from '@assets/icons/ChevronLeft';
+import mixin from '@style/mixin';
 
 interface NavigationBarProps {
   title: string;
@@ -35,9 +36,7 @@ export default function NavigationBar({
 const Contianer = styled.div`
   position: absolute;
   top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${mixin.flexMixin({ justify: 'center', align: 'center' })}
   width: 100%;
   height: 3.5rem;
   padding: 1rem 1.5rem;
