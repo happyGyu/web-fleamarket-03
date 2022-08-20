@@ -13,7 +13,7 @@ export class ProductRepository {
   public async findProductsByRegion(regionId: number): Promise<Product[]> {
     return this.repository.find({
       where: { regionId },
-      relations: { region: true },
+      relations: ['region', 'likedUsers'],
     });
   }
 }

@@ -10,4 +10,5 @@ export class GetRegionProductAPIDto extends PickType(Product, [
   'createdAt',
 ]) {
   thumbnail: string;
+  likeCount: number;
 }

@@ -14,8 +14,16 @@ export class ProductController {
   ) {
     const products = await this.productService.getRegionProducts(regionId);
     const parsedProducts: GetRegionProductAPIDto[] = products.map((product) => {
-      const { id, name, price, region, salesStatus, createdAt, thumbnails } =
-        product;
+      const {
+        id,
+        name,
+        price,
+        region,
+        salesStatus,
+        createdAt,
+        thumbnails,
+        likedUsers,
+      } = product;
       return {
         id,
         name,
@@ -24,6 +32,7 @@ export class ProductController {
         salesStatus,
         createdAt,
         thumbnail: thumbnails[0],
+        likeCount: likedUsers.length,
       };
     });
     return res
