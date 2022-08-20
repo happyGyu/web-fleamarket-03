@@ -20,10 +20,10 @@ export class UserRegion {
   userId: number;
 
   @ManyToOne(() => Region, (region) => region.users)
-  @JoinColumn({ name: 'regionId' })
+  @JoinColumn({ name: 'region_id' })
   region: Region;
 
   @ManyToOne(() => User, (user) => user.regions)
-  @JoinColumn({ name: 'userId' })
+  @JoinColumn({ name: 'user_id' })
   user: User;
 }
