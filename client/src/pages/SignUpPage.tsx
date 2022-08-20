@@ -17,7 +17,7 @@ import { fontSize } from '@constants/fonts';
 import { checkDuplicatedUser } from '../apis/user';
 
 export default function SignUpPage() {
-  const { isModalOpen, toggleModalOpen, selectedRegion, selectRegion } = useRegionModal();
+  const { isModalOpen, toggleModalOpen, selectedRegion, setSelectedRegion } = useRegionModal();
   const [userName, setUserName] = useState<string>('');
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -102,11 +102,6 @@ export default function SignUpPage() {
               {selectedRegion?.address || '동네를 선택해주세요'}
             </RegionInput>
           </InputWrapper>
-          <RegionModal
-            isModalOpen={isModalOpen}
-            toggleModalOpen={toggleModalOpen}
-            selectRegion={selectRegion}
-          />
           <Button size="large" type="submit">
             회원가입
           </Button>
@@ -115,6 +110,11 @@ export default function SignUpPage() {
           </ValidateMessage>
         </form>
       </SignUpPageWrapper>
+      <RegionModal
+        isModalOpen={isModalOpen}
+        toggleModalOpen={toggleModalOpen}
+        setSelectedRegion={setSelectedRegion}
+      />
     </>
   );
 }

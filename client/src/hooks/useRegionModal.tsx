@@ -9,9 +9,5 @@ export default function useRegionModal() {
     setIsModalOpen((prev) => !prev);
   };
 
-  const selectRegion = (region: IRegion) => {
-    setSelectedRegion(region);
-  };
-
-  return { isModalOpen, toggleModalOpen, selectedRegion, selectRegion };
+  return { isModalOpen, toggleModalOpen, selectedRegion, setSelectedRegion };
 }

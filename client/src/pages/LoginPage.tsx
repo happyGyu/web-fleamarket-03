@@ -7,7 +7,6 @@ import mixin from '@style/mixin';
 export default function LoginPage() {
   return (
     <LoginPageWrapper>
-      <NavigationBar title="로그인" />
       <Logo src="./goldmarket-logo.png" />
       <WelcomeMessage>간편하게 황금마켓을 시작하세요</WelcomeMessage>
       <StartButtonWrapper>
