@@ -1,8 +1,8 @@
+import { searchRegionByKeyword } from '@apis/region';
 import NavigationBar from '@components/common/NavigationBar';
 import colors from '@constants/colors';
 import { IRegion } from '@customTypes/region';
 import { debounce } from '@utils/common';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import RegionSearchList from './RegionSearchList';
@@ -31,9 +31,10 @@ export default function RegionModal({
   };
 
   useEffect(() => {
-    axios
-      .get(`/region/search?keyword=${searchKeyword}`)
-      .then((res) => setSearchResult(res.data.regions));
+    (async () => {
+      const result = await searchRegionByKeyword(searchKeyword);
+      setSearchResult(result);
+    })();
   }, [searchKeyword]);
 
   return (
