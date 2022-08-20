@@ -2,7 +2,7 @@ import colors from '@constants/colors';
 import styled from 'styled-components';
 
 type TextSizeType = 'large' | 'medium' | 'small' | 'xSmall';
-type FontWeightType = 'bold' | 'medium';
+type FontWeightType = 'bolder' | 'bold' | 'medium';
 
 const textSizeMap = {
   large: '1.4rem',
@@ -12,6 +12,7 @@ const textSizeMap = {
 };
 
 const fontWeightMap = {
+  bolder: '700',
   bold: '500',
   medium: '400',
 };
