@@ -9,7 +9,8 @@
       "@utils/*": ["./utils/*"],
       "@hooks/*": ["./hooks/*"],
       "@stores/*": ["./stores/*"],
-      "@customTypes/*": ["./customTypes/*"]
+      "@customTypes/*": ["./customTypes/*"],
+      "@assets/*": ["./assets/*"]
     }
   }
 }
