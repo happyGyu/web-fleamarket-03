@@ -5,12 +5,14 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Category } from './category.entity';
 import { User } from 'src/user/entities/user.entity';
 import { Region } from 'src/region/entities/region.entity';
+import { Like } from './like.entity';
 
 @Entity()
 export class Product {
@@ -61,4 +63,7 @@ export class Product {
   @ManyToOne(() => Region, (region) => region.products)
   @JoinColumn({ name: 'region_id' })
   region: Region;
+
+  @OneToMany(() => Like, (like) => like.product)
+  likedUsers: Like[];
 }
