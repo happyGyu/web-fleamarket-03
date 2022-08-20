@@ -8,7 +8,7 @@ export abstract class BaseOAuthStrategy {
     try {
       const response = await axios.get(this.url, {
         headers: {
-          Authorization: `Bearer ${accessToken}ㄴㄴ`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
       const user = response.data;
