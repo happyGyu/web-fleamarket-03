@@ -3,6 +3,9 @@ module.exports = {
     browser: true,
     es2021: true,
   },
+  globals: {
+    NodeJS: true,
+  },
   extends: [
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
@@ -32,6 +35,16 @@ module.exports = {
         jsx: 'never',
         ts: 'never',
         tsx: 'never',
+      },
+    ],
+    'jsx-a11y/label-has-associated-control': [
+      2,
+      {
+        labelComponents: [],
+        labelAttributes: [],
+        controlComponents: ['Input'],
+        assert: 'both',
+        depth: 3,
       },
     ],
     'no-use-before-define': 'off',

@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Text } from '@components/common/Text';
 import ChevronLeft from '@assets/icons/ChevronLeft';
 import mixin from '@style/mixin';
+import { componentSize } from '@constants/componentSize';
 
 interface NavigationBarProps {
   title: string;
@@ -23,25 +24,26 @@ export default function NavigationBar({
     navigate(-1);
   };
   return (
-    <Contianer>
+    <Container>
       <NavigationButton onClick={navigationButtonHandler || defaultNavigationHandler}>
         <ChevronLeft />
       </NavigationButton>
       <Text>{title}</Text>
       <ActionItemContainer>{actionItem}</ActionItemContainer>
-    </Contianer>
+    </Container>
   );
 }
 
-const Contianer = styled.div`
+const Container = styled.div`
   position: absolute;
+  z-index: 10;
   top: 0;
   ${mixin.flexMixin({ justify: 'center', align: 'center' })}
   width: 100%;
-  height: 3.5rem;
+  height: ${componentSize.navigationHeader.height};
   padding: 1rem 1.5rem;
   background-color: ${colors.offWhite};
-  border-bottom: 2px solid ${colors.grey1};
+  box-shadow: inset 0px -1px 0px ${colors.grey3};
 `;
 
 const NavigationButton = styled.button`

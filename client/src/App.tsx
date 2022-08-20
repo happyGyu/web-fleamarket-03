@@ -32,5 +32,7 @@ const Display = styled.div`
   position: relative;
   width: 26rem;
   height: 56rem;
+  overflow-x: hidden;
+  overflow-y: auto;
   border: 5px solid black;
 `;
