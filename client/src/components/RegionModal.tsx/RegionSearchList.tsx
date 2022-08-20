@@ -38,7 +38,7 @@ export default function RegionSearchList({
 }
 
 const SearchListWrapper = styled.div`
-  padding: 1rem;
+  padding: 1rem 0;
   ${mixin.flexMixin({ direction: 'column' })}
 
   ${Text} {

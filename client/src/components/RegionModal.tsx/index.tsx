@@ -1,6 +1,7 @@
 import { searchRegionByKeyword } from '@apis/region';
 import NavigationBar from '@components/common/NavigationBar';
 import colors from '@constants/colors';
+import { padding } from '@constants/padding';
 import { IRegion } from '@customTypes/region';
 import { debounce } from '@utils/common';
 import React, { useEffect, useState } from 'react';
@@ -58,10 +59,11 @@ export default function RegionModal({
 
 const RegionModalWrapper = styled.div<{ isModalOpen: boolean }>`
   position: absolute;
+  z-index: 10;
   top: 0;
   width: 100%;
   height: 100%;
-  transition: transform 0.3s ease-in;
+  transition: transform 0.2s ease-out;
   background-color: ${colors.offWhite};
   ${({ isModalOpen }) =>
     isModalOpen
@@ -74,5 +76,7 @@ const RegionModalWrapper = styled.div<{ isModalOpen: boolean }>`
 `;
 
 const ContentWrapper = styled.div`
-  padding-top: 10rem;
+  height: 100%;
+  padding: ${padding.pageTop} ${padding.pageSide} 0 ${padding.pageSide};
+  background-color: ${colors.white};
 `;
