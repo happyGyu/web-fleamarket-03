@@ -22,4 +22,15 @@ export class RegionRepository {
       },
     });
   }
+
+  public async findOneRegionProducts(regionId: number): Promise<Region[]> {
+    return this.repository.find({
+      where: {
+        id: regionId,
+      },
+      relations: {
+        products: true,
+      },
+    });
+  }
 }
