@@ -6,6 +6,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { RegionModule } from './region/region.module';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { APP_FILTER } from '@nestjs/core';
+import { HttpExceptionFilter } from './core/exception.filter';
 
 @Module({
   imports: [
@@ -32,6 +34,12 @@ import { AuthenticationModule } from './authentication/authentication.module';
     AuthenticationModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
+  ],
 })
 export class AppModule {}
