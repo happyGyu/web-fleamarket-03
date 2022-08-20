@@ -1,5 +1,6 @@
 import { Controller, Get, Query, Res, HttpStatus } from '@nestjs/common';
 import { Response } from 'express';
+import { GetRegionProductAPIDto } from './dto/getRegionProducts.dto';
 import { ProductService } from './product.service';
 
 @Controller('products')
@@ -12,6 +13,21 @@ export class ProductController {
     @Query('region-id') regionId: number,
   ) {
     const products = await this.productService.getRegionProducts(regionId);
-    return res.status(HttpStatus.OK).json({ ok: true, products });
+    const parsedProducts: GetRegionProductAPIDto[] = products.map((product) => {
+      const { id, name, price, region, salesStatus, createdAt, thumbnails } =
+        product;
+      return {
+        id,
+        name,
+        price,
+        region,
+        salesStatus,
+        createdAt,
+        thumbnail: thumbnails[0],
+      };
+    });
+    return res
+      .status(HttpStatus.OK)
+      .json({ ok: true, products: parsedProducts });
   }
 }
