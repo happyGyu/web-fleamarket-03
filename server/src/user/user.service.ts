@@ -28,4 +28,12 @@ export class UserService {
   async getOneByOAuthId(id: string) {
     return await this.userRepository.findOneByOAuthId(id);
   }
+  async checkDuplicatedUserByNickname(name: string) {
+    const user = await this.userRepository.findOneByName(name);
+
+    if (!user) {
+      return { isDuplicated: false };
+    }
+    return { isDuplicated: true };
+  }
 }

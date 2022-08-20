@@ -22,4 +22,11 @@ export class UserRepository {
       select: ['id', 'name', 'regions'],
     });
   }
+
+  public async findOneByName(name: string): Promise<UserResponseDto> {
+    return this.repository.findOne({
+      where: { name },
+      select: ['id', 'name', 'regions'],
+    });
+  }
 }

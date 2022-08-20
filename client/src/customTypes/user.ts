@@ -12,3 +12,7 @@ export interface LoginAPIResponseDto {
   oAuthInfo: IOAuthUserInfo;
   accessToken: string;
 }
+
+export interface CheckDuplicatedResponseDto {
+  data: { isDuplicated: false };
+}
