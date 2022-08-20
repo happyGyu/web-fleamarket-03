@@ -1,3 +1,4 @@
+import { Text } from '@components/common/Text';
 import colors from '@constants/colors';
 import { fontSize } from '@constants/fonts';
 import { IRegion } from '@customTypes/region';
@@ -5,18 +6,31 @@ import mixin from '@style/mixin';
 import styled from 'styled-components';
 
 interface RegionSearchListProps {
+  searchKeyword: string;
   searchResult: IRegion[];
   selectRegion: (region: IRegion) => void;
 }
 
-export default function RegionSearchList({ searchResult, selectRegion }: RegionSearchListProps) {
+export default function RegionSearchList({
+  searchKeyword,
+  searchResult,
+  selectRegion,
+}: RegionSearchListProps) {
   return searchResult.length ? (
     <SearchListWrapper>
-      {searchResult.map((region) => (
-        <ResultItem key={region.id} tabIndex={0} type="button" onClick={() => selectRegion(region)}>
-          {region.address}
-        </ResultItem>
-      ))}
+      <Text size="small" fontWeight="bolder">{`'${searchKeyword}'검색 결과`}</Text>
+      <>
+        {searchResult.map((region) => (
+          <ResultItem
+            key={region.id}
+            tabIndex={0}
+            type="button"
+            onClick={() => selectRegion(region)}
+          >
+            {region.address}
+          </ResultItem>
+        ))}
+      </>
     </SearchListWrapper>
   ) : (
     <div>검색결과가 없습니다.</div>
@@ -26,6 +40,10 @@ export default function RegionSearchList({ searchResult, selectRegion }: RegionS
 const SearchListWrapper = styled.div`
   padding: 1rem;
   ${mixin.flexMixin({ direction: 'column' })}
+
+  ${Text} {
+    margin: 0.5rem 0;
+  }
 `;
 
 const ResultItem = styled.button`
