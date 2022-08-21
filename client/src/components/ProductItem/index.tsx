@@ -2,14 +2,14 @@ import CountIndicator from '@components/common/CountIndicator';
 import { Text } from '@components/common/Text';
 import Thumbnail from '@components/common/Thumbnail';
 import colors from '@constants/colors';
-import { GetRegionProductAPIDto } from '@customTypes/product';
+import { IProductItem } from '@customTypes/product';
 import mixin from '@style/mixin';
 import { calTimePassed } from '@utils/common';
 import { getLastAddress } from '@utils/product';
 import styled from 'styled-components';
 
 interface ProductItemProps {
-  productInfo: GetRegionProductAPIDto;
+  productInfo: IProductItem;
 }
 
 export default function ProductItem({ productInfo }: ProductItemProps) {

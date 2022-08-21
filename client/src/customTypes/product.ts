@@ -22,8 +22,12 @@ export interface ILikedUser {
   userId: number;
 }
 
-export interface GetRegionProductAPIDto
+export interface IProductItem
   extends Pick<IProduct, 'id' | 'name' | 'price' | 'region' | 'salesStatus' | 'createdAt'> {
   thumbnail: string;
   likedUsers: ILikedUser[];
+}
+
+export interface GetRegionProductAPIDto {
+  data: IProductItem[];
 }

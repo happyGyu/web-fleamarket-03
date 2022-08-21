@@ -35,8 +35,6 @@ export class ProductController {
         thumbnail: thumbnails[0],
       };
     });
-    return res
-      .status(HttpStatus.OK)
-      .json({ ok: true, products: parsedProducts });
+    return res.status(HttpStatus.OK).json(parsedProducts);
   }
 }

@@ -1,33 +1,28 @@
+import { getRegionProducts } from '@apis/product';
 import PageContainer from '@components/common/PageContainer';
 import MainPageNavigationBar from '@components/MainPageNavigationBar';
 import ProductItem from '@components/ProductItem';
 import colors from '@constants/colors';
-import { GetRegionProductAPIDto } from '@customTypes/product';
+import { IProductItem } from '@customTypes/product';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-const mockData: GetRegionProductAPIDto[] = [
-  {
-    id: 1,
-    name: '테스트 상품',
-    price: 5000,
-    region: {
-      id: 3,
-      address: '서울시 노원구 하계동',
-    },
-    salesStatus: 'sale',
-    createdAt: '2022-08-20T09:51:48.714Z',
-    thumbnail: 'https://src.hidoc.co.kr/image/lib/2021/9/17/1631863503853_0.jpg',
-    likeCount: 2,
-  },
-];
-
 export default function MainPage() {
+  const [productInfos, setProductInfos] = useState<IProductItem[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const result = await getRegionProducts(3);
+      setProductInfos((prev) => [...prev, ...result]);
+    })();
+  }, []);
+
   return (
     <>
       <MainPageNavigationBar />
       <MainPageWrapper>
-        {mockData.map((data) => (
-          <ProductItem key={data.id} productInfo={data} />
+        {productInfos.map((productInfo) => (
+          <ProductItem key={productInfo.id} productInfo={productInfo} />
         ))}
       </MainPageWrapper>
     </>
