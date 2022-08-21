@@ -19,6 +19,7 @@ export default function RegionFooter() {
 
 const Container = styled.div`
   position: absolute;
+  color: ${colors.black};
   bottom: 0;
   left: 0;
   width: 100%;
