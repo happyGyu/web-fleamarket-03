@@ -4,12 +4,9 @@ import styled from 'styled-components';
 
 export default function TitleInput() {
   return (
-    <>
-      <Container>
-        <CustomInput placeholder="글 제목" />
-      </Container>
-      <div />
-    </>
+    <Container>
+      <CustomInput placeholder="글 제목" />
+    </Container>
   );
 }
 
