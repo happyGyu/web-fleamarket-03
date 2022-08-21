@@ -1,4 +1,5 @@
 import { getRegionProducts } from '@apis/product';
+import CircleButton from '@components/common/CircleButton';
 import LikeButton from '@components/common/LikeButton';
 import PageContainer from '@components/common/PageContainer';
 import MainPageNavigationBar from '@components/MainPageNavigationBar';
@@ -32,6 +33,9 @@ export default function MainPage() {
             })}
           />
         ))}
+        <RegisterNewProductButtonWrapper>
+          <CircleButton />
+        </RegisterNewProductButtonWrapper>
       </MainPageWrapper>
     </>
   );
@@ -40,4 +44,10 @@ export default function MainPage() {
 const MainPageWrapper = styled(PageContainer)`
   background-color: ${colors.white};
   height: 100%;
+`;
+
+const RegisterNewProductButtonWrapper = styled.div`
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
 `;
