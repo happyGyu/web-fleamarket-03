@@ -15,14 +15,14 @@ export default function TitleInput() {
 }
 
 const Container = styled.div`
-  padding: 24px 0;
+  padding: 24px 0 18px 0;
 `;
 
 const CustomInput = styled.input`
   width: 100%;
   background-color: ${colors.white};
   border: 0;
-  font-size: ${fontSize.medium};
+  font-size: ${fontSize.large};
   ::placeholder {
     color: ${colors.grey1};
   }

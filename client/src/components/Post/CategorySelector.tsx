@@ -11,8 +11,8 @@ export default function CategorySelector() {
       <Text size="xSmall">(필수) 카테고리를 선택해주세요</Text>
       <CategoriesContainer>
         {categories.map((category) => (
-          <ItemWrapper>
-            <Text size="small">{category}</Text>
+          <ItemWrapper isActive={category === '여성패션 잡화'}>
+            <Text>{category}</Text>
           </ItemWrapper>
         ))}
       </CategoriesContainer>
@@ -21,20 +21,27 @@ export default function CategorySelector() {
 }
 
 const Container = styled.div`
-  padding: 24px 0;
+  padding-bottom: 24px;
+
   border-bottom: 1px solid ${colors.grey3};
   color: ${colors.grey1};
   width: 100%;
   overflow-x: hidden;
   ${Text} {
-    color: ${colors.grey1};
+    color: ${colors.grey2};
   }
 `;
-const ItemWrapper = styled.div`
+const ItemWrapper = styled.div<{ isActive?: boolean }>`
   padding: 4px 16px;
   border: 1px solid ${colors.grey3};
   border-radius: 999px;
   white-space: nowrap;
+
+  background-color: ${({ isActive: active }) => (active ? colors.primary : colors.white)};
+  ${Text} {
+    color: ${({ isActive: active }) => (active ? colors.white : colors.grey1)};
+    font-size: 14px;
+  }
 `;
 const CategoriesContainer = styled.div`
   margin-top: 0.8rem;
