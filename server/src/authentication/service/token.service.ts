@@ -9,7 +9,7 @@ export class TokenService {
     private jwtService: JwtService,
   ) {}
 
-  async getAccessToken(userId: string) {
+  async getAccessToken(userId: number) {
     const tokenSecret = this.configService.get('JWT_ACCESS_TOKEN_SECRET');
     const expirationTime = this.configService.get(
       'JWT_ACCESS_TOKEN_EXPIRATION_TIME',
@@ -17,7 +17,7 @@ export class TokenService {
     return this.getToken({ userId, tokenSecret, expirationTime });
   }
 
-  async getRefreshToken(userId: string) {
+  async getRefreshToken(userId: number) {
     const tokenSecret = this.configService.get('JWT_REFRESH_TOKEN_SECRET');
     const expirationTime = this.configService.get(
       'JWT_REFRESH_TOKEN_EXPIRATION_TIME',
@@ -30,7 +30,7 @@ export class TokenService {
     tokenSecret,
     expirationTime,
   }: {
-    userId: string;
+    userId: number;
     tokenSecret: string;
     expirationTime: number;
   }) {

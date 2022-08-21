@@ -55,14 +55,14 @@ export class UserService {
   }
 
   async getOneByUserId(id: string) {
-    try {
-      return await this.userRepository.findOneByUserId(Number(id));
-    } catch (e) {
+    const user = await this.userRepository.findOneByUserId(Number(id));
+    if (!user) {
       throw new HttpException(
         '존재하지 않는 유저입니다.',
         HttpStatus.NOT_FOUND,
       );
     }
+    return user;
   }
 
   async checkDuplicatedUserByNickname(name: string) {

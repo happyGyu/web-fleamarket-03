@@ -34,9 +34,9 @@ export class AuthenticationService {
     };
 
     if (clientUser) {
-      const { oAuthId } = oAuthInfo;
-      const accessToken = await this.tokenService.getAccessToken(oAuthId);
-      const refreshToken = await this.tokenService.getRefreshToken(oAuthId);
+      const { id } = clientUser;
+      const accessToken = await this.tokenService.getAccessToken(id);
+      const refreshToken = await this.tokenService.getRefreshToken(id);
       return {
         isRegistered: true,
         user: clientUser,
