@@ -11,7 +11,7 @@ export default function MainPageNavigationBar() {
   const navigate = useNavigate();
 
   return (
-    <Contianer>
+    <Container>
       <IconButton left="1rem" onClick={() => navigate('/error')}>
         <CategoryIcon />
       </IconButton>
@@ -22,11 +22,11 @@ export default function MainPageNavigationBar() {
       <IconButton right="1rem" onClick={() => navigate('/error')}>
         <MenuIcon />
       </IconButton>
-    </Contianer>
+    </Container>
   );
 }
 
-const Contianer = styled.div`
+const Container = styled.div`
   position: absolute;
   top: 0;
   ${mixin.flexMixin({ justify: 'center', align: 'center' })}
