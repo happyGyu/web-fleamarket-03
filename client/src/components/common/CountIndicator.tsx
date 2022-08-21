@@ -3,6 +3,7 @@ import HeartIcon from '@assets/icons/HeartIcon';
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
 import styled from 'styled-components';
+import { Text } from './Text';
 
 type CountType = 'chat' | 'like';
 
@@ -22,7 +23,7 @@ export default function CountIndicator({ type, count }: CountIndicatorProps) {
   return (
     <CountIndicatorWrapper>
       <Icon />
-      {count}
+      <Text color={colors.grey1}>{count}</Text>
     </CountIndicatorWrapper>
   );
 }

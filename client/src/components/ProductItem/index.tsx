@@ -54,8 +54,8 @@ const ProductInfoContainer = styled.div`
 
 const CountIndicatorWrapper = styled.div`
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: 1rem;
+  right: 1rem;
   ${mixin.flexMixin({ align: 'center' })}
   gap: 1rem;
 `;
