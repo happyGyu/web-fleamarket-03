@@ -54,6 +54,17 @@ export class UserService {
     }
   }
 
+  async getOneByUserId(id: string) {
+    try {
+      return await this.userRepository.findOneByUserId(Number(id));
+    } catch (e) {
+      throw new HttpException(
+        '존재하지 않는 유저입니다.',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
   async checkDuplicatedUserByNickname(name: string) {
     const user = await this.userRepository.findOneByName(name);
 
