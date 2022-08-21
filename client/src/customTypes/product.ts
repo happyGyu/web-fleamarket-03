@@ -17,8 +17,13 @@ export interface IProduct {
   writer: IUser;
 }
 
+export interface ILikedUser {
+  productId: number;
+  userId: number;
+}
+
 export interface GetRegionProductAPIDto
   extends Pick<IProduct, 'id' | 'name' | 'price' | 'region' | 'salesStatus' | 'createdAt'> {
   thumbnail: string;
-  likeCount: number;
+  likedUsers: ILikedUser[];
 }
