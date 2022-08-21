@@ -54,7 +54,7 @@ export class AuthenticationService {
 
   async validateAccessToken(accessToken: string) {
     try {
-      const userId = this.tokenService.verify(accessToken);
+      const userId = this.tokenService.verify(accessToken, 'access');
       const user = await this.userService.getOneByUserId(userId);
       return user;
     } catch (error) {
