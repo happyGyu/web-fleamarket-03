@@ -1,5 +1,5 @@
 import { OauthStrategyFactory } from './../strategy/oauthStrategy.factory';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 import { UserService } from 'src/user/user.service';
 import { TokenService } from './token.service';
@@ -47,5 +47,11 @@ export class AuthenticationService {
     const userId = this.tokenService.verify(accessToken, 'access');
     const user = await this.userService.getOneByUserId(userId);
     return user;
+  }
+
+  async resignAccessToken(refreshToken: string) {
+    const userId = this.tokenService.verify(refreshToken, 'refresh');
+    const newAccessToken = this.tokenService.getToken(userId, 'access');
+    return newAccessToken;
   }
 }

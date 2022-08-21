@@ -43,9 +43,9 @@ export class UserService {
     }
   }
 
-  async getOneByOAuthId(id: string) {
+  async getOneByOAuthId(oAuthId: string) {
     try {
-      return await this.userRepository.findOneByOAuthId(id);
+      return await this.userRepository.findOneByOAuthId(oAuthId);
     } catch (e) {
       throw new HttpException(
         '존재하지 않는 유저입니다.',
@@ -54,8 +54,8 @@ export class UserService {
     }
   }
 
-  async getOneByUserId(id: string) {
-    const user = await this.userRepository.findOneByUserId(Number(id));
+  async getOneByUserId(userId: number) {
+    const user = await this.userRepository.findOneByUserId(userId);
     if (!user) {
       throw new HttpException(
         '존재하지 않는 유저입니다.',

@@ -3,10 +3,6 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 export type JwtTokenType = 'access' | 'refresh';
-interface GetTokenProps {
-  userId: number;
-  tokenType: JwtTokenType;
-}
 @Injectable()
 export class TokenService {
   constructor(
@@ -24,7 +20,7 @@ export class TokenService {
     refresh: this.configService.get('JWT_REFRESH_TOKEN_EXPIRATION_TIME'),
   };
 
-  getToken({ userId, tokenType }: GetTokenProps) {
+  getToken(userId: number, tokenType: JwtTokenType) {
     const payload = { userId };
     const token = this.jwtService.sign(payload, {
       secret: this.tokenSecretMap[tokenType],
@@ -34,22 +30,16 @@ export class TokenService {
     return token;
   }
 
-  getTokenSet(userId) {
-    const accessToken = this.getToken({
-      userId,
-      tokenType: 'access',
-    });
-    const refreshToken = this.getToken({
-      userId,
-      tokenType: 'refresh',
-    });
+  getTokenSet(userId: number) {
+    const accessToken = this.getToken(userId, 'access');
+    const refreshToken = this.getToken(userId, 'refresh');
     return { accessToken, refreshToken };
   }
 
   verify(token: string, tokenType: JwtTokenType) {
     const tokenSecret = this.tokenSecretMap[tokenType];
     try {
-      const { userId } = this.jwtService.verify<{ userId: string }>(token, {
+      const { userId } = this.jwtService.verify<{ userId: number }>(token, {
         secret: tokenSecret,
       });
       return userId;
