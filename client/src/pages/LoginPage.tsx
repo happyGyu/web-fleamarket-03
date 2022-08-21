@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { redirectToOAuthUrl } from '@utils/oAuth';
-import NavigationBar from '@components/common/NavigationBar';
 import Button from '@components/common/Button';
 import mixin from '@style/mixin';
 

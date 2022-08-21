@@ -20,8 +20,8 @@ export class UserController {
     @Res() res: Response,
     @Body() createUserDto: CreateUserRequestDto,
   ) {
-    const userId = await this.userService.create(createUserDto);
-    return res.status(HttpStatus.CREATED).json({ ok: true, userId });
+    await this.userService.create(createUserDto);
+    res.status(HttpStatus.CREATED).json({ ok: true });
   }
 
   @Get('')

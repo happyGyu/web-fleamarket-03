@@ -9,13 +9,13 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'varchar', length: 20, nullable: false, unique: true })
   name: string;
 
-  @Column({ type: 'enum', enum: OAuthOriginEnum })
+  @Column({ type: 'enum', enum: OAuthOriginEnum, nullable: false })
   oAuthOrigin: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: false })
   oAuthId: string;
 
   @OneToMany(() => UserRegion, (userRegion) => userRegion.user)

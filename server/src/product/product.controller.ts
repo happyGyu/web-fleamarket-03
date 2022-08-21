@@ -1,5 +1,6 @@
 import { Controller, Get, Query, Res, HttpStatus } from '@nestjs/common';
 import { Response } from 'express';
+import { UseAuthGuard } from 'src/authentication/decorators/use.auth.guard.decorator';
 import { GetRegionProductAPIDto } from './dto/getRegionProducts.dto';
 import { ProductService } from './product.service';
 
@@ -8,6 +9,7 @@ export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Get()
+  @UseAuthGuard()
   async getRegionProducts(
     @Res() res: Response,
     @Query('region-id') regionId: number,
