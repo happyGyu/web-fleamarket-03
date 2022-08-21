@@ -21,6 +21,8 @@ export default function LikeButton({ productId, likedUsers }: LikeButtonProps) {
 
 const LikeButtonWrapper = styled.button<{ isUserPick: boolean }>`
   svg {
+    scale: 1.2;
+    stroke-width: 2;
     stroke: ${colors.grey1};
     ${({ isUserPick }) =>
       isUserPick &&
