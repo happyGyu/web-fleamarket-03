@@ -1,5 +1,5 @@
 import { OauthStrategyFactory } from './../strategy/oauthStrategy.factory';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 
 import { UserService } from 'src/user/user.service';
 import { TokenService } from './token.service';
@@ -50,5 +50,15 @@ export class AuthenticationService {
       isRegistered: false,
       oAuthInfo,
     };
+  }
+
+  async validateAccessToken(accessToken: string) {
+    try {
+      const userId = this.tokenService.verify(accessToken);
+      const user = await this.userService.getOneByUserId(userId);
+      return user;
+    } catch (error) {
+      throw new HttpException('유효하지 않은 토큰', HttpStatus.UNAUTHORIZED);
+    }
   }
 }

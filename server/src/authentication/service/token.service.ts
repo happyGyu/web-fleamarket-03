@@ -42,4 +42,13 @@ export class TokenService {
 
     return token;
   }
+
+  verify(accessToken: string) {
+    const tokenSecret = this.configService.get('JWT_ACCESS_TOKEN_SECRET');
+
+    const { userId } = this.jwtService.verify<{ userId: string }>(accessToken, {
+      secret: tokenSecret,
+    });
+    return userId;
+  }
 }
