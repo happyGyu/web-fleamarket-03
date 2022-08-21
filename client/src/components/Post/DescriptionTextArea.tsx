@@ -30,8 +30,17 @@ const CustomTextArea = styled.div`
     border: 0;
     outline: 0;
   }
-  &[contentEditable='true']:empty:not(:focus)::before {
+  &[contenteditable='true'] {
+    position: relative;
+  }
+
+  &[contenteditable='true']:empty:before {
     content: attr(placeholder);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 4px;
+    margin: auto;
     color: ${colors.grey2};
   }
 `;
