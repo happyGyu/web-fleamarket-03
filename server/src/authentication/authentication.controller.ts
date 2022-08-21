@@ -9,7 +9,7 @@ export class AuthenticationController {
   @Post()
   async oAuthLogin(
     @Res() res: Response,
-    @Body() oauthDto: { targetOAuthOrigin: string; code: string },
+    @Body() oauthDto: { oAuthOrigin: string; code: string },
   ) {
     const { isRegistered, refreshToken, ...loginResult } =
       await this.authenticationService.loginWithOAuth(oauthDto);

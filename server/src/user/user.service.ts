@@ -23,7 +23,6 @@ export class UserService {
         regionId,
       });
     } catch (error) {
-      console.log(error);
       switch (error.errno) {
         case 1062:
           throw new HttpException(

@@ -12,13 +12,13 @@ export class AuthenticationService {
     private readonly strategyFactory: OauthStrategyFactory,
   ) {}
   async loginWithOAuth({
-    targetOAuthOrigin,
+    oAuthOrigin,
     code,
   }: {
-    targetOAuthOrigin: string;
+    oAuthOrigin: string;
     code: string;
   }) {
-    const strategy = this.strategyFactory.build(targetOAuthOrigin);
+    const strategy = this.strategyFactory.build(oAuthOrigin);
     const resourceServerAccessToken = await strategy.getToken(code);
     const resourceServerUser = await strategy.requestLogin(
       resourceServerAccessToken.access_token,
@@ -29,7 +29,7 @@ export class AuthenticationService {
     );
 
     const oAuthInfo = {
-      targetOAuthOrigin,
+      oAuthOrigin,
       oAuthId: resourceServerUser.id,
     };
 
