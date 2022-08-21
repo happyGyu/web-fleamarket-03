@@ -1,3 +1,4 @@
+import LoadingIndicator from '@components/common/LoadingIndicator';
 import useLogin from '@hooks/useLogin';
 import { getQueryValue } from '@utils/queryParser';
 
@@ -9,4 +10,6 @@ export default function OAuthRedirectPage() {
   }
   const { login } = useLogin();
   login(code, oAuthOrigin);
+
+  return <LoadingIndicator />;
 }

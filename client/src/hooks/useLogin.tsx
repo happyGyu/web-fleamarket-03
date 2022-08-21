@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { LoginAPIResponseDto } from '@customTypes/user';
 import { useQuery } from '@tanstack/react-query';
 import { requestLogin } from '@apis/user';
-import LoadingIndicator from '@components/common/LoadingIndicator';
-import React from 'react';
 
 export default function useLogin() {
   const navigate = useNavigate();
@@ -14,12 +12,11 @@ export default function useLogin() {
   };
 
   const login = async (code: string, oAuthOrigin: string) => {
-    const { data, error, isLoading } = useQuery<LoginAPIResponseDto>(['user'], () =>
+    const { data, error } = useQuery<LoginAPIResponseDto>(['user'], () =>
       requestLogin(code, oAuthOrigin),
     );
-    if (!data || isLoading) {
-      return <LoadingIndicator />;
-    }
+
+    if (!data) return;
 
     if (data.isRegistered) {
       setAccessTokenOnHeader(data.accessToken);
@@ -33,8 +30,6 @@ export default function useLogin() {
     if (error) {
       navigate('/error');
     }
-
-    return <LoadingIndicator />;
   };
 
   return { login };
