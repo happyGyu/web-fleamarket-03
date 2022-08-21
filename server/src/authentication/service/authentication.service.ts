@@ -43,13 +43,9 @@ export class AuthenticationService {
     };
   }
 
-  async validateAccessToken(accessToken: string) {
-    try {
-      const userId = this.tokenService.verify(accessToken, 'access');
-      const user = await this.userService.getOneByUserId(userId);
-      return user;
-    } catch (error) {
-      throw new HttpException('유효하지 않은 토큰', HttpStatus.UNAUTHORIZED);
-    }
+  async getAuthorizedUser(accessToken: string) {
+    const userId = this.tokenService.verify(accessToken, 'access');
+    const user = await this.userService.getOneByUserId(userId);
+    return user;
   }
 }

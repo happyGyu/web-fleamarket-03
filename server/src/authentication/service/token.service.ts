@@ -2,7 +2,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
-type JwtTokenType = 'access' | 'refresh';
+export type JwtTokenType = 'access' | 'refresh';
 interface GetTokenProps {
   userId: number;
   tokenType: JwtTokenType;
