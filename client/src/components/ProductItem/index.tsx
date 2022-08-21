@@ -6,13 +6,15 @@ import { IProductItem } from '@customTypes/product';
 import mixin from '@style/mixin';
 import { calTimePassed } from '@utils/common';
 import { getLastAddress } from '@utils/product';
+import React from 'react';
 import styled from 'styled-components';
 
 interface ProductItemProps {
   productInfo: IProductItem;
+  UtilButton?: React.ReactNode;
 }
 
-export default function ProductItem({ productInfo }: ProductItemProps) {
+export default function ProductItem({ productInfo, UtilButton }: ProductItemProps) {
   const getPassedTimeString = (timeString: string) => {
     const createdTime = new Date(timeString);
     return `${calTimePassed(createdTime)} 전`;
@@ -31,6 +33,7 @@ export default function ProductItem({ productInfo }: ProductItemProps) {
         )}`}</Text>
         <Text weight="bold">{`${price.toLocaleString()}원`}</Text>
       </ProductInfoContainer>
+      <UtilButtonWrapper>{UtilButton}</UtilButtonWrapper>
       <CountIndicatorWrapper>
         {likedUsers.length && <CountIndicator type="like" count={likedUsers.length} />}
       </CountIndicatorWrapper>
@@ -50,6 +53,12 @@ const ProductInfoContainer = styled.div`
   ${mixin.flexMixin({ direction: 'column' })}
   gap: 0.5rem;
   margin-top: 0.5rem;
+`;
+
+const UtilButtonWrapper = styled.div`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 `;
 
 const CountIndicatorWrapper = styled.div`

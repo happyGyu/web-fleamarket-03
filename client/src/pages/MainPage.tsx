@@ -1,4 +1,5 @@
 import { getRegionProducts } from '@apis/product';
+import LikeButton from '@components/common/LikeButton';
 import PageContainer from '@components/common/PageContainer';
 import MainPageNavigationBar from '@components/MainPageNavigationBar';
 import ProductItem from '@components/ProductItem';
@@ -22,7 +23,14 @@ export default function MainPage() {
       <MainPageNavigationBar />
       <MainPageWrapper>
         {productInfos.map((productInfo) => (
-          <ProductItem key={productInfo.id} productInfo={productInfo} />
+          <ProductItem
+            key={productInfo.id}
+            productInfo={productInfo}
+            UtilButton={LikeButton({
+              productId: productInfo.id,
+              likedUsers: productInfo.likedUsers,
+            })}
+          />
         ))}
       </MainPageWrapper>
     </>
