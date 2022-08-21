@@ -27,9 +27,14 @@ export const requestSignUp = async ({ name, regionId, oAuthInfo }: SignUpRequest
 };
 
 export const requestLogin = async (code: string, oAuthOrigin: string) => {
-  const { data: loginResponse } = await axios.post<LoginAPIResponseDto>('/login', {
+  const { data: loginResponse } = await axios.post<LoginAPIResponseDto>('/auth/login', {
     code,
     oAuthOrigin,
   });
   return loginResponse;
+};
+
+export const requestRelogin = async () => {
+  const { data: reloginResponse } = await axios.get('/auth/relogin');
+  return reloginResponse;
 };

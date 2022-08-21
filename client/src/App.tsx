@@ -20,7 +20,6 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
-
       <AppWrapper>
         <Display ref={displayRef}>
           <GlobalStyle />

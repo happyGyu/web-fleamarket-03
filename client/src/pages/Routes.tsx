@@ -1,3 +1,6 @@
+import { requestRelogin } from '@apis/user';
+import { LoginAPIResponseDto } from '@customTypes/user';
+import { useQuery } from '@tanstack/react-query';
 import { Navigate, Route, Routes as RouterRoutes } from 'react-router-dom';
 import ErrorPage from './ErrorPage';
 import LoginPage from './LoginPage';
@@ -6,6 +9,7 @@ import OAuthRedirectPage from './OAuthRedirectPage';
 import SignUpPage from './SignUpPage';
 
 export default function Routes() {
+  requestRelogin();
   const isLogin = true;
 
   return (
