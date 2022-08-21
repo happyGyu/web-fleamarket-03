@@ -43,13 +43,13 @@ export class Product {
   @Column({ type: 'enum', enum: SalesStatusEnum })
   salesStatus: string;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', select: false })
   categoryId: number;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', select: false })
   sellerId: number;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', select: false })
   regionId: number;
 
   @ManyToOne(() => Category, (category) => category.products)

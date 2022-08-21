@@ -16,4 +16,11 @@ export class ProductRepository {
       relations: ['region', 'likedUsers'],
     });
   }
+
+  public async findOneByProductId(id: number) {
+    return this.repository.findOne({
+      where: { id },
+      relations: ['region', 'seller', 'likedUsers'],
+    });
+  }
 }

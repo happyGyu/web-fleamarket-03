@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Res, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Query, Res, HttpStatus, Param } from '@nestjs/common';
 import { Response } from 'express';
 import { GetRegionProductAPIDto } from './dto/getRegionProducts.dto';
 import { ProductService } from './product.service';
@@ -6,6 +6,15 @@ import { ProductService } from './product.service';
 @Controller('products')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
+
+  @Get(':productId')
+  async getProduct(
+    @Res() res: Response,
+    @Param('productId') productId: number,
+  ) {
+    const product = await this.productService.getProduct(productId);
+    return res.status(HttpStatus.OK).json(product);
+  }
 
   @Get()
   async getRegionProducts(

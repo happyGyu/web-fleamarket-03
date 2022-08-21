@@ -9,4 +9,8 @@ export class ProductService {
   getRegionProducts(regionId: number): Promise<Product[]> {
     return this.productRepository.findProductsByRegion(regionId);
   }
+
+  getProduct(productId: number): Promise<Product> {
+    return this.productRepository.findOneByProductId(productId);
+  }
 }
