@@ -1,6 +1,6 @@
 const padding = {
   pageSide: '1rem',
-  pageTop: '4.7rem',
+  pageTop: '3.5rem',
 };
 
 export { padding };

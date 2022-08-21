@@ -66,7 +66,7 @@ export default function SignUpPage() {
         <form onSubmit={signUp}>
           <InputWrapper>
             <label htmlFor="nickname">
-              <Text as="p" fontWeight="bold" size="small">
+              <Text as="p" weight="bold" size="small">
                 닉네임
               </Text>
               <Flex>
@@ -95,7 +95,7 @@ export default function SignUpPage() {
             </label>
           </InputWrapper>
           <InputWrapper onClick={toggleModalOpen}>
-            <Text fontWeight="bold" size="small">
+            <Text weight="bold" size="small">
               우리 동네 선택
             </Text>
             <RegionInput isValue={Boolean(selectedRegion?.address)} as="div">

@@ -1,6 +1,9 @@
+import PageContainer from '@components/common/PageContainer';
 import MainPageNavigationBar from '@components/MainPageNavigationBar';
 import ProductItem from '@components/ProductItem';
+import colors from '@constants/colors';
 import { GetRegionProductAPIDto } from '@customTypes/product';
+import styled from 'styled-components';
 
 const mockData: GetRegionProductAPIDto[] = [
   {
@@ -22,9 +25,16 @@ export default function MainPage() {
   return (
     <>
       <MainPageNavigationBar />
-      {mockData.map((data) => (
-        <ProductItem key={data.id} productInfo={data} />
-      ))}
+      <MainPageWrapper>
+        {mockData.map((data) => (
+          <ProductItem key={data.id} productInfo={data} />
+        ))}
+      </MainPageWrapper>
     </>
   );
 }
+
+const MainPageWrapper = styled(PageContainer)`
+  background-color: ${colors.white};
+  height: 100%;
+`;
