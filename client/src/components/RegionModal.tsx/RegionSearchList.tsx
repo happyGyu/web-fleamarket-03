@@ -18,7 +18,7 @@ export default function RegionSearchList({
 }: RegionSearchListProps) {
   return searchResult.length ? (
     <SearchListWrapper>
-      <Text size="small" fontWeight="bolder">{`'${searchKeyword}'검색 결과`}</Text>
+      <Text size="small" weight="bolder">{`'${searchKeyword}'검색 결과`}</Text>
       <>
         {searchResult.map((region) => (
           <ResultItem

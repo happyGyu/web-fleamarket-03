@@ -17,9 +17,8 @@ const fontWeightMap = {
   medium: '400',
 };
 
-export const Text = styled.span<{ size?: TextSizeType; fontWeight?: FontWeightType }>`
-  color: ${colors.black};
+export const Text = styled.span<{ size?: TextSizeType; weight?: FontWeightType; color?: string }>`
+  color: ${({ color }) => color || colors.black};
   font-size: ${({ size }) => (size ? textSizeMap[size] : textSizeMap.medium)};
-  font-weight: ${({ fontWeight }) =>
-    fontWeight ? fontWeightMap[fontWeight] : fontWeightMap.medium};
+  font-weight: ${({ weight }) => (weight ? fontWeightMap[weight] : fontWeightMap.medium)};
 `;
