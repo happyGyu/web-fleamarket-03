@@ -1,3 +1,4 @@
+import { Product } from 'src/product/entities/product.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserRegion } from './userRegion.entity';
 
@@ -11,4 +12,7 @@ export class Region {
 
   @OneToMany(() => UserRegion, (userRegion) => userRegion.region)
   users: UserRegion[];
+
+  @OneToMany(() => Product, (product) => product.region)
+  products: Product[];
 }
