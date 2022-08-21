@@ -4,6 +4,11 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import { TokenService } from './token.service';
 
+interface LoginWithOAuth {
+  oAuthOrigin: string;
+  code: string;
+}
+
 @Injectable()
 export class AuthenticationService {
   constructor(
@@ -11,50 +16,30 @@ export class AuthenticationService {
     private readonly tokenService: TokenService,
     private readonly strategyFactory: OauthStrategyFactory,
   ) {}
-  async loginWithOAuth({
-    oAuthOrigin,
-    code,
-  }: {
-    oAuthOrigin: string;
-    code: string;
-  }) {
+
+  async loginWithOAuth({ oAuthOrigin, code }: LoginWithOAuth) {
     const strategy = this.strategyFactory.build(oAuthOrigin);
-    const resourceServerAccessToken = await strategy.getToken(code);
-    const resourceServerUser = await strategy.requestLogin(
-      resourceServerAccessToken.access_token,
-    );
+    const { access_token: oAuthAccessToken } = await strategy.getToken(code);
+    const { id: oAuthId } = await strategy.requestLogin(oAuthAccessToken);
+    const oAuthInfo = { oAuthOrigin, oAuthId };
 
-    const clientUser = await this.userService.getOneByOAuthId(
-      resourceServerUser.id,
-    );
+    const clientUser = await this.userService.getOneByOAuthId(oAuthId);
 
-    const oAuthInfo = {
-      oAuthOrigin,
-      oAuthId: resourceServerUser.id,
-    };
-
-    if (clientUser) {
-      const { id: userId } = clientUser;
-      const accessToken = await this.tokenService.getToken({
-        userId,
-        tokenType: 'access',
-      });
-      const refreshToken = await this.tokenService.getToken({
-        userId,
-        tokenType: 'refresh',
-      });
+    if (!clientUser) {
       return {
-        isRegistered: true,
-        user: clientUser,
+        isRegistered: false,
         oAuthInfo,
-        accessToken,
-        refreshToken,
       };
     }
 
+    const { id: userId } = clientUser;
+    const jwtTokenSet = this.tokenService.getTokenSet(userId);
+
     return {
-      isRegistered: false,
+      isRegistered: true,
+      user: clientUser,
       oAuthInfo,
+      ...jwtTokenSet,
     };
   }
 

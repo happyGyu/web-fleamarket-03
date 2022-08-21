@@ -24,7 +24,7 @@ export class TokenService {
     refresh: this.configService.get('JWT_REFRESH_TOKEN_EXPIRATION_TIME'),
   };
 
-  async getToken({ userId, tokenType }: GetTokenProps) {
+  getToken({ userId, tokenType }: GetTokenProps) {
     const payload = { userId };
     const token = this.jwtService.sign(payload, {
       secret: this.tokenSecretMap[tokenType],
@@ -32,6 +32,18 @@ export class TokenService {
     });
 
     return token;
+  }
+
+  getTokenSet(userId) {
+    const accessToken = this.getToken({
+      userId,
+      tokenType: 'access',
+    });
+    const refreshToken = this.getToken({
+      userId,
+      tokenType: 'refresh',
+    });
+    return { accessToken, refreshToken };
   }
 
   verify(token: string, tokenType: JwtTokenType) {
