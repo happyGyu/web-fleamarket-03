@@ -8,7 +8,7 @@ export class GetRegionProductAPIDto extends PickType(Product, [
   'region',
   'salesStatus',
   'createdAt',
+  'likedUsers',
 ]) {
   thumbnail: string;
-  likeCount: number;
 }

@@ -31,8 +31,8 @@ export class ProductController {
         region,
         salesStatus,
         createdAt,
+        likedUsers,
         thumbnail: thumbnails[0],
-        likeCount: likedUsers.length,
       };
     });
     return res
