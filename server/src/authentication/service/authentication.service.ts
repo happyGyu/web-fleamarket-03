@@ -1,6 +1,5 @@
-import { UserResponseDto } from './../../user/dto/userResponse.dto';
 import { OauthStrategyFactory } from './../strategy/oauthStrategy.factory';
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
 
 import { UserService } from 'src/user/user.service';
 import { TokenService } from './token.service';
@@ -61,7 +60,13 @@ export class AuthenticationService {
     return user;
   }
 
-  async resignAccessToken(refreshToken: string) {
+  resignAccessToken(refreshToken: string) {
+    if (!refreshToken) {
+      throw new HttpException(
+        'refresh token이 없습니다.',
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
     const userId = this.tokenService.verify(refreshToken, 'refresh');
     const newAccessToken = this.tokenService.getToken(userId, 'access');
     return newAccessToken;

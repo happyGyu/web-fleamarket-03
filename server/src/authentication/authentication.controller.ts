@@ -31,11 +31,11 @@ export class AuthenticationController {
   }
 
   @Get('resign')
-  async relogin(@Res() res: Response, @Req() req: Request) {
+  relogin(@Res() res: Response, @Req() req: Request) {
     const refreshToken = req.cookies.Refresh;
     const newAccessToken =
       this.authenticationService.resignAccessToken(refreshToken);
-    return newAccessToken;
+    return res.status(HttpStatus.OK).json(newAccessToken);
   }
 
   @Get('user')
