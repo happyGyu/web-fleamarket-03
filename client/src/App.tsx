@@ -4,10 +4,6 @@ import styled from 'styled-components';
 import portalUtil from '@utils/portal';
 import { useRef, useEffect } from 'react';
 import mixin from '@style/mixin';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-
-const queryClient = new QueryClient();
 
 export default function App() {
   const displayRef = useRef<HTMLDivElement | null>(null);
@@ -18,16 +14,12 @@ export default function App() {
   }, []);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
-
-      <AppWrapper>
-        <Display ref={displayRef}>
-          <GlobalStyle />
-          <Routes />
-        </Display>
-      </AppWrapper>
-    </QueryClientProvider>
+    <AppWrapper>
+      <Display ref={displayRef}>
+        <GlobalStyle />
+        <Routes />
+      </Display>
+    </AppWrapper>
   );
 }
 

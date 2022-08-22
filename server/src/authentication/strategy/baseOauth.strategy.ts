@@ -11,6 +11,7 @@ export abstract class BaseOAuthStrategy {
           Authorization: `Bearer ${accessToken}`,
         },
       });
+
       const user = response.data;
       return user;
     } catch (error) {

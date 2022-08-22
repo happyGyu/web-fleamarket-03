@@ -1,7 +1,8 @@
 import { JwtService } from '@nestjs/jwt';
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
+export type JwtTokenType = 'access' | 'refresh';
 @Injectable()
 export class TokenService {
   constructor(
@@ -9,46 +10,56 @@ export class TokenService {
     private jwtService: JwtService,
   ) {}
 
-  async getAccessToken(userId: number) {
-    const tokenSecret = this.configService.get('JWT_ACCESS_TOKEN_SECRET');
-    const expirationTime = this.configService.get(
-      'JWT_ACCESS_TOKEN_EXPIRATION_TIME',
-    );
-    return this.getToken({ userId, tokenSecret, expirationTime });
-  }
+  private tokenSecretMap = {
+    access: this.configService.get('JWT_ACCESS_TOKEN_SECRET'),
+    refresh: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
+  };
 
-  async getRefreshToken(userId: number) {
-    const tokenSecret = this.configService.get('JWT_REFRESH_TOKEN_SECRET');
-    const expirationTime = this.configService.get(
-      'JWT_REFRESH_TOKEN_EXPIRATION_TIME',
-    );
-    return this.getToken({ userId, tokenSecret, expirationTime });
-  }
+  private expirationTimeMap = {
+    access: this.configService.get('JWT_ACCESS_TOKEN_EXPIRATION_TIME'),
+    refresh: this.configService.get('JWT_REFRESH_TOKEN_EXPIRATION_TIME'),
+  };
 
-  async getToken({
-    userId,
-    tokenSecret,
-    expirationTime,
-  }: {
-    userId: number;
-    tokenSecret: string;
-    expirationTime: number;
-  }) {
+  getToken(userId: number, tokenType: JwtTokenType) {
     const payload = { userId };
     const token = this.jwtService.sign(payload, {
-      secret: tokenSecret,
-      expiresIn: `${expirationTime}s`,
+      secret: this.tokenSecretMap[tokenType],
+      expiresIn: `${this.expirationTimeMap[tokenType]}s`,
     });
 
     return token;
   }
 
-  verify(accessToken: string) {
-    const tokenSecret = this.configService.get('JWT_ACCESS_TOKEN_SECRET');
+  getTokenSet(userId: number) {
+    const accessToken = this.getToken(userId, 'access');
+    const refreshToken = this.getToken(userId, 'refresh');
+    return { accessToken, refreshToken };
+  }
 
-    const { userId } = this.jwtService.verify<{ userId: string }>(accessToken, {
-      secret: tokenSecret,
-    });
-    return userId;
+  verify(token: string, tokenType: JwtTokenType) {
+    const tokenSecret = this.tokenSecretMap[tokenType];
+    try {
+      const { userId } = this.jwtService.verify<{ userId: number }>(token, {
+        secret: tokenSecret,
+      });
+      return userId;
+    } catch (e) {
+      switch (e.message) {
+        case 'INVALID_TOKEN':
+        case 'TOKEN_IS_ARRAY':
+        case 'NO_USER':
+          throw new HttpException(
+            '유효하지 않은 토큰입니다.',
+            HttpStatus.UNAUTHORIZED,
+          );
+        case 'EXPIRED_TOKEN':
+          throw new HttpException('토큰이 만료되었습니다.', HttpStatus.GONE);
+        default:
+          throw new HttpException(
+            '서버 오류입니다.',
+            HttpStatus.INTERNAL_SERVER_ERROR,
+          );
+      }
+    }
   }
 }

@@ -1,22 +1,13 @@
 import { User } from 'src/user/entities/user.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { Region } from './region.entity';
 
 @Entity()
 export class UserRegion {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column({ type: 'int' })
+  @Column({ type: 'int', primary: true })
   regionId: number;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', primary: true })
   userId: number;
 
   @ManyToOne(() => Region, (region) => region.users)
