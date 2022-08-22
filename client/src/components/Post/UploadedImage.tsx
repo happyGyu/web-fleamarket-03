@@ -1,22 +1,25 @@
 import colors from '@constants/colors';
+import React from 'react';
 import styled from 'styled-components';
 import CircleXButton from './CircleXButton';
 
-export default function UploadedImage() {
+interface UploadedImageProps {
+  imgUrl: string;
+  onClick: () => void;
+}
+
+export default function UploadedImage({ onClick, imgUrl }: UploadedImageProps) {
   return (
     <Container>
-      <img
-        src="https://image.msscdn.net/images/goods_img/20210907/2113853/2113853_2_500.jpg?t=20220405141136"
-        alt="신발"
-      />
-      <CircleXButton />
+      <img src={imgUrl} alt="product" />
+      <CircleXButton onClick={onClick} />
     </Container>
   );
 }
 
 const Container = styled.div`
   --size: 6rem;
-
+  flex: 0 0 6rem;
   position: relative;
   background-color: ${colors.offWhite};
   width: var(--size);
@@ -25,8 +28,10 @@ const Container = styled.div`
   border: 1px solid ${colors.grey3};
 
   img {
+    object-fit: cover;
     width: 100%;
     height: 100%;
+    animation: appear 0.5s ease-in-out 0s 1 normal forwards;
   }
 
   button {
@@ -34,5 +39,14 @@ const Container = styled.div`
     right: 0;
     top: 0;
     transform: translate(50%, -50%);
+  }
+
+  @keyframes appear {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 `;
