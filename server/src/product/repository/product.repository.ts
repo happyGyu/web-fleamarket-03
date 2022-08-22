@@ -1,6 +1,9 @@
+import { CreateProductDto } from '../dto/createProduct.dto';
 import { DataSource, Repository } from 'typeorm';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Product } from '../entities/product.entity';
+import { SalesStatusEnum } from 'src/common/enums';
+import { UpdateProductDto } from '../dto/updateProductDto';
 
 @Injectable()
 export class ProductRepository {
@@ -15,5 +18,42 @@ export class ProductRepository {
       where: { regionId },
       relations: ['region', 'likedUsers'],
     });
+  }
+
+  public async createProduct(input: CreateProductDto): Promise<Product> {
+    try {
+      return this.repository.save({
+        ...input,
+        salesStatus: SalesStatusEnum.SALE,
+      });
+    } catch (error) {
+      throw new HttpException(
+        '상품 만들기를 실패했습니다.',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  public async patchProductById(
+    id: number,
+    sellerId: number,
+    updateProductDto: UpdateProductDto,
+  ) {
+    const product = await this.repository.findOne({ where: { id } });
+    if (product.sellerId !== sellerId) {
+      throw new HttpException(
+        '상품 판매자가 아닙니다.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+
+    try {
+      return this.repository.update({ id, sellerId }, { ...updateProductDto });
+    } catch (error) {
+      throw new HttpException(
+        '상품 업데이트를 실패했습니다.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }
