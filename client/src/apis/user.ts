@@ -1,4 +1,5 @@
 import { IOAuthUserInfo } from '@customTypes/auth';
+import { IRegion } from '@customTypes/region';
 import { CheckDuplicatedResponseDto, LoginAPIResponseDto } from '@customTypes/user';
 import { makeQueryString } from '@utils/queryParser';
 import axios from 'axios';
@@ -40,7 +41,19 @@ export const requestResignToken = async () => {
   return accessToken;
 };
 
+interface ILoginUserRegion {
+  regionId: number;
+  userId: number;
+  region: IRegion;
+}
+
+interface GetLoginUserApiDto {
+  id: number;
+  name: string;
+  regions: ILoginUserRegion[];
+}
+
 export const getUser = async () => {
-  const { data: user } = await myAxios.get('/auth/user');
+  const { data: user } = await myAxios.get<GetLoginUserApiDto>('/auth/user');
   return user;
 };

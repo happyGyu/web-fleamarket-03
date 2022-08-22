@@ -1,29 +1,33 @@
 import { getRegionProducts } from '@apis/product';
+import { getUser } from '@apis/user';
 import CircleButton from '@components/common/CircleButton';
 import LikeButton from '@components/common/LikeButton';
+import LoadingIndicator from '@components/common/LoadingIndicator';
 import PageContainer from '@components/common/PageContainer';
 import MainPageNavigationBar from '@components/MainPageNavigationBar';
 import ProductItem from '@components/ProductItem';
 import colors from '@constants/colors';
-import { IProductItem } from '@customTypes/product';
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import styled from 'styled-components';
 
 export default function MainPage() {
-  const [productInfos, setProductInfos] = useState<IProductItem[]>([]);
+  const { data: user, isLoading: userLoading } = useQuery(['user'], getUser);
+  const { data: productInfos, isLoading: productLoading } = useQuery(
+    ['products'],
+    () => getRegionProducts(user?.regions[0].regionId),
+    {
+      enabled: !!user?.regions[0].regionId,
+    },
+  );
 
-  useEffect(() => {
-    (async () => {
-      const result = await getRegionProducts(3);
-      setProductInfos((prev) => [...prev, ...result]);
-    })();
-  }, []);
-
+  if (userLoading || productLoading) {
+    return <LoadingIndicator />;
+  }
   return (
     <>
       <MainPageNavigationBar />
       <MainPageWrapper>
-        {productInfos.map((productInfo) => (
+        {productInfos?.map((productInfo) => (
           <ProductItem
             key={productInfo.id}
             productInfo={productInfo}
