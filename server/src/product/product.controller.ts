@@ -1,5 +1,14 @@
-import { Controller, Get, Query, Res, HttpStatus, Param } from '@nestjs/common';
-import { Response } from 'express';
+import {
+  Controller,
+  Get,
+  Query,
+  Res,
+  HttpStatus,
+  Param,
+  Delete,
+  Req,
+} from '@nestjs/common';
+import { Request, Response } from 'express';
 import { UseAuthGuard } from 'src/authentication/decorators/use.auth.guard.decorator';
 import { GetRegionProductAPIDto } from './dto/getRegionProducts.dto';
 import { ProductService } from './product.service';
@@ -47,5 +56,17 @@ export class ProductController {
       };
     });
     return res.status(HttpStatus.OK).json(parsedProducts);
+  }
+
+  @Delete()
+  @UseAuthGuard()
+  async deleteProduct(
+    @Req() req: Request,
+    @Res() res: Response,
+    @Param('productId') productId: number,
+  ) {
+    const loginUser = req['user'];
+    await this.productService.deleteProduct(productId, loginUser.id);
+    return res.status(HttpStatus.OK).json({ ok: true });
   }
 }
