@@ -7,6 +7,7 @@ import mixin from '@style/mixin';
 import { calTimePassed } from '@utils/common';
 import { getLastAddress } from '@utils/product';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface ProductItemProps {
@@ -15,14 +16,20 @@ interface ProductItemProps {
 }
 
 export default function ProductItem({ productInfo, UtilButton }: ProductItemProps) {
+  const navigate = useNavigate();
+
   const getPassedTimeString = (timeString: string) => {
     const createdTime = new Date(timeString);
     return `${calTimePassed(createdTime)} 전`;
   };
 
+  const moveToDetailPage = () => {
+    navigate(`/product/${productInfo.id}`);
+  };
+
   const { thumbnail, name, region, createdAt, price, likedUsers } = productInfo;
   return (
-    <Container>
+    <Container onClick={moveToDetailPage}>
       <Thumbnail src={thumbnail} size="medium" />
       <ProductInfoContainer>
         <Text size="large" weight="bold">
