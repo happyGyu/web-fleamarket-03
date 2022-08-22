@@ -10,7 +10,6 @@ import {
 import { UserService } from './user.service';
 import { Response } from 'express';
 import { CreateUserRequestDto } from './dto/createUserRequset.dto';
-
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -24,7 +23,7 @@ export class UserController {
     res.status(HttpStatus.CREATED).json({ ok: true });
   }
 
-  @Get('')
+  @Get()
   async searchByNickname(
     @Res() res: Response,
     @Query('nickname') nickname: string,
