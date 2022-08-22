@@ -4,14 +4,18 @@ import {
   Query,
   Res,
   HttpStatus,
-  Param,
-  Delete,
-  Req,
+  Post,
+  Body,
   Patch,
+  Param,
+  Req,
+  Delete,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { UseAuthGuard } from 'src/authentication/decorators/use.auth.guard.decorator';
+import { CreateProductDto } from './dto/createProduct.dto';
 import { GetRegionProductAPIDto } from './dto/getRegionProducts.dto';
+import { UpdateProductDto } from './dto/updateProductDto';
 import { ProductService } from './product.service';
 
 @Controller('products')
@@ -84,5 +88,38 @@ export class ProductController {
       userId: loginUser.id,
     });
     return res.status(HttpStatus.NO_CONTENT).json({ ok: true });
+  }
+
+  @Post()
+  @UseAuthGuard()
+  async createProduct(
+    @Res() res: Response,
+    @Req() req: Request,
+    @Body() createProductDto: CreateProductDto,
+  ) {
+    const { id: sellerId } = req['user'];
+    const newProduct = await this.productService.createNewProduct({
+      createProductDto,
+      ...sellerId,
+    });
+
+    return res.status(HttpStatus.OK).json(newProduct);
+  }
+
+  @Patch('/:productId')
+  @UseAuthGuard()
+  async updateProduct(
+    @Res() res: Response,
+    @Req() req: Request,
+    @Param('productId') productId: number,
+    @Body() updateProductDto: UpdateProductDto,
+  ) {
+    const { id: sellerId } = req['user'];
+    const updatedProduct = await this.productService.updateProductById(
+      productId,
+      sellerId,
+      updateProductDto,
+    );
+    return res.status(HttpStatus.OK).json(updatedProduct);
   }
 }

@@ -2,6 +2,8 @@ import { LikeRepository } from './repository/like.repository';
 import { ProductRepository } from './repository/product.repository';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { Product } from './entities/product.entity';
+import { CreateProductDto } from './dto/createProduct.dto';
+import { UpdateProductDto } from './dto/updateProductDto';
 import { LikeDto } from './dto/like.dto';
 
 @Injectable()
@@ -13,6 +15,22 @@ export class ProductService {
 
   getRegionProducts(regionId: number): Promise<Product[]> {
     return this.productRepository.findProductsByRegion(regionId);
+  }
+
+  createNewProduct(createProductDto: CreateProductDto) {
+    return this.productRepository.createProduct(createProductDto);
+  }
+
+  updateProductById(
+    id: number,
+    sellerId: number,
+    updateProductDto: UpdateProductDto,
+  ) {
+    return this.productRepository.patchProductById(
+      id,
+      sellerId,
+      updateProductDto,
+    );
   }
 
   getProduct(productId: number): Promise<Product> {
