@@ -3,9 +3,13 @@ import colors from '@constants/colors';
 import mixin from '@style/mixin';
 import styled from 'styled-components';
 
-export default function CircleXButton() {
+interface CircleXButtonProps {
+  onClick: () => void;
+}
+
+export default function CircleXButton({ onClick }: CircleXButtonProps) {
   return (
-    <CircleButtonWrapper>
+    <CircleButtonWrapper onClick={onClick} type="button">
       <XIcon />
     </CircleButtonWrapper>
   );

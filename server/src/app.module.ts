@@ -10,6 +10,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from './core/exception.filter';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { UploadImageModule } from './upload-image/upload-image.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
     RegionModule,
     AuthenticationModule,
     ProductModule,
+    UploadImageModule,
   ],
   controllers: [AppController],
   providers: [
