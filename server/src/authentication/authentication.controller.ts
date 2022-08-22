@@ -8,6 +8,7 @@ import {
   Get,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
+import { UseAuthGuard } from './decorators/use.auth.guard.decorator';
 import { AuthenticationService } from './service/authentication.service';
 
 @Controller('auth')
@@ -21,7 +22,6 @@ export class AuthenticationController {
   ) {
     const { isRegistered, refreshToken, ...loginResult } =
       await this.authenticationService.loginWithOAuth(oauthDto);
-
     if (isRegistered) {
       const refreshCookie = `Refresh=${refreshToken}; HttpOnly; Path=/;}`;
       res.setHeader('SET-COOKIE', refreshCookie);
@@ -30,9 +30,18 @@ export class AuthenticationController {
     return res.status(HttpStatus.OK).json({ isRegistered, ...loginResult });
   }
 
-  @Get('relogin')
+  @Get('resign')
   async relogin(@Res() res: Response, @Req() req: Request) {
-    console.log(req.cookies.Refresh);
-    return 'hi';
+    const refreshToken = req.cookies.Refresh;
+    const newAccessToken =
+      this.authenticationService.resignAccessToken(refreshToken);
+    return newAccessToken;
+  }
+
+  @Get('user')
+  @UseAuthGuard()
+  async getAuthorizedUser(@Res() res: Response, @Req() req: Request) {
+    const loginUser = req['user'];
+    return res.status(HttpStatus.OK).json(loginUser);
   }
 }

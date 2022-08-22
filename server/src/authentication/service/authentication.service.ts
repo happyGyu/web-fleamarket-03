@@ -12,11 +12,10 @@ interface LoginWithOAuthProps {
 
 interface LoginWithOAuthReturn {
   isRegistered: boolean;
-  oAuthInfo: {
+  oAuthInfo?: {
     oAuthOrigin: string;
     oAuthId: string;
   };
-  user?: UserResponseDto;
   accessToken?: string;
   refreshToken?: string;
 }
@@ -52,8 +51,6 @@ export class AuthenticationService {
 
     return {
       isRegistered: true,
-      user: clientUser,
-      oAuthInfo,
       ...jwtTokenSet,
     };
   }
