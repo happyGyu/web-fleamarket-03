@@ -43,12 +43,12 @@ export class ProductRepository {
     if (product.seller.id !== sellerId) {
       throw new HttpException(
         '상품 판매자가 아닙니다.',
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        HttpStatus.NOT_ACCEPTABLE,
       );
     }
 
     try {
-      return this.repository.update({ id, sellerId }, { ...updateProductDto });
+      return this.repository.update({ id }, { ...updateProductDto });
     } catch (error) {
       throw new HttpException(
         '상품 업데이트를 실패했습니다.',
