@@ -39,8 +39,8 @@ export class ProductRepository {
     sellerId: number,
     updateProductDto: UpdateProductDto,
   ) {
-    const product = await this.repository.findOne({ where: { id } });
-    if (product.sellerId !== sellerId) {
+    const product = await this.findOneByProductId(id);
+    if (product.seller.id !== sellerId) {
       throw new HttpException(
         '상품 판매자가 아닙니다.',
         HttpStatus.INTERNAL_SERVER_ERROR,
