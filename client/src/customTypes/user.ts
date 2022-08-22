@@ -8,9 +8,8 @@ export interface IUser {
 
 export interface LoginAPIResponseDto {
   isRegistered: boolean;
-  user: IUser;
-  oAuthInfo: IOAuthUserInfo;
-  accessToken: string;
+  oAuthInfo?: IOAuthUserInfo;
+  accessToken?: string;
 }
 
 export interface CheckDuplicatedResponseDto {
