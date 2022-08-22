@@ -9,6 +9,7 @@ import {
   Patch,
   Param,
   Req,
+  Delete,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { UseAuthGuard } from 'src/authentication/decorators/use.auth.guard.decorator';
@@ -20,6 +21,15 @@ import { ProductService } from './product.service';
 @Controller('products')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
+
+  @Get(':productId')
+  async getProduct(
+    @Res() res: Response,
+    @Param('productId') productId: number,
+  ) {
+    const product = await this.productService.getProduct(productId);
+    return res.status(HttpStatus.OK).json(product);
+  }
 
   @Get()
   @UseAuthGuard()
@@ -51,6 +61,33 @@ export class ProductController {
       };
     });
     return res.status(HttpStatus.OK).json(parsedProducts);
+  }
+
+  @Delete(':productId')
+  @UseAuthGuard()
+  async deleteProduct(
+    @Req() req: Request,
+    @Res() res: Response,
+    @Param('productId') productId: number,
+  ) {
+    const loginUser = req['user'];
+    await this.productService.deleteProduct(productId, loginUser.id);
+    return res.status(HttpStatus.OK).json({ ok: true });
+  }
+
+  @Patch('/like/:productId')
+  @UseAuthGuard()
+  async toggleLikeState(
+    @Req() req: Request,
+    @Res() res: Response,
+    @Param('productId') productId: number,
+  ) {
+    const loginUser = req['user'];
+    await this.productService.toggleLikeState({
+      productId,
+      userId: loginUser.id,
+    });
+    return res.status(HttpStatus.NO_CONTENT).json({ ok: true });
   }
 
   @Post()

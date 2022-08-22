@@ -1,6 +1,6 @@
 import { CreateProductDto } from '../dto/createProduct.dto';
 import { DataSource, Repository } from 'typeorm';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, Injectable, HttpStatus } from '@nestjs/common';
 import { Product } from '../entities/product.entity';
 import { SalesStatusEnum } from 'src/common/enums';
 import { UpdateProductDto } from '../dto/updateProductDto';
@@ -52,6 +52,31 @@ export class ProductRepository {
     } catch (error) {
       throw new HttpException(
         '상품 업데이트를 실패했습니다.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  public async findOneByProductId(id: number) {
+    try {
+      return this.repository.findOne({
+        where: { id },
+        relations: ['region', 'seller', 'likedUsers'],
+      });
+    } catch (e) {
+      throw new HttpException(
+        '존재하지 않는 상품입니다.',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  public async deleteProductById(id: number) {
+    try {
+      return this.repository.delete({ id });
+    } catch (e) {
+      throw new HttpException(
+        '상품 삭제에 실패했습니다.',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
