@@ -2,13 +2,14 @@ import { IOAuthUserInfo } from '@customTypes/auth';
 import { CheckDuplicatedResponseDto, LoginAPIResponseDto } from '@customTypes/user';
 import { makeQueryString } from '@utils/queryParser';
 import axios from 'axios';
+import myAxios from './myAxios';
 
 export const checkDuplicatedUser = async (nickname: string) => {
   const queryConfig = {
     nickname,
   };
   const queryString = makeQueryString(queryConfig);
-  const response = await axios.get<CheckDuplicatedResponseDto>(`/user${queryString}`);
+  const response = await myAxios.get<CheckDuplicatedResponseDto>(`/user${queryString}`);
   return response.data.data;
 };
 
@@ -27,14 +28,19 @@ export const requestSignUp = async ({ name, regionId, oAuthInfo }: SignUpRequest
 };
 
 export const requestLogin = async (code: string, oAuthOrigin: string) => {
-  const { data: loginResponse } = await axios.post<LoginAPIResponseDto>('/auth/login', {
+  const { data: loginResponse } = await myAxios.post<LoginAPIResponseDto>('/auth/login', {
     code,
     oAuthOrigin,
   });
   return loginResponse;
 };
 
-export const requestRelogin = async () => {
-  const { data: reloginResponse } = await axios.get('/auth/relogin');
-  return reloginResponse;
+export const requestResignToken = async () => {
+  const { data: accessToken } = await axios.get<string>('/auth/resign');
+  return accessToken;
+};
+
+export const getUser = async () => {
+  const { data: user } = await myAxios.get('/auth/user');
+  return user;
 };

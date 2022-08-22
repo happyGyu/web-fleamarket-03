@@ -16,7 +16,11 @@ myAxios.interceptors.response.use(
     } = error;
 
     if (status === 401) {
-      await reissueTokenAndRetryRequest(originalRequest);
+      try {
+        await reissueTokenAndRetryRequest(originalRequest);
+      } catch (e) {
+        window.location.href = '/login';
+      }
     }
 
     return Promise.reject(error);
