@@ -1,6 +1,5 @@
 import RegionModal from '@components/RegionModal.tsx';
 import useRegionModal from '@hooks/useRegionModal';
-import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { IOAuthUserInfo } from '@customTypes/auth';
@@ -14,7 +13,8 @@ import Button from '@components/common/Button';
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
 import { fontSize } from '@constants/fonts';
-import { checkDuplicatedUser } from '../apis/user';
+import { redirectToOAuthUrl } from '@utils/oAuth';
+import { checkDuplicatedUser, requestSignUp } from '../apis/user';
 
 export default function SignUpPage() {
   const { isModalOpen, toggleModalOpen, selectedRegion, setSelectedRegion } = useRegionModal();
@@ -35,6 +35,7 @@ export default function SignUpPage() {
       validate: Boolean(selectedRegion?.id),
     },
   ];
+
   const signUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validateResult = validateSet.filter(({ validate }) => !validate);
@@ -42,14 +43,13 @@ export default function SignUpPage() {
       setSignUpErrorMessage(validateResult[0].errorMessage);
       return;
     }
-
-    const response = await axios.post('/user/sign-up', {
-      name: userName,
-      regionId: selectedRegion?.id,
-      ...oAuthInfo,
-    });
-
-    navigate('/');
+    if (!selectedRegion) return;
+    try {
+      await requestSignUp({ name: userName, regionId: selectedRegion.id, oAuthInfo });
+      redirectToOAuthUrl(oAuthInfo.oAuthOrigin);
+    } catch (error) {
+      navigate('/error');
+    }
   };
 
   const validateDuplicatedUser = async (nickname: string) => {

@@ -17,10 +17,7 @@ export class RegionService {
   }
 
   async createUserRegion(createUserRegionDto: CreateUserRegionDto) {
-    const newUserRegion = await this.userRegionRepository.create(
-      createUserRegionDto,
-    );
-    return newUserRegion.id;
+    return await this.userRegionRepository.create(createUserRegionDto);
   }
 
   async searchByKeyword(keyword: string) {

@@ -29,4 +29,16 @@ export class UserRepository {
       select: ['id', 'name', 'regions'],
     });
   }
+
+  public async findOneByUserId(id: number): Promise<UserResponseDto> {
+    return this.repository.findOne({
+      where: { id },
+      relations: {
+        regions: {
+          region: true,
+        },
+      },
+      select: ['id', 'name', 'regions'],
+    });
+  }
 }
