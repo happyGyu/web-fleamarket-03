@@ -12,6 +12,7 @@ interface NavigationBarProps {
   navigationButtonHandler?: () => void;
   actionItem?: React.ReactNode;
   color?: string;
+  backgroundColor?: string;
   shadowColor?: string;
 }
 
@@ -20,6 +21,7 @@ export default function NavigationBar({
   navigationButtonHandler,
   actionItem,
   color,
+  backgroundColor,
   shadowColor,
 }: NavigationBarProps) {
   const navigate = useNavigate();
@@ -28,7 +30,7 @@ export default function NavigationBar({
     navigate(-1);
   };
   return (
-    <Container shadowColor={shadowColor}>
+    <Container backgroundColor={backgroundColor} shadowColor={shadowColor}>
       <NavigationButton onClick={navigationButtonHandler || defaultNavigationHandler} color={color}>
         <ChevronLeft />
       </NavigationButton>
@@ -38,7 +40,7 @@ export default function NavigationBar({
   );
 }
 
-const Container = styled.div<{ shadowColor?: string }>`
+const Container = styled.div<{ backgroundColor?: string; shadowColor?: string }>`
   position: absolute;
   z-index: 10;
   top: 0;
@@ -46,7 +48,7 @@ const Container = styled.div<{ shadowColor?: string }>`
   width: 100%;
   height: ${componentSize.navigationHeader.height};
   padding: 1rem 1.5rem;
-  background-color: ${colors.offWhite};
+  background-color: ${({ backgroundColor }) => backgroundColor || colors.offWhite};
   box-shadow: inset 0px -1px 0px ${({ shadowColor }) => shadowColor || colors.grey3};
 `;
 
