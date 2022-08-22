@@ -3,7 +3,6 @@ import { Product } from '../entities/product.entity';
 
 export class UpdateProductDto extends PartialType(
   PickType(Product, [
-    'sellerId',
     'name',
     'price',
     'salesStatus',
