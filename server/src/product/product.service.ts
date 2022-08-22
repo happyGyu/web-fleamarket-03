@@ -1,10 +1,15 @@
+import { LikeRepository } from './repository/like.repository';
 import { ProductRepository } from './repository/product.repository';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { Product } from './entities/product.entity';
+import { LikeDto } from './dto/like.dto';
 
 @Injectable()
 export class ProductService {
-  constructor(private readonly productRepository: ProductRepository) {}
+  constructor(
+    private readonly productRepository: ProductRepository,
+    private readonly likeRepository: LikeRepository,
+  ) {}
 
   getRegionProducts(regionId: number): Promise<Product[]> {
     return this.productRepository.findProductsByRegion(regionId);
@@ -23,6 +28,15 @@ export class ProductService {
       );
     } else {
       this.productRepository.deleteProductById(productId);
+    }
+  }
+
+  async toggleLikeState(likeDto: LikeDto) {
+    const like = await this.likeRepository.findLike(likeDto);
+    if (like) {
+      this.likeRepository.deleteLike(likeDto);
+    } else {
+      this.likeRepository.addLike(likeDto);
     }
   }
 }

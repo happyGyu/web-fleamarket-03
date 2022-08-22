@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Req,
+  Patch,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { UseAuthGuard } from 'src/authentication/decorators/use.auth.guard.decorator';
@@ -58,7 +59,7 @@ export class ProductController {
     return res.status(HttpStatus.OK).json(parsedProducts);
   }
 
-  @Delete()
+  @Delete(':productId')
   @UseAuthGuard()
   async deleteProduct(
     @Req() req: Request,
@@ -68,5 +69,20 @@ export class ProductController {
     const loginUser = req['user'];
     await this.productService.deleteProduct(productId, loginUser.id);
     return res.status(HttpStatus.OK).json({ ok: true });
+  }
+
+  @Patch('/like/:productId')
+  @UseAuthGuard()
+  async toggleLikeState(
+    @Req() req: Request,
+    @Res() res: Response,
+    @Param('productId') productId: number,
+  ) {
+    const loginUser = req['user'];
+    await this.productService.toggleLikeState({
+      productId,
+      userId: loginUser.id,
+    });
+    return res.status(HttpStatus.NO_CONTENT).json({ ok: true });
   }
 }
