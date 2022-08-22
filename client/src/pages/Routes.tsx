@@ -3,6 +3,7 @@ import ErrorPage from './ErrorPage';
 import LoginPage from './LoginPage';
 import MainPage from './MainPage';
 import OAuthRedirectPage from './OAuthRedirectPage';
+import PostPage from './PostPage';
 import SignUpPage from './SignUpPage';
 
 export default function Routes() {
@@ -13,6 +14,7 @@ export default function Routes() {
       <Route path="/signUp" element={<SignUpPage />} />
       <Route path="/error" element={<ErrorPage />} />
       <Route path="/" element={<MainPage />} />
+      <Route path="/post" element={<PostPage />} />
     </RouterRoutes>
   );
 }
