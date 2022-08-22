@@ -2,8 +2,9 @@ import { IOAuthUserInfo } from './auth';
 import { IRegion } from './region';
 
 export interface IUser {
+  id: number;
   name: string;
-  regions: IRegion[];
+  regions?: IRegion[];
 }
 
 export interface LoginAPIResponseDto {

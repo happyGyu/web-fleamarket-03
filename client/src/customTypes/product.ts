@@ -11,10 +11,11 @@ export interface IProduct {
   salesStatus: SalesStatusType;
   createdAt: string;
   updatedAt: string;
-  thumbnail: JSON;
+  thumbnails: JSON;
   description: string;
   views: number;
-  writer: IUser;
+  seller: IUser;
+  likedUsers: ILikedUser[];
 }
 
 export interface ILikedUser {
@@ -23,9 +24,11 @@ export interface ILikedUser {
 }
 
 export interface IProductItem
-  extends Pick<IProduct, 'id' | 'name' | 'price' | 'region' | 'salesStatus' | 'createdAt'> {
+  extends Pick<
+    IProduct,
+    'id' | 'name' | 'price' | 'region' | 'salesStatus' | 'createdAt' | 'likedUsers'
+  > {
   thumbnail: string;
-  likedUsers: ILikedUser[];
 }
 
 export interface GetRegionProductAPIDto {
