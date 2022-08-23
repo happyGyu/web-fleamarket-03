@@ -6,7 +6,7 @@ import colors from '@constants/colors';
 import { IProductItem } from '@customTypes/product';
 import mixin from '@style/mixin';
 import { getPassedTimeString } from '@utils/common';
-import { getLastAddress } from '@utils/product';
+import { getLastAddress, getPriceString } from '@utils/product';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -32,7 +32,7 @@ export default function ProductItem({ productInfo, UtilButton }: ProductItemProp
           {name}
         </Text>
         <Caption captions={[getLastAddress(region.address), getPassedTimeString(createdAt)]} />
-        <Text weight="bold">{`${price.toLocaleString()}원`}</Text>
+        <Text weight="bold">{getPriceString(price)}</Text>
       </ProductInfoContainer>
       <UtilButtonWrapper>{UtilButton}</UtilButtonWrapper>
       <CountIndicatorWrapper>
