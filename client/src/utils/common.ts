@@ -20,3 +20,8 @@ export function calTimePassed(targetDate: Date) {
   const date = Math.ceil(hours / 24);
   return `${date}일`;
 }
+
+export const getPassedTimeString = (timeString: string) => {
+  const createdTime = new Date(timeString);
+  return `${calTimePassed(createdTime)} 전`;
+};
