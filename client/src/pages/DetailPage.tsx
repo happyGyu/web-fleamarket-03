@@ -95,11 +95,6 @@ const SellerInfo = styled.div`
   width: 100%;
   background-color: ${colors.offWhite};
   padding: 1rem;
-  ${mixin.flexMixin({ align: 'center' })}
-
-  :first-child {
-    flex-grow: 1;
-  }
 `;
 
 const DetailPageFooter = styled.div`
