@@ -5,6 +5,10 @@ import { getProductDetail } from '@apis/product';
 import { getUser } from '@apis/user';
 import SaleStateSelector from '@components/SaleStateSelector';
 import LoadingIndicator from '@components/common/LoadingIndicator';
+import ImageSlider from '@components/ImageSlider.tsx';
+import styled from 'styled-components';
+import mixin from '@style/mixin';
+import { padding } from '@constants/padding';
 
 export default function DetailPage() {
   const { productId } = useParams();
@@ -18,9 +22,23 @@ export default function DetailPage() {
   }
 
   return (
-    <>
+    <Container>
       <DetailPageNavigationBar />
-      <SaleStateSelector initialStatus={product.salesStatus} />
-    </>
+      <ImageSlider images={['1']} />
+      <DetailPageBody>
+        {user?.id === product.seller.id && (
+          <SaleStateSelector initialStatus={product.salesStatus} />
+        )}
+      </DetailPageBody>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  ${mixin.flexMixin({ direction: 'column' })}
+  gap: 1.5rem;
+`;
+
+const DetailPageBody = styled.div`
+  padding: 0 ${padding.pageSide};
+`;
