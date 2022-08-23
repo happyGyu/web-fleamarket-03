@@ -50,13 +50,13 @@ export default function DetailPage() {
         </DetailContent>
         <Caption size="small" captions={[`관심 ${likedUsers.length}`, `조회 ${views}`]} />
         <SellerInfo>
-          <Text size="small" weight="bolder">
+          <Text size="small" weight="bold">
             판매자 정보
           </Text>
           <Text size="small" weight="bolder">
             {seller.name}
           </Text>
-          <Text size="small" weight="medium">
+          <Text size="small" weight="medium" color={colors.grey1}>
             {getLastAddress(seller.regions[0].address)}
           </Text>
         </SellerInfo>
@@ -94,7 +94,13 @@ const Description = styled(Text)`
 const SellerInfo = styled.div`
   width: 100%;
   background-color: ${colors.offWhite};
-  padding: 1rem;
+  padding: 1rem 1.5rem;
+  ${mixin.flexMixin({ justify: 'space-between' })}
+  gap: 1rem;
+
+  & :first-child {
+    flex-grow: 1;
+  }
 `;
 
 const DetailPageFooter = styled.div`
