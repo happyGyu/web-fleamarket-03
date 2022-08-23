@@ -19,6 +19,7 @@ import { UpdateProductDto } from './dto/updateProductDto';
 import { ProductService } from './product.service';
 
 @Controller('products')
+@UseAuthGuard()
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
@@ -33,7 +34,6 @@ export class ProductController {
   }
 
   @Get()
-  @UseAuthGuard()
   async getRegionProducts(
     @Res() res: Response,
     @Query('region-id') regionId: number,
@@ -65,7 +65,6 @@ export class ProductController {
   }
 
   @Delete(':productId')
-  @UseAuthGuard()
   async deleteProduct(
     @Req() req: Request,
     @Res() res: Response,
@@ -77,7 +76,6 @@ export class ProductController {
   }
 
   @Patch('/like/:productId')
-  @UseAuthGuard()
   async toggleLikeState(
     @Req() req: Request,
     @Res() res: Response,
@@ -92,7 +90,6 @@ export class ProductController {
   }
 
   @Post()
-  @UseAuthGuard()
   async createProduct(
     @Res() res: Response,
     @Req() req: Request,
@@ -108,7 +105,6 @@ export class ProductController {
   }
 
   @Patch('/:productId')
-  @UseAuthGuard()
   async updateProduct(
     @Res() res: Response,
     @Req() req: Request,

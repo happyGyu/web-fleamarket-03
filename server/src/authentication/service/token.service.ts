@@ -44,17 +44,21 @@ export class TokenService {
       });
       return userId;
     } catch (e) {
-      switch (e.message) {
-        case 'INVALID_TOKEN':
-        case 'TOKEN_IS_ARRAY':
-        case 'NO_USER':
+      switch (e.name) {
+        case 'JsonWebTokenError':
+        case 'NotBeforeError':
           throw new HttpException(
             '유효하지 않은 토큰입니다.',
             HttpStatus.UNAUTHORIZED,
           );
-        case 'EXPIRED_TOKEN':
-          throw new HttpException('토큰이 만료되었습니다.', HttpStatus.GONE);
+        case 'TokenExpiredError':
+          throw new HttpException(
+            '토큰이 만료되었습니다.',
+            HttpStatus.UNAUTHORIZED,
+          );
         default:
+          console.log(e);
+          console.log(e.name);
           throw new HttpException(
             '서버 오류입니다.',
             HttpStatus.INTERNAL_SERVER_ERROR,
