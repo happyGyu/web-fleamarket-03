@@ -13,7 +13,7 @@ import styled from 'styled-components';
 
 interface ProductItemProps {
   productInfo: IProductItem;
-  UtilButton?: React.ReactNode;
+  UtilButton: React.ReactNode;
 }
 
 export default function ProductItem({ productInfo, UtilButton }: ProductItemProps) {

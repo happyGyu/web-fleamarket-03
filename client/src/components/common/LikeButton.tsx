@@ -1,6 +1,8 @@
+import { getUser } from '@apis/user';
 import HeartIcon from '@assets/icons/HeartIcon';
 import colors from '@constants/colors';
 import { ILikedUser } from '@customTypes/product';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import styled, { css } from 'styled-components';
 
@@ -8,9 +10,9 @@ interface LikeButtonProps {
   productId: number;
   likedUsers: ILikedUser[];
 }
-
 export default function LikeButton({ productId, likedUsers }: LikeButtonProps) {
-  //   const [isUserPick, setIsUserPick] = useState(false);
+  // const { data: user } = useQuery(['user'], getUser);
+  // const [isUserPick, setIsUserPick] = useState(false);
 
   return (
     <LikeButtonWrapper isUserPick={false}>

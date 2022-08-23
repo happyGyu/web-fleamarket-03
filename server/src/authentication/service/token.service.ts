@@ -52,10 +52,17 @@ export class TokenService {
             HttpStatus.UNAUTHORIZED,
           );
         case 'TokenExpiredError':
-          throw new HttpException(
-            '토큰이 만료되었습니다.',
-            HttpStatus.UNAUTHORIZED,
-          );
+          if (tokenType === 'access') {
+            throw new HttpException(
+              'Access 토큰이 만료되었습니다.',
+              HttpStatus.UNAUTHORIZED,
+            );
+          } else {
+            throw new HttpException(
+              'Refresh 토큰이 만료되었습니다.',
+              HttpStatus.GONE,
+            );
+          }
         default:
           console.log(e);
           console.log(e.name);
