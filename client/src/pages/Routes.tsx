@@ -1,4 +1,5 @@
 import { Route, Routes as RouterRoutes } from 'react-router-dom';
+import DetailPage from './DetailPage';
 import ErrorPage from './ErrorPage';
 import LoginPage from './LoginPage';
 import MainPage from './MainPage';
@@ -14,6 +15,7 @@ export default function Routes() {
       <Route path="/signUp" element={<SignUpPage />} />
       <Route path="/error" element={<ErrorPage />} />
       <Route path="/" element={<MainPage />} />
+      <Route path="/product/:productId" element={<DetailPage />} />
       <Route path="/post" element={<PostPage />} />
     </RouterRoutes>
   );

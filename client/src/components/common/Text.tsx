@@ -1,7 +1,7 @@
 import colors from '@constants/colors';
 import styled from 'styled-components';
 
-type TextSizeType = 'large' | 'medium' | 'small' | 'xSmall';
+export type TextSizeType = 'large' | 'medium' | 'small' | 'xSmall';
 type FontWeightType = 'bolder' | 'bold' | 'medium';
 
 const textSizeMap = {

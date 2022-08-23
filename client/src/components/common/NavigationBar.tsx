@@ -8,15 +8,21 @@ import mixin from '@style/mixin';
 import { componentSize } from '@constants/componentSize';
 
 interface NavigationBarProps {
-  title: string;
+  title?: string;
   navigationButtonHandler?: () => void;
   actionItem?: React.ReactNode;
+  color?: string;
+  backgroundColor?: string;
+  shadowColor?: string;
 }
 
 export default function NavigationBar({
   title,
   navigationButtonHandler,
   actionItem,
+  color,
+  backgroundColor,
+  shadowColor,
 }: NavigationBarProps) {
   const navigate = useNavigate();
 
@@ -24,17 +30,17 @@ export default function NavigationBar({
     navigate(-1);
   };
   return (
-    <Container>
-      <NavigationButton onClick={navigationButtonHandler || defaultNavigationHandler}>
+    <Container backgroundColor={backgroundColor} shadowColor={shadowColor}>
+      <NavigationButton onClick={navigationButtonHandler || defaultNavigationHandler} color={color}>
         <ChevronLeft />
       </NavigationButton>
-      <Text>{title}</Text>
+      <Text color={color}>{title}</Text>
       <ActionItemContainer>{actionItem}</ActionItemContainer>
     </Container>
   );
 }
 
-const Container = styled.div`
+const Container = styled.div<{ backgroundColor?: string; shadowColor?: string }>`
   position: absolute;
   z-index: 10;
   top: 0;
@@ -42,11 +48,11 @@ const Container = styled.div`
   width: 100%;
   height: ${componentSize.navigationHeader.height};
   padding: 1rem 1.5rem;
-  background-color: ${colors.offWhite};
-  box-shadow: inset 0px -1px 0px ${colors.grey3};
+  background-color: ${({ backgroundColor }) => backgroundColor || colors.offWhite};
+  box-shadow: inset 0px -1px 0px ${({ shadowColor }) => shadowColor || colors.grey3};
 `;
 
-const NavigationButton = styled.button`
+const NavigationButton = styled.button<{ color?: string }>`
   position: absolute;
   top: 1.25rem;
   left: 1.5rem;
@@ -54,6 +60,7 @@ const NavigationButton = styled.button`
   svg {
     width: 0.5rem;
     height: 1rem;
+    stroke: ${({ color }) => color || colors.black};
   }
 `;
 

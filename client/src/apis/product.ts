@@ -1,4 +1,4 @@
-import { GetRegionProductAPIDto } from '@customTypes/product';
+import { GetRegionProductAPIDto, IProduct } from '@customTypes/product';
 import myAxios from './myAxios';
 
 export async function getRegionProducts(regionId?: number) {
@@ -8,5 +8,15 @@ export async function getRegionProducts(regionId?: number) {
     return res.data;
   } catch (e) {
     throw new Error('검색에 실패했습니다.');
+  }
+}
+
+export async function getProductDetail(productId?: number) {
+  if (!productId) throw new Error('상품이 존재하지 않습니다.');
+  try {
+    const { data: product } = await myAxios.get<IProduct>(`/products/${productId}`);
+    return product;
+  } catch (e) {
+    throw new Error('상품 조회에 실패했습니다.');
   }
 }

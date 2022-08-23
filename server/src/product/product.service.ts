@@ -5,6 +5,7 @@ import { Product } from './entities/product.entity';
 import { CreateProductDto } from './dto/createProduct.dto';
 import { UpdateProductDto } from './dto/updateProductDto';
 import { LikeDto } from './dto/like.dto';
+import { GetProductDetailDto } from './dto/getProductDetail.dto';
 
 @Injectable()
 export class ProductService {
@@ -35,6 +36,22 @@ export class ProductService {
 
   getProduct(productId: number): Promise<Product> {
     return this.productRepository.findOneByProductId(productId);
+  }
+
+  async getAndParseProductDetail(productId: number) {
+    const {
+      seller: { regions: rawSellerRegion, ...sellerData },
+      ...restData
+    } = await this.getProduct(productId);
+    const parsedSellerRegion = rawSellerRegion.map((rawSellerRegion) => ({
+      id: rawSellerRegion.region.id,
+      address: rawSellerRegion.region.address,
+    }));
+    const parsedProduct: GetProductDetailDto = {
+      ...restData,
+      seller: { regions: parsedSellerRegion, ...sellerData },
+    };
+    return parsedProduct;
   }
 
   async deleteProduct(productId: number, userId: number) {
