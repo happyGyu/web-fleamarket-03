@@ -20,3 +20,9 @@ export async function getProductDetail(productId?: number) {
     throw new Error('상품 조회에 실패했습니다.');
   }
 }
+
+export async function toggleLike(productId?: number) {
+  if (!productId) throw new Error('상품이 존재하지 않습니다.');
+  const { data: result } = await myAxios.patch(`/products/like/${productId}`);
+  return result.ok;
+}

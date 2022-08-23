@@ -31,10 +31,9 @@ export default function MainPage() {
           <ProductItem
             key={productInfo.id}
             productInfo={productInfo}
-            UtilButton={LikeButton({
-              productId: productInfo.id,
-              likedUsers: productInfo.likedUsers,
-            })}
+            UtilButton={
+              <LikeButton productId={productInfo.id} likedUsers={productInfo.likedUsers} />
+            }
           />
         ))}
         <RegisterNewProductButtonWrapper>
