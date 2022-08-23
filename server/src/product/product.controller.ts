@@ -23,8 +23,9 @@ export class ProductController {
     @Res() res: Response,
     @Param('productId') productId: number,
   ) {
-    const product = await this.productService.getProduct(productId);
-    return res.status(HttpStatus.OK).json(product);
+    const parsedProductDetail =
+      await this.productService.getAndParseProductDetail(productId);
+    return res.status(HttpStatus.OK).json(parsedProductDetail);
   }
 
   @Get()
