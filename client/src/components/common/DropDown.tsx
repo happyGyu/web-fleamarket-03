@@ -54,4 +54,13 @@ const DropDownItem = styled.li`
   padding: 1rem;
   text-align: left;
   background-color: ${colors.offWhite};
+  border-bottom: 1px solid ${colors.grey3};
+
+  :hover {
+    background-color: ${colors.grey3};
+  }
+
+  :last-child {
+    border: none;
+  }
 `;

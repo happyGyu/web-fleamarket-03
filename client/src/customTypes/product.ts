@@ -1,7 +1,13 @@
 import { IRegion } from './region';
 import { IUser } from './user';
 
-type SalesStatusType = 'sale' | 'reserved' | 'sold';
+export type SalesStatusType = keyof typeof SalesStatusEnum;
+
+export enum SalesStatusEnum {
+  sale = '판매중',
+  reserved = '예약중',
+  sold = '판매완료',
+}
 
 export interface IProduct {
   id: number;
