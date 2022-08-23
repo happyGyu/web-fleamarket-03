@@ -8,7 +8,7 @@ export function debounce<T>(callback: (...args: T[]) => void, time: number) {
   };
 }
 
-export function calTimePassed(targetDate: Date) {
+export function calculatePassedTime(targetDate: Date) {
   const millisecond = new Date().getTime() - targetDate.getTime();
   if (millisecond < 1000) return '방금';
   const seconds = Math.ceil(millisecond / 1000);
@@ -23,5 +23,5 @@ export function calTimePassed(targetDate: Date) {
 
 export const getPassedTimeString = (timeString: string) => {
   const createdTime = new Date(timeString);
-  return `${calTimePassed(createdTime)} 전`;
+  return `${calculatePassedTime(createdTime)} 전`;
 };
