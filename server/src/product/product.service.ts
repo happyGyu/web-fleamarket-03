@@ -6,16 +6,45 @@ import { CreateProductDto } from './dto/createProduct.dto';
 import { UpdateProductDto } from './dto/updateProductDto';
 import { LikeDto } from './dto/like.dto';
 import { GetProductDetailDto } from './dto/getProductDetail.dto';
+import { CategoryRepository } from './repository/category.repository';
+import { Category } from './entities/category.entity';
 
 @Injectable()
 export class ProductService {
   constructor(
     private readonly productRepository: ProductRepository,
     private readonly likeRepository: LikeRepository,
+    private readonly categoryRepository: CategoryRepository,
   ) {}
 
   getRegionProducts(regionId: number): Promise<Product[]> {
     return this.productRepository.findProductsByRegion(regionId);
+  }
+
+  async getPaginationOfProductsByRegion(
+    startProductId: number,
+    regionId: number,
+    categoryId: number,
+    limit: number,
+  ): Promise<{
+    products: Product[];
+    nextStartParam: number | undefined;
+  }> {
+    const products = await this.productRepository.findProductsByRegionWithLimit(
+      startProductId,
+      limit,
+      regionId,
+      categoryId,
+    );
+
+    const isEnd = products[limit];
+
+    const nextStartParam = isEnd ? products[limit].id : undefined;
+    if (isEnd) {
+      products.pop();
+    }
+
+    return { products, nextStartParam };
   }
 
   createNewProduct(createProductDto: CreateProductDto) {
@@ -32,6 +61,10 @@ export class ProductService {
       sellerId,
       updateProductDto,
     );
+  }
+
+  getCategories(): Promise<Category[]> {
+    return this.categoryRepository.findAll();
   }
 
   getProduct(productId: number): Promise<Product> {

@@ -1,3 +1,5 @@
+import { InfiniteFetchFunctionDto } from './common';
+import { Category } from './category';
 import { IRegion } from './region';
 import { IUser } from './user';
 
@@ -8,16 +10,17 @@ export enum SalesStatusEnum {
   reserved = '예약중',
   sold = '판매완료',
 }
-
 export interface IProduct {
   id: number;
   name: string;
   price: number;
   region: IRegion;
   salesStatus: SalesStatusType;
+  // categoryId: number;
   createdAt: string;
   updatedAt: string;
-  thumbnails: JSON;
+  thumbnails: string[];
+  category: Category;
   description: string;
   views: number;
   seller: IUser;
@@ -37,6 +40,17 @@ export interface IProductItem
   thumbnail: string;
 }
 
-export interface GetRegionProductAPIDto {
-  data: IProductItem[];
+export interface GetRegionProductDto extends InfiniteFetchFunctionDto {
+  products: IProductItem[];
 }
+
+export interface CreateProductAPIDto {
+  name: string;
+  price: number;
+  regionId: IRegion['id'];
+  thumbnails: JSON;
+  description: string;
+  categoryId: number;
+}
+
+export type PatchProductDto = Partial<CreateProductAPIDto>;

@@ -1,24 +1,61 @@
 import { Text } from '@components/common/Text';
+import { ValidationMessage } from '@components/common/ValidationMessage';
+import { useForm } from '@components/CustomForm/useForm';
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
 import styled from 'styled-components';
+import { useCategory } from '../../queries/useCategory';
 
-export default function CategorySelector() {
-  const categories = ['여성패션 잡화', '기타 물품', '가구 인테리어', '기타', 'it물품'];
+interface CategorySelectorProps {
+  categoryId?: number;
+}
+
+export default function CategorySelector({ categoryId: initialCategoryId }: CategorySelectorProps) {
+  // const categories = ['여성패션 잡화', '기타 물품', '가구 인테리어', '기타', 'it물품'];
+  const { data: categories } = useCategory();
+
+  const validator = {
+    exist: {
+      errorMessage: '카테고리를 선택해주세요',
+      validate: (value: null | number) => value !== null,
+    },
+  };
+
+  const initialValue = initialCategoryId || 1;
+
+  const {
+    inputValue: selectedCategoryId,
+    setInputValue: setSelectedCategoryId,
+    errorMessage,
+    validate,
+  } = useForm('categoryId', initialValue, validator, { isInitialValid: true });
+
+  const selectCategory = (categoryId: number) => () => {
+    validate({ value: categoryId, validateProperties: ['exist'] });
+    setSelectedCategoryId(categoryId);
+  };
 
   return (
     <Container>
       <Text size="xSmall">(필수) 카테고리를 선택해주세요</Text>
+      <ValidationMessage size="xSmall" color="red">
+        {errorMessage}
+      </ValidationMessage>
       <CategoriesContainer>
-        {categories.map((category) => (
-          <ItemWrapper isActive={category === '여성패션 잡화'}>
-            <Text>{category}</Text>
-          </ItemWrapper>
-        ))}
+        {categories &&
+          categories.map(({ name, id }) => (
+            <ItemWrapper key={id} isActive={id === selectedCategoryId} onClick={selectCategory(id)}>
+              <Text>{name}</Text>
+            </ItemWrapper>
+          ))}
       </CategoriesContainer>
     </Container>
   );
 }
+
+const ErrorMessage = styled(Text)`
+  color: ${colors.red};
+`;
 
 const Container = styled.div`
   padding-bottom: 24px;
@@ -26,7 +63,6 @@ const Container = styled.div`
   border-bottom: 1px solid ${colors.grey3};
   color: ${colors.grey1};
   width: 100%;
-  overflow-x: hidden;
   ${Text} {
     color: ${colors.grey2};
   }
@@ -44,6 +80,8 @@ const ItemWrapper = styled.div<{ isActive?: boolean }>`
   }
 `;
 const CategoriesContainer = styled.div`
+  overflow-x: auto;
+
   margin-top: 0.8rem;
   ${mixin.flexMixin({ align: 'center' })};
   gap: 4px;

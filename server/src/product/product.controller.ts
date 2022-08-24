@@ -23,6 +23,11 @@ import { ProductService } from './product.service';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
+  @Get('categories')
+  async getCategories(@Res() res: Response) {
+    const categories = await this.productService.getCategories();
+    return res.status(HttpStatus.OK).json(categories);
+  }
   @Get(':productId')
   async getProduct(
     @Res() res: Response,
@@ -33,12 +38,23 @@ export class ProductController {
     return res.status(HttpStatus.OK).json(parsedProductDetail);
   }
 
+  @UseAuthGuard()
   @Get()
   async getRegionProducts(
     @Res() res: Response,
-    @Query('region-id') regionId: number,
+    @Query('regionId') regionId: number,
+    @Query('start') startProductId: number,
+    @Query('categoryId') categoryId: number,
   ) {
-    const products = await this.productService.getRegionProducts(regionId);
+    const LIMIT = 2;
+    const { products, nextStartParam } =
+      await this.productService.getPaginationOfProductsByRegion(
+        startProductId,
+        regionId,
+        categoryId,
+        LIMIT,
+      );
+
     const parsedProducts: GetRegionProductAPIDto[] = products.map((product) => {
       const {
         id,
@@ -61,7 +77,10 @@ export class ProductController {
         thumbnail: thumbnails[0],
       };
     });
-    return res.status(HttpStatus.OK).json(parsedProducts);
+    return res.status(HttpStatus.OK).json({
+      products: parsedProducts,
+      nextStartParam: nextStartParam || null,
+    });
   }
 
   @Delete(':productId')
@@ -97,8 +116,8 @@ export class ProductController {
   ) {
     const { id: sellerId } = req['user'];
     const newProduct = await this.productService.createNewProduct({
-      createProductDto,
-      ...sellerId,
+      ...createProductDto,
+      sellerId,
     });
 
     return res.status(HttpStatus.OK).json(newProduct);

@@ -2,6 +2,7 @@ import MoreIcon from '@assets/icons/MoreIcon';
 import DropDown from '@components/common/DropDown';
 import colors from '@constants/colors';
 import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface MoreButtonProps {
@@ -10,10 +11,12 @@ interface MoreButtonProps {
 
 export default function MoreButton({ color }: MoreButtonProps) {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+  const { productId } = useParams();
+  const navigate = useNavigate();
   const moreUtils = [
     {
       name: '수정하기',
-      onClick: () => alert('수정하기'),
+      onClick: () => navigate(`/product/edit/${productId}`),
     },
     {
       name: '삭제하기',

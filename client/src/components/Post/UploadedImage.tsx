@@ -1,3 +1,4 @@
+import { Text } from '@components/common/Text';
 import colors from '@constants/colors';
 import React from 'react';
 import styled from 'styled-components';
