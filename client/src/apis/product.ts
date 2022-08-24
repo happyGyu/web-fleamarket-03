@@ -1,20 +1,25 @@
 import { Category } from '@customTypes/category';
 import {
   CreateProductAPIDto,
-  GetRegionProductAPIDto,
+  GetRegionProductDto,
   IProduct,
   PatchProductDto,
 } from '@customTypes/product';
 import myAxios from './myAxios';
 
-export async function getRegionProducts(regionId?: number) {
-  if (!regionId) throw new Error('동네가 존재하지 않습니다.');
-  try {
-    const res: GetRegionProductAPIDto = await myAxios.get(`/products?region-id=${regionId}`);
-    return res.data;
-  } catch (e) {
-    throw new Error('검색에 실패했습니다.');
-  }
+interface GetRegionProductsProps {
+  regionId?: number;
+  categoryId?: number;
+  start?: number;
+}
+
+export async function getRegionProducts(queryConfig: GetRegionProductsProps) {
+  const queryString = Object.entries(queryConfig).reduce(
+    (query, [key, value]) => (value ? `${query}&${key}=${value}` : query),
+    '',
+  );
+  const { data } = await myAxios.get<GetRegionProductDto>(`/products?${queryString}`);
+  return data;
 }
 
 export async function getProductDetail(productId?: number) {
