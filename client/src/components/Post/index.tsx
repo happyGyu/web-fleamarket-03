@@ -10,7 +10,7 @@ export default function Post({ product }: { product?: IProduct }) {
     <>
       <ImageUploader thumbnails={product?.thumbnails} />
       <TitleInput name={product?.name} />
-      <CategorySelector />
+      <CategorySelector categoryId={product?.category.id} />
       <PriceInput price={product?.price} />
       <DescriptionTextArea description={product?.description} />
     </>

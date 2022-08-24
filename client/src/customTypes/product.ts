@@ -1,3 +1,4 @@
+import { Category } from './category';
 import { IRegion } from './region';
 import { IUser } from './user';
 
@@ -15,9 +16,11 @@ export interface IProduct {
   price: number;
   region: IRegion;
   salesStatus: SalesStatusType;
+  // categoryId: number;
   createdAt: string;
   updatedAt: string;
   thumbnails: string[];
+  category: Category;
   description: string;
   views: number;
   seller: IUser;
