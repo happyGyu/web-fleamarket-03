@@ -4,7 +4,8 @@ import { FormEvent } from 'react';
 
 export const MAX_QUANTITY_IMG_URLS = 2;
 
-export const useUploadImage = () => {
+export const useUploadImage = (thumbnails?: string[]) => {
+  const initialValue = thumbnails || [];
   const validator = {
     min: {
       validate: (value: string[]) => value.length > 0,
@@ -21,7 +22,12 @@ export const useUploadImage = () => {
     inputValue: uploadedImgUrls,
     errorMessage,
     validate,
-  } = useForm<string[], { min: () => boolean; max: () => boolean }>('thumbnails', [], validator);
+  } = useForm<string[], { min: () => boolean; max: () => boolean }>(
+    'thumbnails',
+    initialValue,
+    validator,
+    { isInitialValid: !!thumbnails },
+  );
   // const [uploadedImgUrls, setUploadedImgUrls] = useState<string[]>([]);
 
   const deleteImageFile = (imgUrl: string) => {

@@ -4,23 +4,35 @@ import { fontSize } from '@constants/fonts';
 import { ChangeEvent } from 'react';
 import styled from 'styled-components';
 
-export default function DescriptionTextArea() {
+interface DescriptionTextAreaProps {
+  description?: string;
+}
+
+export default function DescriptionTextArea({ description }: DescriptionTextAreaProps) {
   const validator = {
     min: {
       validate: (value: string) => value.length > 0,
       errorMessage: '게시글 내용을 작성해야합니다.',
     },
   };
+  const initialValue = description || '';
 
-  const { validate, inputValue, setInputValue } = useForm('description', '', validator);
+  const { validate, setInputValue, inputValue } = useForm('description', initialValue, validator, {
+    isInitialValid: !!description,
+  });
   const onChange = ({ currentTarget }: ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = currentTarget;
     validate({ value });
     setInputValue(value);
   };
+
   return (
     <Container>
-      <CustomTextArea onChange={onChange} placeholder="게시글 내용을 작성해주세요" />
+      <CustomTextArea
+        value={inputValue}
+        onChange={onChange}
+        placeholder="게시글 내용을 작성해주세요"
+      />
     </Container>
   );
 }

@@ -8,8 +8,8 @@ import styled from 'styled-components';
 import UploadedImage from '../UploadedImage';
 import { MAX_QUANTITY_IMG_URLS, useUploadImage } from './useUploadImage';
 
-export default function ImageUploader() {
-  const { uploadedImgUrls, actions, errorMessage } = useUploadImage();
+export default function ImageUploader({ thumbnails }: { thumbnails?: string[] }) {
+  const { uploadedImgUrls, actions, errorMessage } = useUploadImage(thumbnails);
 
   const initializeFile = (e: React.MouseEvent<HTMLInputElement>) => {
     e.currentTarget.value = '';
@@ -25,7 +25,6 @@ export default function ImageUploader() {
             <Text size="xSmall">/</Text>
             <Text size="xSmall">{MAX_QUANTITY_IMG_URLS}</Text>
           </Flex>
-
           <input
             onClick={initializeFile}
             onInput={actions.imageUpload}
