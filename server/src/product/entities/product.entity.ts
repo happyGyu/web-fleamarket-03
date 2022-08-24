@@ -38,7 +38,7 @@ export class Product {
   updatedAt: Date;
 
   @Column({ type: 'int' })
-  view: number;
+  views: number;
 
   @Column({ type: 'enum', enum: SalesStatusEnum })
   salesStatus: string;

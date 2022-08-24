@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import portalUtil from '@utils/portal';
 import { useRef, useEffect } from 'react';
 import mixin from '@style/mixin';
+import colors from '@constants/colors';
 
 export default function App() {
   const displayRef = useRef<HTMLDivElement | null>(null);
@@ -32,6 +33,7 @@ const Display = styled.div`
   position: relative;
   width: 26rem;
   height: 56rem;
+  background-color: ${colors.white};
   overflow-x: hidden;
   overflow-y: auto;
   border: 5px solid black;

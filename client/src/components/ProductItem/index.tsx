@@ -1,12 +1,14 @@
+import Caption from '@components/common/Caption';
 import CountIndicator from '@components/common/CountIndicator';
 import { Text } from '@components/common/Text';
 import Thumbnail from '@components/common/Thumbnail';
 import colors from '@constants/colors';
 import { IProductItem } from '@customTypes/product';
 import mixin from '@style/mixin';
-import { calTimePassed } from '@utils/common';
-import { getLastAddress } from '@utils/product';
+import { getPassedTimeString } from '@utils/common';
+import { getLastAddress, getPriceString } from '@utils/product';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface ProductItemProps {
@@ -15,23 +17,22 @@ interface ProductItemProps {
 }
 
 export default function ProductItem({ productInfo, UtilButton }: ProductItemProps) {
-  const getPassedTimeString = (timeString: string) => {
-    const createdTime = new Date(timeString);
-    return `${calTimePassed(createdTime)} 전`;
+  const navigate = useNavigate();
+
+  const moveToDetailPage = () => {
+    navigate(`/product/${productInfo.id}`);
   };
 
   const { thumbnail, name, region, createdAt, price, likedUsers } = productInfo;
   return (
-    <Container>
+    <Container onClick={moveToDetailPage}>
       <Thumbnail src={thumbnail} size="medium" />
       <ProductInfoContainer>
         <Text size="large" weight="bold">
           {name}
         </Text>
-        <Text color={colors.grey1}>{`${getLastAddress(region.address)} · ${getPassedTimeString(
-          createdAt,
-        )}`}</Text>
-        <Text weight="bold">{`${price.toLocaleString()}원`}</Text>
+        <Caption captions={[getLastAddress(region.address), getPassedTimeString(createdAt)]} />
+        <Text weight="bold">{getPriceString(price)}</Text>
       </ProductInfoContainer>
       <UtilButtonWrapper>{UtilButton}</UtilButtonWrapper>
       <CountIndicatorWrapper>

@@ -31,6 +31,9 @@ import { UploadImageModule } from './upload-image/upload-image.module';
         entities: [__dirname + '/**/entities/*.entity.{js,ts}'],
         synchronize: true,
         namingStrategy: new SnakeNamingStrategy(),
+        extra: {
+          decimalNumbers: true,
+        },
       }),
     }),
     UserModule,
