@@ -1,5 +1,4 @@
 import { getUser } from '@apis/user';
-import LoadingIndicator from '@components/common/LoadingIndicator';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 
@@ -17,7 +16,7 @@ export default function useInfiniteScroll<T extends IFetchFunction>({
   fetchFunction,
 }: UseInfiniteScrollProps<T>) {
   const { data: user } = useQuery(['user'], getUser);
-  const { data, fetchNextPage, isLoading } = useInfiniteQuery(
+  const { data, fetchNextPage, isLoading, hasNextPage } = useInfiniteQuery(
     queryKey,
     ({ pageParam = undefined }) => fetchFunction(pageParam),
     {
@@ -42,8 +41,14 @@ export default function useInfiniteScroll<T extends IFetchFunction>({
 
   function Trigger() {
     return (
-      <div ref={triggerRef}>
-        <LoadingIndicator />
+      <div
+        ref={triggerRef}
+        style={{
+          visibility: isLoading ? 'visible' : 'hidden',
+          display: hasNextPage ? 'block' : 'none',
+        }}
+      >
+        로딩중
       </div>
     );
   }
