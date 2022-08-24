@@ -22,6 +22,11 @@ import { ProductService } from './product.service';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
+  @Get('categories')
+  async getCategories(@Res() res: Response) {
+    const categories = await this.productService.getCategories();
+    return res.status(HttpStatus.OK).json(categories);
+  }
   @Get(':productId')
   async getProduct(
     @Res() res: Response,
