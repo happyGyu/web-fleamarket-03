@@ -1,3 +1,4 @@
+import { Category } from './category';
 import { IRegion } from './region';
 import { IUser } from './user';
 
@@ -15,9 +16,11 @@ export interface IProduct {
   price: number;
   region: IRegion;
   salesStatus: SalesStatusType;
+  // categoryId: number;
   createdAt: string;
   updatedAt: string;
-  thumbnails: JSON;
+  thumbnails: string[];
+  category: Category;
   description: string;
   views: number;
   seller: IUser;
@@ -47,6 +50,7 @@ export interface CreateProductAPIDto {
   regionId: IRegion['id'];
   thumbnails: JSON;
   description: string;
-  sellerId: number;
   categoryId: number;
 }
+
+export type PatchProductDto = Partial<CreateProductAPIDto>;

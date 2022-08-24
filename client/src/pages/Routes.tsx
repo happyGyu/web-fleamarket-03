@@ -5,6 +5,7 @@ import LoginPage from './LoginPage';
 import MainPage from './MainPage';
 import OAuthRedirectPage from './OAuthRedirectPage';
 import PostPage from './PostPage';
+import ProductEditPage from './ProductEditPage';
 import SignUpPage from './SignUpPage';
 
 export default function Routes() {
@@ -16,6 +17,8 @@ export default function Routes() {
       <Route path="/error" element={<ErrorPage />} />
       <Route path="/" element={<MainPage />} />
       <Route path="/product/:productId" element={<DetailPage />} />
+      <Route path="/product/edit/:productId" element={<ProductEditPage />} />
+      {/* /product/edit/${productId} */}
       <Route path="/post" element={<PostPage />} />
     </RouterRoutes>
   );

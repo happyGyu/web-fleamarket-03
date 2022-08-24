@@ -1,4 +1,4 @@
-import { createProduct } from '@apis/product';
+import { getProductDetail, updateProduct } from '@apis/product';
 import { getUser } from '@apis/user';
 import NavigationBar from '@components/common/NavigationBar';
 import PageContainer from '@components/common/PageContainer';
@@ -15,24 +15,28 @@ import { CreateProductAPIDto } from '@customTypes/product';
 import { useQuery } from '@tanstack/react-query';
 import { getNumber } from '@utils/format';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-export default function PostPage() {
+export default function ProductEditPage() {
   return (
     <FormProvider>
-      <PostForm />
+      <PostEditForm />
     </FormProvider>
   );
 }
 
-function PostForm() {
+function PostEditForm() {
   const { data: user } = useQuery(['user'], getUser);
-
+  const { productId } = useParams();
+  const { data: product } = useQuery(['product', productId], () =>
+    getProductDetail(Number(productId)),
+  );
   const { formInputMap } = useFormInputMap();
   const { isAllValidated } = useFormValidationState();
 
   const navigate = useNavigate();
+
   const registerProduct = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isAllValidated) {
@@ -40,25 +44,30 @@ function PostForm() {
       return;
     }
 
-    const product = {
+    const editedProduct = {
       ...formInputMap,
       price: Number(getNumber(formInputMap.price)),
+      // region primary구현해야함
       regionId: user?.regions[0].regionId,
     } as CreateProductAPIDto;
 
     try {
-      await createProduct(product);
+      await updateProduct(editedProduct, Number(productId));
       navigate('/');
     } catch (error) {
       navigate('error');
     }
   };
 
+  if (!product) {
+    return <div />;
+  }
+
   return (
     <Form onSubmit={registerProduct}>
       <NavigationBar title="글쓰기" actionItem={<SubmitButton />} />
       <PostPageWrapper>
-        <Post />
+        <Post product={product} />
         <RegionFooter />
       </PostPageWrapper>
     </Form>
