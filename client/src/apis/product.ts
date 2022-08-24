@@ -1,3 +1,4 @@
+import { Category } from '@customTypes/category';
 import {
   CreateProductAPIDto,
   GetRegionProductAPIDto,
@@ -38,6 +39,15 @@ export async function createProduct(product: CreateProductAPIDto) {
 export async function updateProduct(product: PatchProductDto, productId: number) {
   try {
     const { data } = await myAxios.patch(`/products/${productId}`, product);
+    return data;
+  } catch (e) {
+    throw new Error('상품 수정에 실패했습니다.');
+  }
+}
+
+export async function getCategories() {
+  try {
+    const { data } = await myAxios.get<Category[]>(`/products/categories`);
     return data;
   } catch (e) {
     throw new Error('상품 수정에 실패했습니다.');

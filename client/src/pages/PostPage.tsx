@@ -33,7 +33,6 @@ function PostForm() {
   const { isAllValidated } = useFormValidationState();
 
   const navigate = useNavigate();
-
   const registerProduct = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isAllValidated) {
