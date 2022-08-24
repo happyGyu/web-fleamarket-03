@@ -17,7 +17,7 @@ export interface IProduct {
   salesStatus: SalesStatusType;
   createdAt: string;
   updatedAt: string;
-  thumbnails: JSON;
+  thumbnails: string[];
   description: string;
   views: number;
   seller: IUser;
@@ -47,6 +47,7 @@ export interface CreateProductAPIDto {
   regionId: IRegion['id'];
   thumbnails: JSON;
   description: string;
-  sellerId: number;
   categoryId: number;
 }
+
+export type PatchProductDto = Partial<CreateProductAPIDto>;
