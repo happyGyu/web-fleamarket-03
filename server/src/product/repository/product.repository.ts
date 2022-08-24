@@ -1,5 +1,5 @@
 import { CreateProductDto } from '../dto/createProduct.dto';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, LessThan, MoreThan, Repository } from 'typeorm';
 import { HttpException, Injectable, HttpStatus } from '@nestjs/common';
 import { Product } from '../entities/product.entity';
 import { SalesStatusEnum } from 'src/common/enums';
@@ -32,6 +32,24 @@ export class ProductRepository {
         HttpStatus.BAD_REQUEST,
       );
     }
+  }
+
+  public async findProductsByRegionWithLimit(
+    startProductId: number,
+    limit: number,
+    regionId: number,
+    categoryId: number,
+  ) {
+    return this.repository.find({
+      where: {
+        id: startProductId ? LessThan(startProductId) : undefined,
+        regionId: regionId,
+        categoryId: categoryId,
+      },
+      order: { id: 'DESC' },
+      relations: ['region', 'likedUsers'],
+      take: limit + 1,
+    });
   }
 
   public async patchProductById(

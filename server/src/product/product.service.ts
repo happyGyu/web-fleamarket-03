@@ -21,6 +21,32 @@ export class ProductService {
     return this.productRepository.findProductsByRegion(regionId);
   }
 
+  async getPaginationOfProductsByRegion(
+    startProductId: number,
+    regionId: number,
+    categoryId: number,
+    limit: number,
+  ): Promise<{
+    products: Product[];
+    nextStartParam: number | undefined;
+  }> {
+    const products = await this.productRepository.findProductsByRegionWithLimit(
+      startProductId,
+      limit,
+      regionId,
+      categoryId,
+    );
+
+    const isEnd = products[limit];
+
+    const nextStartParam = isEnd ? products[limit].id : undefined;
+    if (isEnd) {
+      products.pop();
+    }
+
+    return { products, nextStartParam };
+  }
+
   createNewProduct(createProductDto: CreateProductDto) {
     return this.productRepository.createProduct(createProductDto);
   }
