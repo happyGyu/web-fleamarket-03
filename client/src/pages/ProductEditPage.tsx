@@ -1,5 +1,4 @@
 import { getProductDetail, updateProduct } from '@apis/product';
-import { getUser } from '@apis/user';
 import NavigationBar from '@components/common/NavigationBar';
 import PageContainer from '@components/common/PageContainer';
 import {
@@ -12,6 +11,7 @@ import RegionFooter from '@components/Post/RegionFooter';
 import { SubmitButton } from '@components/Post/SubmitButton';
 import { padding } from '@constants/padding';
 import { CreateProductAPIDto } from '@customTypes/product';
+import { useUser } from '@queries/useUser';
 import { useQuery } from '@tanstack/react-query';
 import { getNumber } from '@utils/format';
 import React from 'react';
@@ -27,7 +27,7 @@ export default function ProductEditPage() {
 }
 
 function PostEditForm() {
-  const { data: user } = useQuery(['user'], getUser);
+  const user = useUser();
   const { productId } = useParams();
   const { data: product } = useQuery(['product', productId], () =>
     getProductDetail(Number(productId)),

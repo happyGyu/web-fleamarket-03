@@ -1,5 +1,4 @@
 import { getRegionProducts } from '@apis/product';
-import { getUser } from '@apis/user';
 import CircleButton from '@components/common/CircleButton';
 import LikeButton from '@components/common/LikeButton';
 import PageContainer from '@components/common/PageContainer';
@@ -8,12 +7,12 @@ import ProductItem from '@components/ProductItem';
 import colors from '@constants/colors';
 import { GetRegionProductDto } from '@customTypes/product';
 import useInfiniteScroll from '@hooks/useInfiniteScroll';
-import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useUser } from '../queries/useUser';
 
 export default function MainPage() {
-  const { data: user } = useQuery(['user'], getUser);
+  const user = useUser();
   const { data, Trigger } = useInfiniteScroll<GetRegionProductDto>({
     queryKey: ['products', user?.regions[0].regionId],
     fetchFunction: (pageParam?: number) =>

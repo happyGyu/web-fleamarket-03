@@ -1,15 +1,14 @@
-import { getUser } from '@apis/user';
 import MapPinIcon from '@assets/icons/MapPinIcon';
 import LoadingIndicator from '@components/common/LoadingIndicator';
 import { Text } from '@components/common/Text';
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
-import { useQuery } from '@tanstack/react-query';
 import { getLastAddress } from '@utils/product';
+import { useUser } from '@queries/useUser';
 import styled from 'styled-components';
 
 export default function MainNavTitle() {
-  const { data: user } = useQuery(['user'], getUser);
+  const user = useUser();
   return user ? (
     <Container>
       <MapPinIcon />

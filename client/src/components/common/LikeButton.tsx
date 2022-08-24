@@ -1,18 +1,17 @@
 import { toggleLike } from '@apis/product';
-import { getUser } from '@apis/user';
 import HeartIcon from '@assets/icons/HeartIcon';
 import colors from '@constants/colors';
 import { ILikedUser } from '@customTypes/product';
-import { useQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
+import { useUser } from '@queries/useUser';
 
 interface LikeButtonProps {
   productId: number;
   likedUsers: ILikedUser[];
 }
 export default function LikeButton({ productId, likedUsers }: LikeButtonProps) {
-  const { data: user } = useQuery(['user'], getUser);
+  const user = useUser();
   const [isUserPick, setIsUserPick] = useState(false);
 
   useEffect(() => {

@@ -1,5 +1,5 @@
-import { getUser } from '@apis/user';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useUser } from '@queries/useUser';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 
 interface IFetchFunction {
@@ -15,7 +15,7 @@ export default function useInfiniteScroll<T extends IFetchFunction>({
   queryKey,
   fetchFunction,
 }: UseInfiniteScrollProps<T>) {
-  const { data: user } = useQuery(['user'], getUser);
+  const user = useUser;
   const { data, fetchNextPage, isLoading, hasNextPage } = useInfiniteQuery(
     queryKey,
     ({ pageParam = undefined }) => fetchFunction(pageParam),
