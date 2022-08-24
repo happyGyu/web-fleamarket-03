@@ -25,7 +25,7 @@ export default function NavigationBar({
   };
   return (
     <Container>
-      <NavigationButton onClick={navigationButtonHandler || defaultNavigationHandler}>
+      <NavigationButton type="button" onClick={navigationButtonHandler || defaultNavigationHandler}>
         <ChevronLeft />
       </NavigationButton>
       <Text>{title}</Text>
