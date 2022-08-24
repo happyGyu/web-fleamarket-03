@@ -13,7 +13,7 @@ export default function TitleInput() {
     },
   };
 
-  const { setInputValue, inputValue, validate, errorMessage } = useForm('title', '', validator);
+  const { setInputValue, inputValue, validate, errorMessage } = useForm('name', '', validator);
 
   const inputHandler = ({ currentTarget }: React.FormEvent<HTMLInputElement>) => {
     const { value } = currentTarget;

@@ -19,7 +19,7 @@ export default function CategorySelector() {
     setInputValue: setSelectedCategoryId,
     errorMessage,
     validate,
-  } = useForm('category', 0, validator, { isInitialValid: true });
+  } = useForm('categoryId', 0, validator, { isInitialValid: true });
 
   const selectCategory = (categoryId: number) => () => {
     validate({ value: categoryId, validateProperties: ['exist'] });

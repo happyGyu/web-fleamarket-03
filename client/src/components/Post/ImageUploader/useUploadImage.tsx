@@ -21,7 +21,7 @@ export const useUploadImage = () => {
     inputValue: uploadedImgUrls,
     errorMessage,
     validate,
-  } = useForm<string[], { min: () => boolean; max: () => boolean }>('image', [], validator);
+  } = useForm<string[], { min: () => boolean; max: () => boolean }>('thumbnails', [], validator);
   // const [uploadedImgUrls, setUploadedImgUrls] = useState<string[]>([]);
 
   const deleteImageFile = (imgUrl: string) => {
