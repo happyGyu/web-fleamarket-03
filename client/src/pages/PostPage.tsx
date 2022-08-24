@@ -6,7 +6,6 @@ import {
   FormProvider,
   useFormInputMap,
   useFormValidationState,
-  useFormValidatorMapAction,
 } from '@components/CustomForm/FormProvider';
 import Post from '@components/Post';
 import RegionFooter from '@components/Post/RegionFooter';
@@ -14,6 +13,7 @@ import { SubmitButton } from '@components/Post/SubmitButton';
 import { padding } from '@constants/padding';
 import { CreateProductAPIDto } from '@customTypes/product';
 import { useQuery } from '@tanstack/react-query';
+import { getNumber } from '@utils/format';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -31,17 +31,19 @@ function PostForm() {
 
   const { formInputMap } = useFormInputMap();
   const { isAllValidated } = useFormValidationState();
-  const { formValidatorMapAction } = useFormValidatorMapAction();
+
   const navigate = useNavigate();
+
   const registerProduct = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isAllValidated) {
       alert('값을 확인해주세요!');
+      return;
     }
 
     const product = {
       ...formInputMap,
-      price: 3300,
+      price: Number(getNumber(formInputMap.price)),
       sellerId: user?.id,
       regionId: user?.regions[0].regionId,
     } as CreateProductAPIDto;

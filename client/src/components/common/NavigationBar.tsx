@@ -31,7 +31,11 @@ export default function NavigationBar({
   };
   return (
     <Container backgroundColor={backgroundColor} shadowColor={shadowColor}>
-      <NavigationButton onClick={navigationButtonHandler || defaultNavigationHandler} color={color}>
+      <NavigationButton
+        type="button"
+        onClick={navigationButtonHandler || defaultNavigationHandler}
+        color={color}
+      >
         <ChevronLeft />
       </NavigationButton>
       <Text color={color}>{title}</Text>
