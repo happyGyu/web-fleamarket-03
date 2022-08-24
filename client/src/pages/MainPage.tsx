@@ -8,6 +8,7 @@ import MainPageNavigationBar from '@components/MainPageNavigationBar';
 import ProductItem from '@components/ProductItem';
 import colors from '@constants/colors';
 import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export default function MainPage() {
@@ -37,9 +38,9 @@ export default function MainPage() {
             })}
           />
         ))}
-        <RegisterNewProductButtonWrapper>
+        <RegisterNewProductLink to="/post">
           <CircleButton />
-        </RegisterNewProductButtonWrapper>
+        </RegisterNewProductLink>
       </MainPageWrapper>
     </>
   );
@@ -50,7 +51,7 @@ const MainPageWrapper = styled(PageContainer)`
   height: 100%;
 `;
 
-const RegisterNewProductButtonWrapper = styled.div`
+const RegisterNewProductLink = styled(Link)`
   position: absolute;
   bottom: 1rem;
   right: 1rem;
