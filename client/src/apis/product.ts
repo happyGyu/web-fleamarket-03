@@ -1,4 +1,4 @@
-import { GetRegionProductAPIDto, IProduct } from '@customTypes/product';
+import { CreateProductAPIDto, GetRegionProductAPIDto, IProduct } from '@customTypes/product';
 import myAxios from './myAxios';
 
 export async function getRegionProducts(regionId?: number) {
@@ -18,5 +18,14 @@ export async function getProductDetail(productId?: number) {
     return product;
   } catch (e) {
     throw new Error('상품 조회에 실패했습니다.');
+  }
+}
+
+export async function createProduct(product: CreateProductAPIDto) {
+  try {
+    const { data } = await myAxios.post('/products', product);
+    return data;
+  } catch (e) {
+    throw new Error('상품 등록에 실패했습니다.');
   }
 }

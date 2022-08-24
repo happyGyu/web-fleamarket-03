@@ -105,8 +105,8 @@ export class ProductController {
   ) {
     const { id: sellerId } = req['user'];
     const newProduct = await this.productService.createNewProduct({
-      createProductDto,
-      ...sellerId,
+      ...createProductDto,
+      sellerId,
     });
 
     return res.status(HttpStatus.OK).json(newProduct);
