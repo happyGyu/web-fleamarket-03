@@ -41,9 +41,9 @@ export class ProductController {
   @Get()
   async getRegionProducts(
     @Res() res: Response,
-    @Query('region-id') regionId: number,
+    @Query('regionId') regionId: number,
     @Query('start') startProductId: number,
-    @Query('category-id') categoryId: number,
+    @Query('categoryId') categoryId: number,
   ) {
     const LIMIT = 2;
     const { products, nextStartParam } =
@@ -78,7 +78,7 @@ export class ProductController {
     });
     return res.status(HttpStatus.OK).json({
       products: parsedProducts,
-      nextStartParam: nextStartParam ? nextStartParam : -1,
+      nextStartParam: nextStartParam || null,
     });
   }
 
