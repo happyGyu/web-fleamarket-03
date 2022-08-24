@@ -2,7 +2,7 @@ import colors from '@constants/colors';
 import { fontSize } from '@constants/fonts';
 import styled from 'styled-components';
 import React from 'react';
-import { ValidateMessage } from '@components/common/ValidationMessage';
+import { ValidationMessage } from '@components/common/ValidationMessage';
 import { useForm } from '@components/CustomForm/useForm';
 
 export default function TitleInput() {
@@ -24,7 +24,7 @@ export default function TitleInput() {
   return (
     <Container>
       <CustomInput placeholder="글 제목" value={inputValue} onInput={inputHandler} />
-      <ValidateMessage as="p">{errorMessage}</ValidateMessage>
+      <ValidationMessage as="p">{errorMessage}</ValidationMessage>
     </Container>
   );
 }

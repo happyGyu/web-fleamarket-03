@@ -1,4 +1,5 @@
 import { Text } from '@components/common/Text';
+import { ValidationMessage } from '@components/common/ValidationMessage';
 import { useForm } from '@components/CustomForm/useForm';
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
@@ -29,9 +30,9 @@ export default function CategorySelector() {
   return (
     <Container>
       <Text size="xSmall">(필수) 카테고리를 선택해주세요</Text>
-      <ErrorMessage size="xSmall" color="red">
+      <ValidationMessage size="xSmall" color="red">
         {errorMessage}
-      </ErrorMessage>
+      </ValidationMessage>
       <CategoriesContainer>
         {categories.map((category, index) => (
           <ItemWrapper

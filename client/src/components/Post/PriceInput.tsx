@@ -1,4 +1,4 @@
-import { ValidateMessage } from '@components/common/ValidationMessage';
+import { ValidationMessage } from '@components/common/ValidationMessage';
 import { useForm } from '@components/CustomForm/useForm';
 import colors from '@constants/colors';
 import { fontSize } from '@constants/fonts';
@@ -41,7 +41,7 @@ export default function PriceInput() {
           value={inputValue || ''}
           onChange={changeInputValue}
         />
-        <ValidateMessage as="p">{errorMessage}</ValidateMessage>
+        <ValidationMessage as="p">{errorMessage}</ValidationMessage>
       </Container>
       <div />
     </>

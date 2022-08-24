@@ -1,6 +1,6 @@
 import ImageIcon from '@assets/icons/ImageIcon';
 import { Text } from '@components/common/Text';
-import { ValidateMessage } from '@components/common/ValidationMessage';
+import { ValidationMessage } from '@components/common/ValidationMessage';
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
 import React from 'react';
@@ -43,7 +43,7 @@ export default function ImageUploader() {
           />
         ))}
       </ImageFlex>
-      <ValidateMessage>{errorMessage}</ValidateMessage>
+      <ValidationMessage>{errorMessage}</ValidationMessage>
     </Container>
   );
 }
