@@ -35,6 +35,7 @@ export default function ImageUploader() {
         </ImageInput>
         {uploadedImgUrls.map((imgUrl) => (
           <UploadedImage
+            key={imgUrl}
             onClick={() => {
               actions.deleteImageFile(imgUrl);
             }}
