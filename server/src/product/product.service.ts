@@ -107,4 +107,9 @@ export class ProductService {
       this.likeRepository.addLike(likeDto);
     }
   }
+
+  async getLikedProducts(userId: number) {
+    const likes = await this.likeRepository.findLikeByUser(userId);
+    return likes.map((like) => like.product);
+  }
 }
