@@ -8,7 +8,11 @@ import styled from 'styled-components';
 
 const MAX_PRICE_LENGTH = 8;
 
-export default function PriceInput() {
+interface PriceInputProps {
+  price?: number;
+}
+
+export default function PriceInput({ price: initialPrice }: PriceInputProps) {
   const validator = {
     max: {
       validate: (value: string) => value.length < MAX_PRICE_LENGTH,
@@ -16,9 +20,15 @@ export default function PriceInput() {
     },
   };
 
-  const { validate, inputValue, setInputValue, errorMessage } = useForm('price', '', validator, {
-    isInitialValid: true,
-  });
+  const initialValue = initialPrice ? formatPrice(String(initialPrice)) : '';
+  const { validate, inputValue, setInputValue, errorMessage } = useForm(
+    'price',
+    initialValue,
+    validator,
+    {
+      isInitialValid: true,
+    },
+  );
 
   const changeInputValue = ({ currentTarget }: React.FormEvent<HTMLInputElement>) => {
     const { value } = currentTarget;

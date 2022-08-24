@@ -79,7 +79,12 @@ export class ProductRepository {
     try {
       return this.repository.findOne({
         where: { id },
-        relations: ['region', 'seller.regions.region', 'likedUsers'],
+        relations: [
+          'region',
+          'category',
+          'seller.regions.region',
+          'likedUsers',
+        ],
       });
     } catch (e) {
       throw new HttpException(

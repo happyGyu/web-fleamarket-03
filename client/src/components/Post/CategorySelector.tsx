@@ -4,9 +4,15 @@ import { useForm } from '@components/CustomForm/useForm';
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
 import styled from 'styled-components';
+import { useCategory } from '../../queries/useCategory';
 
-export default function CategorySelector() {
-  const categories = ['여성패션 잡화', '기타 물품', '가구 인테리어', '기타', 'it물품'];
+interface CategorySelectorProps {
+  categoryId?: number;
+}
+
+export default function CategorySelector({ categoryId: initialCategoryId }: CategorySelectorProps) {
+  // const categories = ['여성패션 잡화', '기타 물품', '가구 인테리어', '기타', 'it물품'];
+  const { data: categories } = useCategory();
 
   const validator = {
     exist: {
@@ -15,12 +21,14 @@ export default function CategorySelector() {
     },
   };
 
+  const initialValue = initialCategoryId || 1;
+
   const {
     inputValue: selectedCategoryId,
     setInputValue: setSelectedCategoryId,
     errorMessage,
     validate,
-  } = useForm('categoryId', 0, validator, { isInitialValid: true });
+  } = useForm('categoryId', initialValue, validator, { isInitialValid: true });
 
   const selectCategory = (categoryId: number) => () => {
     validate({ value: categoryId, validateProperties: ['exist'] });
@@ -34,15 +42,12 @@ export default function CategorySelector() {
         {errorMessage}
       </ValidationMessage>
       <CategoriesContainer>
-        {categories.map((category, index) => (
-          <ItemWrapper
-            key={category}
-            isActive={index === selectedCategoryId}
-            onClick={selectCategory(index)}
-          >
-            <Text>{category}</Text>
-          </ItemWrapper>
-        ))}
+        {categories &&
+          categories.map(({ name, id }) => (
+            <ItemWrapper key={id} isActive={id === selectedCategoryId} onClick={selectCategory(id)}>
+              <Text>{name}</Text>
+            </ItemWrapper>
+          ))}
       </CategoriesContainer>
     </Container>
   );

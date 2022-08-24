@@ -5,7 +5,11 @@ import React from 'react';
 import { ValidationMessage } from '@components/common/ValidationMessage';
 import { useForm } from '@components/CustomForm/useForm';
 
-export default function TitleInput() {
+interface TitleInputProps {
+  name?: string;
+}
+
+export default function TitleInput({ name }: TitleInputProps) {
   const validator = {
     min: {
       validate: (value: string) => value.length > 0,
@@ -13,7 +17,13 @@ export default function TitleInput() {
     },
   };
 
-  const { setInputValue, inputValue, validate, errorMessage } = useForm('name', '', validator);
+  const initialValue = name || '';
+  const { setInputValue, inputValue, validate, errorMessage } = useForm(
+    'name',
+    initialValue,
+    validator,
+    { isInitialValid: !!name },
+  );
 
   const inputHandler = ({ currentTarget }: React.FormEvent<HTMLInputElement>) => {
     const { value } = currentTarget;
