@@ -1,19 +1,23 @@
 import ImageIcon from '@assets/icons/ImageIcon';
 import { Text } from '@components/common/Text';
+import { ValidationMessage } from '@components/common/ValidationMessage';
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
+import React from 'react';
 import styled from 'styled-components';
 import UploadedImage from '../UploadedImage';
-import { useUploadImage } from './useUploadImage';
-
-const MAX_QUANTITY_IMG_URLS = 2;
+import { MAX_QUANTITY_IMG_URLS, useUploadImage } from './useUploadImage';
 
 export default function ImageUploader() {
-  const { uploadedImgUrls, actions } = useUploadImage();
+  const { uploadedImgUrls, actions, errorMessage } = useUploadImage();
+
+  const initializeFile = (e: React.MouseEvent<HTMLInputElement>) => {
+    e.currentTarget.value = '';
+  };
 
   return (
-    <>
-      <Container>
+    <Container>
+      <ImageFlex>
         <ImageInput>
           <ImageIcon />
           <Flex>
@@ -23,9 +27,7 @@ export default function ImageUploader() {
           </Flex>
 
           <input
-            onClick={(e) => {
-              e.currentTarget.value = '';
-            }}
+            onClick={initializeFile}
             onInput={actions.imageUpload}
             type="file"
             accept=" image/jpeg, image/png"
@@ -33,24 +35,25 @@ export default function ImageUploader() {
         </ImageInput>
         {uploadedImgUrls.map((imgUrl) => (
           <UploadedImage
+            key={imgUrl}
             onClick={() => {
               actions.deleteImageFile(imgUrl);
             }}
             imgUrl={imgUrl}
           />
         ))}
-      </Container>
-      <div />
-    </>
+      </ImageFlex>
+      <ValidationMessage>{errorMessage}</ValidationMessage>
+    </Container>
   );
 }
 
 const Container = styled.div`
-  padding: 24px 0;
+  padding: 24px 0 0 0;
+  height: auto;
   overflow-x: auto;
   border-bottom: 1px solid ${colors.grey3};
-  ${mixin.flexMixin({})}
-  gap: 1.2rem;
+  ${mixin.flexMixin({ direction: 'column' })}
 `;
 
 const ImageInput = styled.div`
@@ -87,4 +90,8 @@ const ImageInput = styled.div`
 const Flex = styled.div`
   ${mixin.flexMixin({})};
   gap: 2px;
+`;
+
+const ImageFlex = styled(Flex)`
+  gap: 1.2rem;
 `;

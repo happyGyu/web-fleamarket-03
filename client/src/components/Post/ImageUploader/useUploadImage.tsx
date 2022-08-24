@@ -1,10 +1,28 @@
 import { uploadProductImage } from '@apis/imageUpload';
-import { FormEvent, useState } from 'react';
+import { useForm } from '@components/CustomForm/useForm';
+import { FormEvent } from 'react';
 
-const MAX_QUANTITY_IMG_URLS = 2;
+export const MAX_QUANTITY_IMG_URLS = 2;
 
 export const useUploadImage = () => {
-  const [uploadedImgUrls, setUploadedImgUrls] = useState<string[]>([]);
+  const validator = {
+    min: {
+      validate: (value: string[]) => value.length > 0,
+      errorMessage: '사진을 등록해주세요',
+    },
+    max: {
+      validate: (value: string[]) => value.length <= MAX_QUANTITY_IMG_URLS,
+      errorMessage: `사진은 ${MAX_QUANTITY_IMG_URLS}개 이하로 해주세요`,
+    },
+  };
+
+  const {
+    setInputValue: setUploadedImgUrls,
+    inputValue: uploadedImgUrls,
+    errorMessage,
+    validate,
+  } = useForm<string[], { min: () => boolean; max: () => boolean }>('thumbnails', [], validator);
+  // const [uploadedImgUrls, setUploadedImgUrls] = useState<string[]>([]);
 
   const deleteImageFile = (imgUrl: string) => {
     const newUploadedImageFiles = uploadedImgUrls.filter(
@@ -18,15 +36,19 @@ export const useUploadImage = () => {
   };
 
   const imageUpload = async (e: FormEvent<HTMLInputElement>) => {
-    // validation 로직 처리 필요
-    if (uploadedImgUrls.length >= MAX_QUANTITY_IMG_URLS) {
-      e.preventDefault();
-      return;
-    }
-
     const imageFiles = e.currentTarget.files;
     if (imageFiles && imageFiles.length > 0) {
       const imageFile = imageFiles[0];
+
+      if (
+        !validate({
+          value: [...uploadedImgUrls, imageFile.name],
+          canChangeValidState: false,
+        })
+      ) {
+        e.preventDefault();
+        return;
+      }
       const formData = new FormData();
       formData.append('image', imageFile);
 
@@ -36,5 +58,5 @@ export const useUploadImage = () => {
   };
 
   const actions = { deleteImageFile, imageUpload, addImageFile };
-  return { uploadedImgUrls, actions };
+  return { uploadedImgUrls, actions, errorMessage };
 };

@@ -40,3 +40,13 @@ export interface IProductItem
 export interface GetRegionProductAPIDto {
   data: IProductItem[];
 }
+
+export interface CreateProductAPIDto {
+  name: string;
+  price: number;
+  regionId: IRegion['id'];
+  thumbnails: JSON;
+  description: string;
+  sellerId: number;
+  categoryId: number;
+}
