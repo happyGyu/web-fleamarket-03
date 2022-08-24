@@ -37,13 +37,23 @@ export class ProductController {
     return res.status(HttpStatus.OK).json(parsedProductDetail);
   }
 
-  @Get()
   @UseAuthGuard()
+  @Get()
   async getRegionProducts(
     @Res() res: Response,
     @Query('region-id') regionId: number,
+    @Query('start') startProductId: number,
+    @Query('category-id') categoryId: number,
   ) {
-    const products = await this.productService.getRegionProducts(regionId);
+    const LIMIT = 2;
+    const { products, nextStartParam } =
+      await this.productService.getPaginationOfProductsByRegion(
+        startProductId,
+        regionId,
+        categoryId,
+        LIMIT,
+      );
+
     const parsedProducts: GetRegionProductAPIDto[] = products.map((product) => {
       const {
         id,
@@ -66,7 +76,10 @@ export class ProductController {
         thumbnail: thumbnails[0],
       };
     });
-    return res.status(HttpStatus.OK).json(parsedProducts);
+    return res.status(HttpStatus.OK).json({
+      products: parsedProducts,
+      nextStartParam: nextStartParam ? nextStartParam : -1,
+    });
   }
 
   @Delete(':productId')
