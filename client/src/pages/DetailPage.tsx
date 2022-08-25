@@ -16,18 +16,18 @@ import colors from '@constants/colors';
 import LikeButton from '@components/LikeButton';
 import ChatButton from '@components/ChatButton';
 import { useUser } from '@queries/useUser';
+import { useProduct } from '@queries/useProduct';
 
 export default function DetailPage() {
   const { productId } = useParams();
-  const { data: product } = useQuery(['product', productId], () =>
-    getProductDetail(Number(productId)),
-  );
+  const { data: product } = useProduct(Number(productId));
   const user = useUser();
 
   if (!product) {
     return <LoadingIndicator />;
   }
   const { name, createdAt, region, description, views, likedUsers, seller, id, price } = product;
+  console.log(product);
   return (
     <Container>
       <DetailPageNavigationBar />
@@ -62,7 +62,7 @@ export default function DetailPage() {
         </SellerInfo>
       </DetailPageBody>
       <DetailPageFooter>
-        {/* <LikeButton productId={id} likedUsers={likedUsers} /> */}
+        <LikeButton productId={id} likedUsers={likedUsers} />
         <Text weight="bolder">{getPriceString(price)}</Text>
         <ChatButton />
       </DetailPageFooter>

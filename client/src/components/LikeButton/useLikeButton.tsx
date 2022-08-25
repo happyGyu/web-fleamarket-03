@@ -3,13 +3,7 @@ import { PagedResponseDto, QueryKeyType } from '@customTypes/common';
 import { IProductItem } from '@customTypes/product';
 import { useProduct } from '@queries/useProduct';
 import { useUser } from '@queries/useUser';
-import {
-  InfiniteData,
-  UseMutateFunction,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { UseMutateFunction, useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface UseLikeButtonprops {
   productId: number;
