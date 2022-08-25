@@ -53,4 +53,6 @@ export interface CreateProductAPIDto {
   categoryId: number;
 }
 
-export type PatchProductDto = Partial<CreateProductAPIDto>;
+export interface PatchProductDto extends Partial<CreateProductAPIDto> {
+  salesStatus?: SalesStatusType;
+}

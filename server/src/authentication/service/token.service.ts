@@ -64,8 +64,6 @@ export class TokenService {
             );
           }
         default:
-          console.log(e);
-          console.log(e.name);
           throw new HttpException(
             '서버 오류입니다.',
             HttpStatus.INTERNAL_SERVER_ERROR,

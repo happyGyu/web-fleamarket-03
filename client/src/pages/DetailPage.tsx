@@ -13,7 +13,7 @@ import Caption from '@components/common/Caption';
 import { getLastAddress, getPriceString } from '@utils/product';
 import { getPassedTimeString } from '@utils/common';
 import colors from '@constants/colors';
-import LikeButton from '@components/common/LikeButton';
+import LikeButton from '@components/LikeButton';
 import ChatButton from '@components/ChatButton';
 import { useUser } from '@queries/useUser';
 
@@ -33,8 +33,8 @@ export default function DetailPage() {
       <DetailPageNavigationBar />
       <ImageSlider images={['1']} />
       <DetailPageBody>
-        {user?.id === product.seller.id && (
-          <SaleStateSelector initialStatus={product.salesStatus} />
+        {user.id === product.seller.id && (
+          <SaleStateSelector initialStatus={product.salesStatus} productId={id} />
         )}
         <DetailContent>
           <Text size="large" weight="bold">
@@ -62,7 +62,7 @@ export default function DetailPage() {
         </SellerInfo>
       </DetailPageBody>
       <DetailPageFooter>
-        <LikeButton productId={id} likedUsers={likedUsers} />
+        {/* <LikeButton productId={id} likedUsers={likedUsers} /> */}
         <Text weight="bolder">{getPriceString(price)}</Text>
         <ChatButton />
       </DetailPageFooter>

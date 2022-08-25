@@ -8,6 +8,7 @@ import { LikeDto } from './dto/like.dto';
 import { GetProductDetailDto } from './dto/getProductDetail.dto';
 import { CategoryRepository } from './repository/category.repository';
 import { Category } from './entities/category.entity';
+import extractRegionsFromUserRegions from 'src/util/parseUtil';
 
 @Injectable()
 export class ProductService {
@@ -76,10 +77,7 @@ export class ProductService {
       seller: { regions: rawSellerRegion, ...sellerData },
       ...restData
     } = await this.getProduct(productId);
-    const parsedSellerRegion = rawSellerRegion.map((rawSellerRegion) => ({
-      id: rawSellerRegion.region.id,
-      address: rawSellerRegion.region.address,
-    }));
+    const parsedSellerRegion = extractRegionsFromUserRegions(rawSellerRegion);
     const parsedProduct: GetProductDetailDto = {
       ...restData,
       seller: { regions: parsedSellerRegion, ...sellerData },

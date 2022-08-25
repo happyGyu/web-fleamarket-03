@@ -5,37 +5,32 @@ import { ILikedUser } from '@customTypes/product';
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useUser } from '@queries/useUser';
+import useLikeButton from './useLikeButton';
+
+interface IInfiniteProductIdx {
+  pageIdx: number;
+  productIdx: number;
+}
 
 interface LikeButtonProps {
   productId: number;
   likedUsers: ILikedUser[];
+  idx: IInfiniteProductIdx;
 }
-export default function LikeButton({ productId, likedUsers }: LikeButtonProps) {
+export default function LikeButton({ productId, likedUsers, idx }: LikeButtonProps) {
   const user = useUser();
-  const [isUserPick, setIsUserPick] = useState(false);
+  const likeButtonmutator = useLikeButton(productId, idx, user.id);
 
-  useEffect(() => {
-    setIsUserPick(isUserInLikerList(user?.id));
-  }, [user]);
-
-  const isUserInLikerList = (userId?: number) => {
-    if (!userId) return false;
-    const likerList = likedUsers.map((likedUser) => likedUser.userId);
-    return likerList.includes(userId);
-  };
+  const checkUserPick = (userId: number) =>
+    likedUsers.some((likedUser) => likedUser.userId === userId);
 
   const handleLikeButtonClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
-    try {
-      await toggleLike(productId);
-      setIsUserPick((prev) => !prev);
-    } catch (e) {
-      alert('정상처리되지 않았습니다.');
-    }
+    likeButtonmutator();
   };
 
   return (
-    <LikeButtonWrapper isUserPick={isUserPick} onClick={handleLikeButtonClick}>
+    <LikeButtonWrapper isUserPick={checkUserPick(user.id)} onClick={handleLikeButtonClick}>
       <HeartIcon />
     </LikeButtonWrapper>
   );

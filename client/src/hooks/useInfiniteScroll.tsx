@@ -15,12 +15,12 @@ export default function useInfiniteScroll<T extends IFetchFunction>({
   queryKey,
   fetchFunction,
 }: UseInfiniteScrollProps<T>) {
-  const user = useUser;
+  const user = useUser();
   const { data, fetchNextPage, isLoading, hasNextPage } = useInfiniteQuery(
     queryKey,
     ({ pageParam = undefined }) => fetchFunction(pageParam),
     {
-      enabled: !!user,
+      enabled: user.id > 0,
       getNextPageParam: (lastPage) => lastPage.nextStartParam || undefined,
       refetchOnWindowFocus: false,
       refetchOnMount: false,

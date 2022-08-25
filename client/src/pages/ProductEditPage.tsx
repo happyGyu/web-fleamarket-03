@@ -48,7 +48,7 @@ function PostEditForm() {
       ...formInputMap,
       price: Number(getNumber(formInputMap.price)),
       // region primary구현해야함
-      regionId: user?.regions[0].regionId,
+      regionId: user.regions[0].id,
     } as CreateProductAPIDto;
 
     try {

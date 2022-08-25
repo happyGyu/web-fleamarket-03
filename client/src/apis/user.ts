@@ -1,6 +1,5 @@
 import { IOAuthUserInfo } from '@customTypes/auth';
-import { IRegion } from '@customTypes/region';
-import { CheckDuplicatedResponseDto, LoginAPIResponseDto } from '@customTypes/user';
+import { CheckDuplicatedResponseDto, IUser, LoginResponseDto } from '@customTypes/user';
 import { makeQueryString } from '@utils/queryParser';
 import axios from 'axios';
 import myAxios from './myAxios';
@@ -29,7 +28,7 @@ export const requestSignUp = async ({ name, regionId, oAuthInfo }: SignUpRequest
 };
 
 export const requestLogin = async (code: string, oAuthOrigin: string) => {
-  const { data: loginResponse } = await myAxios.post<LoginAPIResponseDto>('/auth/login', {
+  const { data: loginResponse } = await myAxios.post<LoginResponseDto>('/auth/login', {
     code,
     oAuthOrigin,
   });
@@ -41,19 +40,7 @@ export const requestResignToken = async () => {
   return accessToken;
 };
 
-interface ILoginUserRegion {
-  regionId: number;
-  userId: number;
-  region: IRegion;
-}
-
-interface GetLoginUserApiDto {
-  id: number;
-  name: string;
-  regions: ILoginUserRegion[];
-}
-
 export const getUser = async () => {
-  const { data: user } = await myAxios.get<GetLoginUserApiDto>('/auth/user');
+  const { data: user } = await myAxios.get<IUser>('/auth/user');
   return user;
 };

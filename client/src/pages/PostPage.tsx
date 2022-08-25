@@ -42,7 +42,7 @@ function PostForm() {
     const product = {
       ...formInputMap,
       price: Number(getNumber(formInputMap.price)),
-      regionId: user?.regions[0].regionId,
+      regionId: user.regions[0].id,
     } as CreateProductAPIDto;
 
     try {
