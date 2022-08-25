@@ -61,7 +61,7 @@ export default function DetailPage() {
         </SellerInfo>
       </DetailPageBody>
       <DetailPageFooter>
-        <LikeButton productId={id} likedUsers={likedUsers} />
+        <LikeButton productId={id} />
         <Text weight="bolder">{getPriceString(price)}</Text>
         <ChatButton />
       </DetailPageFooter>

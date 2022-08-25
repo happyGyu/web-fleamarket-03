@@ -30,7 +30,7 @@ export default function MainPage() {
             <ProductItem
               key={product.id}
               productId={product.id}
-              UtilButton={<LikeButton productId={product.id} likedUsers={product.likedUsers} />}
+              UtilButton={<LikeButton productId={product.id} />}
             />
           )),
         )}
