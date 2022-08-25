@@ -114,7 +114,7 @@ export class ProductRepository {
     } catch (e) {
       throw new HttpException(
         '내 상품 판매 목록을 찾을 수 없습니다.',
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        HttpStatus.NOT_FOUND,
       );
     }
   }
