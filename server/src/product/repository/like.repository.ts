@@ -20,6 +20,20 @@ export class LikeRepository {
     });
   }
 
+  public async findLikeByUser(userId: number) {
+    try {
+      return await this.repository.find({
+        where: { userId },
+        relations: ['product'],
+      });
+    } catch (e) {
+      throw new HttpException(
+        '찜한 상품 가져오기를 실패했습니다.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
   public async deleteLike({ productId, userId }: LikeDto) {
     try {
       await this.repository.delete({
