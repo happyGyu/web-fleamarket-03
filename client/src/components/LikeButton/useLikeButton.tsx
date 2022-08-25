@@ -1,63 +1,40 @@
-import { getRegionProducts, toggleLike } from '@apis/product';
+import { toggleLike } from '@apis/product';
 import { PagedResponseDto, QueryKeyType } from '@customTypes/common';
-import { IProduct, IProductItem } from '@customTypes/product';
+import { IProductItem } from '@customTypes/product';
+import { useProduct } from '@queries/useProduct';
 import { useUser } from '@queries/useUser';
 import {
   InfiniteData,
   UseMutateFunction,
   useMutation,
+  useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
 
 interface UseLikeButtonprops {
   productId: number;
-  queryKey: QueryKeyType;
+  toggleLikeView: () => void;
 }
 
 export default function useLikeButton({
   productId,
-  queryKey,
+  toggleLikeView,
 }: UseLikeButtonprops): UseMutateFunction<void, unknown, void, unknown> {
   const queryClient = useQueryClient();
-  const user = useUser();
-
+  const { refetch } = useProduct(productId);
   const { mutate } = useMutation(() => toggleLike(productId), {
     onMutate: () => {
-      const snapshot =
-        queryClient.getQueryData<InfiniteData<PagedResponseDto<IProductItem>>>(queryKey);
-      queryClient.setQueryData<InfiniteData<PagedResponseDto<IProductItem>>>(
-        queryKey,
-        (infinitePages) => {
-          if (!infinitePages) return infinitePages;
-
-          // todo: 개선필요
-          const newPages = infinitePages.pages.map((productPage) => ({
-            ...productPage,
-            products: productPage.data.map((product) => {
-              if (product.id === productId) {
-                // 만약 likedUser가 없으면 넣어주고 있으면 빼준다.
-                const isLiked = product.likedUsers.find(({ userId }) => userId === user.id);
-                const newProduct: IProductItem = {
-                  ...product,
-                  likedUsers: isLiked
-                    ? product.likedUsers.filter((likedUser) => likedUser.userId !== user.id)
-                    : [...product.likedUsers, { userId: user.id, productId }],
-                };
-
-                return newProduct;
-              }
-              return product;
-            }),
-          }));
-          return { ...infinitePages, pages: newPages };
-        },
-      );
-
+      const snapshot = queryClient.getQueryData<IProductItem>(['prduct', productId]);
+      toggleLikeView();
       return { snapshot };
     },
 
     onError: (error, variables, context) => {
-      queryClient.setQueryData(queryKey, context?.snapshot);
+      queryClient.setQueryData(['product', productId], context?.snapshot);
+    },
+
+    onSuccess: () => {
+      refetch();
     },
   });
 

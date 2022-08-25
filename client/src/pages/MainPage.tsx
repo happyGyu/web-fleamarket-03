@@ -31,11 +31,7 @@ export default function MainPage() {
               key={productInfo.id}
               productInfo={productInfo}
               UtilButton={
-                <LikeButton
-                  queryKey={queryKey}
-                  productId={productInfo.id}
-                  likedUsers={productInfo.likedUsers}
-                />
+                <LikeButton productId={productInfo.id} likedUsers={productInfo.likedUsers} />
               }
             />
           )),
