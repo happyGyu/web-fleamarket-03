@@ -17,6 +17,7 @@ import { CreateProductDto } from './dto/createProduct.dto';
 import { GetRegionProductAPIDto } from './dto/getRegionProducts.dto';
 import { UpdateProductDto } from './dto/updateProductDto';
 import { ProductService } from './product.service';
+import { getParsedProducts } from './util';
 
 @Controller('products')
 export class ProductController {
@@ -29,10 +30,22 @@ export class ProductController {
   }
   @UseAuthGuard()
   @Get('liked')
-  async getSaleProduct(@Res() res: Response, @Req() req: Request) {
+  async getLikedProducts(@Res() res: Response, @Req() req: Request) {
     const { id: userId } = req['user'];
     const products = await this.productService.getLikedProducts(userId);
-    return res.status(HttpStatus.OK).json(products);
+    const parsedProducts: GetRegionProductAPIDto[] =
+      getParsedProducts(products);
+    return res.status(HttpStatus.OK).json(parsedProducts);
+  }
+
+  @UseAuthGuard()
+  @Get('sale')
+  async getSaleProducts(@Res() res: Response, @Req() req: Request) {
+    const { id: userId } = req['user'];
+    const products = await this.productService.getMySalesProducts(userId);
+    const parsedProducts: GetRegionProductAPIDto[] =
+      getParsedProducts(products);
+    return res.status(HttpStatus.OK).json(parsedProducts);
   }
 
   @Get(':productId')
@@ -62,28 +75,8 @@ export class ProductController {
         LIMIT,
       );
 
-    const parsedProducts: GetRegionProductAPIDto[] = products.map((product) => {
-      const {
-        id,
-        name,
-        price,
-        region,
-        salesStatus,
-        createdAt,
-        thumbnails,
-        likedUsers,
-      } = product;
-      return {
-        id,
-        name,
-        price,
-        region,
-        salesStatus,
-        createdAt,
-        likedUsers,
-        thumbnail: thumbnails[0],
-      };
-    });
+    const parsedProducts: GetRegionProductAPIDto[] =
+      getParsedProducts(products);
     return res.status(HttpStatus.OK).json({
       products: parsedProducts,
       nextStartParam: nextStartParam || null,

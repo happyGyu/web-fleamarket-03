@@ -24,7 +24,7 @@ export class LikeRepository {
     try {
       return await this.repository.find({
         where: { userId },
-        relations: ['product'],
+        relations: ['product.likedUsers', 'product.region'],
       });
     } catch (e) {
       throw new HttpException(
