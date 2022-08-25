@@ -19,7 +19,7 @@ export default function MainPageNavigationBar() {
       <IconButton right="3.5rem" onClick={() => navigate('/error')}>
         <UserIcon />
       </IconButton>
-      <IconButton right="1rem" onClick={() => navigate('/error')}>
+      <IconButton right="1rem" onClick={() => navigate('/my')}>
         <MenuIcon />
       </IconButton>
     </Container>

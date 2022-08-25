@@ -3,12 +3,15 @@ import { componentSize } from '@constants/componentSize';
 import mixin from '@style/mixin';
 import { useState } from 'react';
 import styled from 'styled-components';
+import ChattingRoom from './ChattingRoom';
+import LikedProductList from './LikedProductList';
+import MySalesProductLis from './MySalesProductList';
 
 export default function MyTab() {
   const tabInfos = [
-    { id: 1, name: '판매목록', component: <div>상품목록입니다.</div> },
-    { id: 2, name: '채팅목록', component: <div>채팅목록입니다.</div> },
-    { id: 3, name: '관심목록', component: <div>관심목록입니다.</div> },
+    { id: 1, name: '판매목록', component: MySalesProductLis },
+    { id: 2, name: '채팅목록', component: ChattingRoom },
+    { id: 3, name: '관심목록', component: LikedProductList },
   ];
 
   const [selectedTabId, setSelectedTabId] = useState(1);
@@ -23,7 +26,7 @@ export default function MyTab() {
           </TabHeaderItem>
         ))}
       </TabHeader>
-      <TabContent>{SelectedTabComponent && SelectedTabComponent}</TabContent>
+      <TabContent>{SelectedTabComponent && <SelectedTabComponent />}</TabContent>
     </Container>
   );
 }
