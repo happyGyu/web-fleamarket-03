@@ -14,11 +14,19 @@ interface DropDownProps {
   bottom?: string;
   left?: string;
   right?: string;
+  transform?: string;
 }
 
-export default function DropDown({ dropDownItems, top, bottom, left, right }: DropDownProps) {
+export default function DropDown({
+  dropDownItems,
+  transform,
+  top,
+  bottom,
+  left,
+  right,
+}: DropDownProps) {
   return (
-    <Container top={top} bottom={bottom} left={left} right={right}>
+    <Container top={top} bottom={bottom} transform={transform} left={left} right={right}>
       {dropDownItems.map((dropDownItem) => {
         const { name, onClick, color } = dropDownItem;
         return (
@@ -33,7 +41,13 @@ export default function DropDown({ dropDownItems, top, bottom, left, right }: Dr
   );
 }
 
-const Container = styled.ul<{ top?: string; bottom?: string; left?: string; right?: string }>`
+const Container = styled.ul<{
+  top?: string;
+  bottom?: string;
+  left?: string;
+  right?: string;
+  transform?: string;
+}>`
   position: absolute;
   ${({ top, bottom, left, right }) => css`
     top: ${top};
@@ -41,10 +55,15 @@ const Container = styled.ul<{ top?: string; bottom?: string; left?: string; righ
     left: ${left};
     right: ${right};
   `}
+  ${({ transform }) =>
+    css`
+      transform: ${transform};
+    `}
   z-index: 20;
   overflow: hidden;
   border-radius: 0.75rem;
   box-shadow: 0px 0px 4px rgba(204, 204, 204, 0.5), 0px 2px 4px rgba(0, 0, 0, 0.25);
+
   background-color: ${colors.grey3};
 `;
 
