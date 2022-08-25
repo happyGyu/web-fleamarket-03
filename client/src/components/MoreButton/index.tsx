@@ -25,7 +25,13 @@ export default function MoreButton({ color }: MoreButtonProps) {
     },
   ];
   return (
-    <Container color={color} onClick={() => setIsDropDownOpen((prev) => !prev)}>
+    <Container
+      color={color}
+      onClick={(e) => {
+        e.stopPropagation();
+        setIsDropDownOpen((prev) => !prev);
+      }}
+    >
       <MoreIcon />
       {isDropDownOpen && <DropDown dropDownItems={moreUtils} top="2rem" right="0" />}
     </Container>
