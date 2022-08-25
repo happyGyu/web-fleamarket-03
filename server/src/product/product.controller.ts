@@ -27,6 +27,14 @@ export class ProductController {
     const categories = await this.productService.getCategories();
     return res.status(HttpStatus.OK).json(categories);
   }
+  @UseAuthGuard()
+  @Get('liked')
+  async getSaleProduct(@Res() res: Response, @Req() req: Request) {
+    const { id: userId } = req['user'];
+    const products = await this.productService.getLikedProducts(userId);
+    return res.status(HttpStatus.OK).json(products);
+  }
+
   @Get(':productId')
   async getProduct(
     @Res() res: Response,
