@@ -29,9 +29,17 @@ export class ProductController {
   }
   @UseAuthGuard()
   @Get('liked')
-  async getSaleProduct(@Res() res: Response, @Req() req: Request) {
+  async getLikedProducts(@Res() res: Response, @Req() req: Request) {
     const { id: userId } = req['user'];
     const products = await this.productService.getLikedProducts(userId);
+    return res.status(HttpStatus.OK).json(products);
+  }
+
+  @UseAuthGuard()
+  @Get('sale')
+  async getSaleProducts(@Res() res: Response, @Req() req: Request) {
+    const { id: userId } = req['user'];
+    const products = await this.productService.getMySalesProducts(userId);
     return res.status(HttpStatus.OK).json(products);
   }
 
