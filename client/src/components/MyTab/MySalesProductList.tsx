@@ -3,7 +3,7 @@ import ProductItem from '@components/ProductItem';
 import colors from '@constants/colors';
 import { useMySalesProducts } from '@queries/useMySalesProducts';
 
-export default function MySalesProductLis() {
+export default function MySalesProductList() {
   const { data } = useMySalesProducts();
 
   return (
