@@ -1,23 +1,24 @@
 import { getRegionProducts } from '@apis/product';
-import { getUser } from '@apis/user';
 import CircleButton from '@components/common/CircleButton';
-import LikeButton from '@components/common/LikeButton';
+import LikeButton from '@components/LikeButton';
 import PageContainer from '@components/common/PageContainer';
 import MainPageNavigationBar from '@components/MainPageNavigationBar';
 import ProductItem from '@components/ProductItem';
 import colors from '@constants/colors';
-import { GetRegionProductDto } from '@customTypes/product';
+import { IProductItem } from '@customTypes/product';
 import useInfiniteScroll from '@hooks/useInfiniteScroll';
-import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useUser } from '../queries/useUser';
 
 export default function MainPage() {
-  const { data: user } = useQuery(['user'], getUser);
-  const { data, Trigger } = useInfiniteScroll<GetRegionProductDto>({
-    queryKey: ['products', user?.regions[0].regionId],
+  const user = useUser();
+  const primaryRegion = user.regions[0];
+  const queryKey = ['products', primaryRegion.id];
+  const { data, Trigger } = useInfiniteScroll<IProductItem>({
+    queryKey,
     fetchFunction: (pageParam?: number) =>
-      getRegionProducts({ regionId: user?.regions[0].regionId, start: pageParam }),
+      getRegionProducts({ regionId: primaryRegion.id, start: pageParam }),
   });
 
   return (
@@ -25,14 +26,11 @@ export default function MainPage() {
       <MainPageNavigationBar />
       <MainPageWrapper>
         {data?.pages.map((page) =>
-          page.products.map((productInfo) => (
+          page.data.map((product) => (
             <ProductItem
-              key={productInfo.id}
-              productInfo={productInfo}
-              UtilButton={LikeButton({
-                productId: productInfo.id,
-                likedUsers: productInfo.likedUsers,
-              })}
+              key={product.id}
+              productId={product.id}
+              UtilButton={<LikeButton productId={product.id} />}
             />
           )),
         )}

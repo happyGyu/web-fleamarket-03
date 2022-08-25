@@ -40,10 +40,6 @@ export interface IProductItem
   thumbnail: string;
 }
 
-export interface GetRegionProductDto extends InfiniteFetchFunctionDto {
-  products: IProductItem[];
-}
-
 export interface CreateProductAPIDto {
   name: string;
   price: number;
@@ -53,4 +49,6 @@ export interface CreateProductAPIDto {
   categoryId: number;
 }
 
-export type PatchProductDto = Partial<CreateProductAPIDto>;
+export interface PatchProductDto extends Partial<CreateProductAPIDto> {
+  salesStatus?: SalesStatusType;
+}

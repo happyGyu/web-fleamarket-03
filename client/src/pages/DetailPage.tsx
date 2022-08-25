@@ -2,7 +2,6 @@ import { useParams } from 'react-router-dom';
 import DetailPageNavigationBar from '@components/DetailPageNavigationBar';
 import { useQuery } from '@tanstack/react-query';
 import { getProductDetail } from '@apis/product';
-import { getUser } from '@apis/user';
 import SaleStateSelector from '@components/SaleStateSelector';
 import LoadingIndicator from '@components/common/LoadingIndicator';
 import ImageSlider from '@components/ImageSlider.tsx';
@@ -14,15 +13,15 @@ import Caption from '@components/common/Caption';
 import { getLastAddress, getPriceString } from '@utils/product';
 import { getPassedTimeString } from '@utils/common';
 import colors from '@constants/colors';
-import LikeButton from '@components/common/LikeButton';
+import LikeButton from '@components/LikeButton';
 import ChatButton from '@components/ChatButton';
+import { useUser } from '@queries/useUser';
+import { useProduct } from '@queries/useProduct';
 
 export default function DetailPage() {
   const { productId } = useParams();
-  const { data: product } = useQuery(['product', productId], () =>
-    getProductDetail(Number(productId)),
-  );
-  const { data: user } = useQuery(['user'], getUser);
+  const { data: product } = useProduct(Number(productId));
+  const user = useUser();
 
   if (!product) {
     return <LoadingIndicator />;
@@ -33,8 +32,8 @@ export default function DetailPage() {
       <DetailPageNavigationBar />
       <ImageSlider images={['1']} />
       <DetailPageBody>
-        {user?.id === product.seller.id && (
-          <SaleStateSelector initialStatus={product.salesStatus} />
+        {user.id === product.seller.id && (
+          <SaleStateSelector initialStatus={product.salesStatus} productId={id} />
         )}
         <DetailContent>
           <Text size="large" weight="bold">
@@ -62,7 +61,7 @@ export default function DetailPage() {
         </SellerInfo>
       </DetailPageBody>
       <DetailPageFooter>
-        <LikeButton productId={id} likedUsers={likedUsers} />
+        <LikeButton productId={id} />
         <Text weight="bolder">{getPriceString(price)}</Text>
         <ChatButton />
       </DetailPageFooter>

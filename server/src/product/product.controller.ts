@@ -20,14 +20,10 @@ import { ProductService } from './product.service';
 import { getParsedProducts } from './util';
 
 @Controller('products')
+@UseAuthGuard()
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
-  @Get('categories')
-  async getCategories(@Res() res: Response) {
-    const categories = await this.productService.getCategories();
-    return res.status(HttpStatus.OK).json(categories);
-  }
   @UseAuthGuard()
   @Get('liked')
   async getLikedProducts(@Res() res: Response, @Req() req: Request) {
@@ -53,14 +49,14 @@ export class ProductController {
     @Res() res: Response,
     @Param('productId') productId: number,
   ) {
-    const parsedProductDetail =
-      await this.productService.getAndParseProductDetail(productId);
-    return res.status(HttpStatus.OK).json(parsedProductDetail);
+    const product = await this.productService.getProduct(productId);
+    const formattedProduct = this.productService.formatProductForDto(product);
+    return res.status(HttpStatus.OK).json(formattedProduct);
   }
 
   @UseAuthGuard()
   @Get()
-  async getRegionProducts(
+  async getPagedProducts(
     @Res() res: Response,
     @Query('regionId') regionId: number,
     @Query('start') startProductId: number,
@@ -68,23 +64,25 @@ export class ProductController {
   ) {
     const LIMIT = 2;
     const { products, nextStartParam } =
-      await this.productService.getPaginationOfProductsByRegion(
+      await this.productService.getPagedProducts(
         startProductId,
         regionId,
         categoryId,
         LIMIT,
       );
-
-    const parsedProducts: GetRegionProductAPIDto[] =
-      getParsedProducts(products);
     return res.status(HttpStatus.OK).json({
-      products: parsedProducts,
+      data: products,
       nextStartParam: nextStartParam || null,
     });
   }
 
+  @Get('categories')
+  async getCategories(@Res() res: Response) {
+    const categories = await this.productService.getCategories();
+    return res.status(HttpStatus.OK).json(categories);
+  }
+
   @Delete(':productId')
-  @UseAuthGuard()
   async deleteProduct(
     @Req() req: Request,
     @Res() res: Response,
@@ -96,7 +94,6 @@ export class ProductController {
   }
 
   @Patch('/like/:productId')
-  @UseAuthGuard()
   async toggleLikeState(
     @Req() req: Request,
     @Res() res: Response,
@@ -111,7 +108,6 @@ export class ProductController {
   }
 
   @Post()
-  @UseAuthGuard()
   async createProduct(
     @Res() res: Response,
     @Req() req: Request,
@@ -127,7 +123,6 @@ export class ProductController {
   }
 
   @Patch('/:productId')
-  @UseAuthGuard()
   async updateProduct(
     @Res() res: Response,
     @Req() req: Request,

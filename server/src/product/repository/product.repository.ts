@@ -34,7 +34,26 @@ export class ProductRepository {
     }
   }
 
-  public async findProductsByRegionWithLimit(
+  public async findOneByProductId(id: number) {
+    try {
+      return this.repository.findOne({
+        where: { id },
+        relations: [
+          'region',
+          'category',
+          'seller.regions.region',
+          'likedUsers',
+        ],
+      });
+    } catch (e) {
+      throw new HttpException(
+        '존재하지 않는 상품입니다.',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  public async findProductsWithLimit(
     startProductId: number,
     limit: number,
     regionId: number,
@@ -47,7 +66,7 @@ export class ProductRepository {
         categoryId: categoryId,
       },
       order: { id: 'DESC' },
-      relations: ['region', 'likedUsers'],
+      relations: ['region', 'likedUsers', 'category', 'seller.regions.region'],
       take: limit + 1,
     });
   }
@@ -71,25 +90,6 @@ export class ProductRepository {
       throw new HttpException(
         '상품 업데이트를 실패했습니다.',
         HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
-  }
-
-  public async findOneByProductId(id: number) {
-    try {
-      return this.repository.findOne({
-        where: { id },
-        relations: [
-          'region',
-          'category',
-          'seller.regions.region',
-          'likedUsers',
-        ],
-      });
-    } catch (e) {
-      throw new HttpException(
-        '존재하지 않는 상품입니다.',
-        HttpStatus.NOT_FOUND,
       );
     }
   }

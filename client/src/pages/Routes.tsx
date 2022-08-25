@@ -20,7 +20,6 @@ export default function Routes() {
       <Route path="/product/:productId" element={<DetailPage />} />
       <Route path="/product/edit/:productId" element={<ProductEditPage />} />
       <Route path="/my" element={<MyPage />} />
-      {/* /product/edit/${productId} */}
       <Route path="/post" element={<PostPage />} />
     </RouterRoutes>
   );

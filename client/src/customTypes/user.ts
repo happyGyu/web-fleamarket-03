@@ -7,7 +7,7 @@ export interface IUser {
   regions: IRegion[];
 }
 
-export interface LoginAPIResponseDto {
+export interface LoginResponseDto {
   isRegistered: boolean;
   oAuthInfo?: IOAuthUserInfo;
   accessToken?: string;
