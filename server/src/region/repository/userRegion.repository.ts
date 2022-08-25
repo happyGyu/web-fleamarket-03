@@ -14,4 +14,21 @@ export class UserRegionRepository {
   public async create(input: CreateUserRegionDto): Promise<UserRegion> {
     return this.repository.save({ ...input });
   }
+
+  public async findByUserId(userId: number) {
+    return this.repository.find({ where: { userId }, relations: ['region'] });
+  }
+
+  public async updateIsPrimary(
+    userId: number,
+    regionId: number,
+    isPrimary: boolean,
+  ) {
+    return this.repository.update(
+      { userId, regionId },
+      {
+        isPrimary,
+      },
+    );
+  }
 }
