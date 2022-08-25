@@ -14,7 +14,6 @@ import {
 import { Request, Response } from 'express';
 import { UseAuthGuard } from 'src/authentication/decorators/use.auth.guard.decorator';
 import { CreateProductDto } from './dto/createProduct.dto';
-import { GetRegionProductAPIDto } from './dto/getRegionProducts.dto';
 import { UpdateProductDto } from './dto/updateProductDto';
 import { ProductService } from './product.service';
 
@@ -23,24 +22,19 @@ import { ProductService } from './product.service';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
-  @Get('categories')
-  async getCategories(@Res() res: Response) {
-    const categories = await this.productService.getCategories();
-    return res.status(HttpStatus.OK).json(categories);
-  }
   @Get(':productId')
   async getProduct(
     @Res() res: Response,
     @Param('productId') productId: number,
   ) {
-    const parsedProductDetail =
-      await this.productService.getAndParseProductDetail(productId);
-    return res.status(HttpStatus.OK).json(parsedProductDetail);
+    const product = await this.productService.getProduct(productId);
+    const formattedProduct = this.productService.formatProductForDto(product);
+    return res.status(HttpStatus.OK).json(formattedProduct);
   }
 
   @UseAuthGuard()
   @Get()
-  async getRegionProducts(
+  async getPagedProducts(
     @Res() res: Response,
     @Query('regionId') regionId: number,
     @Query('start') startProductId: number,
@@ -48,7 +42,7 @@ export class ProductController {
   ) {
     const LIMIT = 2;
     const { products, nextStartParam } =
-      await this.productService.getPaginationOfProductsByRegion(
+      await this.productService.getPagedProducts(
         startProductId,
         regionId,
         categoryId,
@@ -58,6 +52,12 @@ export class ProductController {
       data: products,
       nextStartParam: nextStartParam || null,
     });
+  }
+
+  @Get('categories')
+  async getCategories(@Res() res: Response) {
+    const categories = await this.productService.getCategories();
+    return res.status(HttpStatus.OK).json(categories);
   }
 
   @Delete(':productId')

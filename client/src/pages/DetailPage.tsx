@@ -27,7 +27,6 @@ export default function DetailPage() {
     return <LoadingIndicator />;
   }
   const { name, createdAt, region, description, views, likedUsers, seller, id, price } = product;
-  console.log(product);
   return (
     <Container>
       <DetailPageNavigationBar />
