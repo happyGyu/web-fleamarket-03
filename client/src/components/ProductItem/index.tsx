@@ -1,9 +1,10 @@
 import Caption from '@components/common/Caption';
 import CountIndicator from '@components/common/CountIndicator';
+import LoadingIndicator from '@components/common/LoadingIndicator';
 import { Text } from '@components/common/Text';
 import Thumbnail from '@components/common/Thumbnail';
 import colors from '@constants/colors';
-import { IProductItem } from '@customTypes/product';
+import { useProduct } from '@queries/useProduct';
 import mixin from '@style/mixin';
 import { getPassedTimeString } from '@utils/common';
 import { getLastAddress, getPriceString } from '@utils/product';
@@ -12,21 +13,24 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface ProductItemProps {
-  productInfo: IProductItem;
+  productId: number;
   UtilButton: React.ReactNode;
 }
 
-export default function ProductItem({ productInfo, UtilButton }: ProductItemProps) {
+export default function ProductItem({ productId, UtilButton }: ProductItemProps) {
   const navigate = useNavigate();
+  const { data: product } = useProduct(productId);
+
+  if (!product) return <LoadingIndicator />;
 
   const moveToDetailPage = () => {
-    navigate(`/product/${productInfo.id}`);
+    navigate(`/product/${product.id}`);
   };
 
-  const { thumbnail, name, region, createdAt, price, likedUsers } = productInfo;
+  const { thumbnails, name, region, createdAt, price, likedUsers } = product;
   return (
     <Container onClick={moveToDetailPage}>
-      <Thumbnail src={thumbnail} size="medium" />
+      <Thumbnail src={thumbnails[0]} size="medium" />
       <ProductInfoContainer>
         <Text size="large" weight="bold">
           {name}

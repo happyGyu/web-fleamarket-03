@@ -9,13 +9,11 @@ import { IProductItem } from '@customTypes/product';
 import useInfiniteScroll from '@hooks/useInfiniteScroll';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useQueryClient } from '@tanstack/react-query';
 import { useUser } from '../queries/useUser';
 
 export default function MainPage() {
   const user = useUser();
   const primaryRegion = user.regions[0];
-  const queryClient = useQueryClient();
   const queryKey = ['products', primaryRegion.id];
   const { data, Trigger } = useInfiniteScroll<IProductItem>({
     queryKey,
@@ -28,23 +26,13 @@ export default function MainPage() {
       <MainPageNavigationBar />
       <MainPageWrapper>
         {data?.pages.map((page) =>
-          page.data.map((product) => {
-            const cachedProduct = queryClient.getQueryData<IProductItem>(['product', product.id]);
-            return (
-              cachedProduct && (
-                <ProductItem
-                  key={cachedProduct.id}
-                  productInfo={cachedProduct}
-                  UtilButton={
-                    <LikeButton
-                      productId={cachedProduct.id}
-                      likedUsers={cachedProduct.likedUsers}
-                    />
-                  }
-                />
-              )
-            );
-          }),
+          page.data.map((product) => (
+            <ProductItem
+              key={product.id}
+              productId={product.id}
+              UtilButton={<LikeButton productId={product.id} likedUsers={product.likedUsers} />}
+            />
+          )),
         )}
         <Trigger />
         <RegisterNewProductLink to="/post">
