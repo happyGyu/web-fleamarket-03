@@ -112,4 +112,8 @@ export class ProductService {
     const likes = await this.likeRepository.findLikeByUser(userId);
     return likes.map((like) => like.product);
   }
+
+  async getMySalesProducts(userId: number) {
+    return await this.productRepository.findBySellerId(userId);
+  }
 }
