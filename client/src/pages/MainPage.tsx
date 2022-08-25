@@ -5,7 +5,7 @@ import PageContainer from '@components/common/PageContainer';
 import MainPageNavigationBar from '@components/MainPageNavigationBar';
 import ProductItem from '@components/ProductItem';
 import colors from '@constants/colors';
-import { GetRegionProductDto } from '@customTypes/product';
+import { IProductItem } from '@customTypes/product';
 import useInfiniteScroll from '@hooks/useInfiniteScroll';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -15,7 +15,7 @@ export default function MainPage() {
   const user = useUser();
   const primaryRegion = user.regions[0];
   const queryKey = ['products', primaryRegion.id];
-  const { data, Trigger } = useInfiniteScroll<GetRegionProductDto>({
+  const { data, Trigger } = useInfiniteScroll<IProductItem>({
     queryKey,
     fetchFunction: (pageParam?: number) =>
       getRegionProducts({ regionId: primaryRegion.id, start: pageParam }),
@@ -26,7 +26,7 @@ export default function MainPage() {
       <MainPageNavigationBar />
       <MainPageWrapper>
         {data?.pages.map((page) =>
-          page.products.map((productInfo) => (
+          page.data.map((productInfo) => (
             <ProductItem
               key={productInfo.id}
               productInfo={productInfo}

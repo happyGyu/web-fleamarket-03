@@ -1,10 +1,6 @@
 import { Category } from '@customTypes/category';
-import {
-  CreateProductAPIDto,
-  GetRegionProductDto,
-  IProduct,
-  PatchProductDto,
-} from '@customTypes/product';
+import { PagedResponseDto } from '@customTypes/common';
+import { CreateProductAPIDto, IProduct, IProductItem, PatchProductDto } from '@customTypes/product';
 import myAxios from './myAxios';
 
 interface GetRegionProductsProps {
@@ -18,7 +14,7 @@ export async function getRegionProducts(queryConfig: GetRegionProductsProps) {
     (query, [key, value]) => (value ? `${query}&${key}=${value}` : query),
     '',
   );
-  const { data } = await myAxios.get<GetRegionProductDto>(`/products?${queryString}`);
+  const { data } = await myAxios.get<PagedResponseDto<IProductItem>>(`/products?${queryString}`);
   return data;
 }
 

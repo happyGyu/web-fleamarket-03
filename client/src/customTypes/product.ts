@@ -40,10 +40,6 @@ export interface IProductItem
   thumbnail: string;
 }
 
-export interface GetRegionProductDto extends InfiniteFetchFunctionDto {
-  products: IProductItem[];
-}
-
 export interface CreateProductAPIDto {
   name: string;
   price: number;

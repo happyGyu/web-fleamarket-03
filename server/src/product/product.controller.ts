@@ -78,7 +78,7 @@ export class ProductController {
       };
     });
     return res.status(HttpStatus.OK).json({
-      products: parsedProducts,
+      data: parsedProducts,
       nextStartParam: nextStartParam || null,
     });
   }

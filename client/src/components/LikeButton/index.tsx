@@ -1,7 +1,7 @@
 import HeartIcon from '@assets/icons/HeartIcon';
 import colors from '@constants/colors';
 import { ILikedUser } from '@customTypes/product';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { useUser } from '@queries/useUser';
 import useLikeButton from './useLikeButton';
