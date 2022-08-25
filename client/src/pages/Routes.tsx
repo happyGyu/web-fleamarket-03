@@ -3,6 +3,7 @@ import DetailPage from './DetailPage';
 import ErrorPage from './ErrorPage';
 import LoginPage from './LoginPage';
 import MainPage from './MainPage';
+import MyPage from './MyPage';
 import OAuthRedirectPage from './OAuthRedirectPage';
 import PostPage from './PostPage';
 import ProductEditPage from './ProductEditPage';
@@ -18,6 +19,7 @@ export default function Routes() {
       <Route path="/" element={<MainPage />} />
       <Route path="/product/:productId" element={<DetailPage />} />
       <Route path="/product/edit/:productId" element={<ProductEditPage />} />
+      <Route path="/my" element={<MyPage />} />
       <Route path="/post" element={<PostPage />} />
     </RouterRoutes>
   );

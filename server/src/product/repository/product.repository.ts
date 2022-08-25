@@ -104,4 +104,18 @@ export class ProductRepository {
       );
     }
   }
+
+  public async findBySellerId(sellerId: number) {
+    try {
+      return this.repository.find({
+        where: { sellerId },
+        relations: ['region', 'likedUsers'],
+      });
+    } catch (e) {
+      throw new HttpException(
+        '내 상품 판매 목록을 찾을 수 없습니다.',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
 }

@@ -14,13 +14,35 @@ import {
 import { Request, Response } from 'express';
 import { UseAuthGuard } from 'src/authentication/decorators/use.auth.guard.decorator';
 import { CreateProductDto } from './dto/createProduct.dto';
+import { GetRegionProductAPIDto } from './dto/getRegionProducts.dto';
 import { UpdateProductDto } from './dto/updateProductDto';
 import { ProductService } from './product.service';
+import { getParsedProducts } from './util';
 
 @Controller('products')
 @UseAuthGuard()
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
+
+  @UseAuthGuard()
+  @Get('liked')
+  async getLikedProducts(@Res() res: Response, @Req() req: Request) {
+    const { id: userId } = req['user'];
+    const products = await this.productService.getLikedProducts(userId);
+    const parsedProducts: GetRegionProductAPIDto[] =
+      getParsedProducts(products);
+    return res.status(HttpStatus.OK).json(parsedProducts);
+  }
+
+  @UseAuthGuard()
+  @Get('sale')
+  async getSaleProducts(@Res() res: Response, @Req() req: Request) {
+    const { id: userId } = req['user'];
+    const products = await this.productService.getMySalesProducts(userId);
+    const parsedProducts: GetRegionProductAPIDto[] =
+      getParsedProducts(products);
+    return res.status(HttpStatus.OK).json(parsedProducts);
+  }
 
   @Get(':productId')
   async getProduct(
