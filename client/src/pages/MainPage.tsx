@@ -9,32 +9,32 @@ import { GetRegionProductDto } from '@customTypes/product';
 import useInfiniteScroll from '@hooks/useInfiniteScroll';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import LoadingIndicator from '@components/common/LoadingIndicator';
 import { useUser } from '../queries/useUser';
 
 export default function MainPage() {
   const user = useUser();
   const primaryRegion = user.regions[0];
+  const queryKey = ['products', primaryRegion.id];
   const { data, Trigger } = useInfiniteScroll<GetRegionProductDto>({
-    queryKey: ['products', primaryRegion.id],
+    queryKey,
     fetchFunction: (pageParam?: number) =>
       getRegionProducts({ regionId: primaryRegion.id, start: pageParam }),
   });
 
-  return user.id > 0 ? (
+  return (
     <>
       <MainPageNavigationBar />
       <MainPageWrapper>
-        {data?.pages.map((page, pageIdx) =>
-          page.products.map((productInfo, productIdx) => (
+        {data?.pages.map((page) =>
+          page.products.map((productInfo) => (
             <ProductItem
               key={productInfo.id}
               productInfo={productInfo}
               UtilButton={
                 <LikeButton
+                  queryKey={queryKey}
                   productId={productInfo.id}
                   likedUsers={productInfo.likedUsers}
-                  idx={{ pageIdx, productIdx }}
                 />
               }
             />
@@ -46,8 +46,6 @@ export default function MainPage() {
         </RegisterNewProductLink>
       </MainPageWrapper>
     </>
-  ) : (
-    <LoadingIndicator />
   );
 }
 

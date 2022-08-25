@@ -1,4 +1,3 @@
-import { toggleLike } from '@apis/product';
 import HeartIcon from '@assets/icons/HeartIcon';
 import colors from '@constants/colors';
 import { ILikedUser } from '@customTypes/product';
@@ -7,19 +6,14 @@ import styled, { css } from 'styled-components';
 import { useUser } from '@queries/useUser';
 import useLikeButton from './useLikeButton';
 
-interface IInfiniteProductIdx {
-  pageIdx: number;
-  productIdx: number;
-}
-
 interface LikeButtonProps {
   productId: number;
   likedUsers: ILikedUser[];
-  idx: IInfiniteProductIdx;
+  queryKey: (string | number)[];
 }
-export default function LikeButton({ productId, likedUsers, idx }: LikeButtonProps) {
+export default function LikeButton({ productId, likedUsers, queryKey }: LikeButtonProps) {
   const user = useUser();
-  const likeButtonmutator = useLikeButton(productId, idx, user.id);
+  const likeButtonmutator = useLikeButton({ productId, queryKey });
 
   const checkUserPick = (userId: number) =>
     likedUsers.some((likedUser) => likedUser.userId === userId);
