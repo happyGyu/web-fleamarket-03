@@ -12,7 +12,7 @@ export default function MySalesProductList() {
         data.map((product) => (
           <ProductItem
             key={product.id}
-            productInfo={product}
+            productId={product.id}
             UtilButton={<MoreButton color={colors.grey2} />}
           />
         ))}

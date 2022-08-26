@@ -30,7 +30,9 @@ myAxios.interceptors.response.use(
 async function reissueTokenAndRetryRequest(originalRequest: any) {
   const { data: accessToken } = await axios.get('/auth/resign');
   myAxios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-  return myAxios(originalRequest);
+  const retryingRequest = { ...originalRequest };
+  retryingRequest.headers.Authorization = `Bearer ${accessToken}`;
+  return axios(retryingRequest);
 }
 
 export default myAxios;

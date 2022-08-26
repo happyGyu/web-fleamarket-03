@@ -5,9 +5,10 @@ import { Product } from './entities/product.entity';
 import { CreateProductDto } from './dto/createProduct.dto';
 import { UpdateProductDto } from './dto/updateProductDto';
 import { LikeDto } from './dto/like.dto';
-import { GetProductDetailDto } from './dto/getProductDetail.dto';
+import { GetProductDto } from './dto/getProductDetail.dto';
 import { CategoryRepository } from './repository/category.repository';
 import { Category } from './entities/category.entity';
+import extractRegionsFromUserRegions from 'src/util/parseUtil';
 
 @Injectable()
 export class ProductService {
@@ -17,24 +18,41 @@ export class ProductService {
     private readonly categoryRepository: CategoryRepository,
   ) {}
 
-  getRegionProducts(regionId: number): Promise<Product[]> {
-    return this.productRepository.findProductsByRegion(regionId);
+  getProduct(productId: number): Promise<Product> {
+    return this.productRepository.findOneByProductId(productId);
   }
 
-  async getPaginationOfProductsByRegion(
+  formatProductForDto(product: Product): GetProductDto {
+    const {
+      seller: { regions: rawSellerRegion, ...sellerData },
+      ...restData
+    } = product;
+    const parsedSellerRegion = extractRegionsFromUserRegions(rawSellerRegion);
+    const parsedProduct: GetProductDto = {
+      ...restData,
+      seller: { regions: parsedSellerRegion, ...sellerData },
+    };
+    return parsedProduct;
+  }
+
+  async getPagedProducts(
     startProductId: number,
     regionId: number,
     categoryId: number,
     limit: number,
   ): Promise<{
-    products: Product[];
+    products: GetProductDto[];
     nextStartParam: number | undefined;
   }> {
-    const products = await this.productRepository.findProductsByRegionWithLimit(
+    const products = await this.productRepository.findProductsWithLimit(
       startProductId,
       limit,
       regionId,
       categoryId,
+    );
+
+    const formattedProducts = products.map((product) =>
+      this.formatProductForDto(product),
     );
 
     const isEnd = products[limit];
@@ -44,7 +62,7 @@ export class ProductService {
       products.pop();
     }
 
-    return { products, nextStartParam };
+    return { products: formattedProducts, nextStartParam };
   }
 
   createNewProduct(createProductDto: CreateProductDto) {
@@ -65,26 +83,6 @@ export class ProductService {
 
   getCategories(): Promise<Category[]> {
     return this.categoryRepository.findAll();
-  }
-
-  getProduct(productId: number): Promise<Product> {
-    return this.productRepository.findOneByProductId(productId);
-  }
-
-  async getAndParseProductDetail(productId: number) {
-    const {
-      seller: { regions: rawSellerRegion, ...sellerData },
-      ...restData
-    } = await this.getProduct(productId);
-    const parsedSellerRegion = rawSellerRegion.map((rawSellerRegion) => ({
-      id: rawSellerRegion.region.id,
-      address: rawSellerRegion.region.address,
-    }));
-    const parsedProduct: GetProductDetailDto = {
-      ...restData,
-      seller: { regions: parsedSellerRegion, ...sellerData },
-    };
-    return parsedProduct;
   }
 
   async deleteProduct(productId: number, userId: number) {

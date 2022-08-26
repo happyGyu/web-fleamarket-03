@@ -1,31 +1,38 @@
-import { getUser } from '@apis/user';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { Data, PagedResponseDto } from '@customTypes/common';
+import { useUser } from '@queries/useUser';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
-
-interface IFetchFunction {
-  nextStartParam: number | null;
-}
 
 interface UseInfiniteScrollProps<T> {
   queryKey: (string | number | undefined)[];
   fetchFunction: (pageParam?: number) => Promise<T>;
 }
 
-export default function useInfiniteScroll<T extends IFetchFunction>({
+export default function useInfiniteScroll<T extends Data>({
   queryKey,
   fetchFunction,
-}: UseInfiniteScrollProps<T>) {
-  const { data: user } = useQuery(['user'], getUser);
+}: UseInfiniteScrollProps<PagedResponseDto<T>>) {
+  const user = useUser();
+  const queryClinet = useQueryClient();
   const { data, fetchNextPage, isLoading, hasNextPage } = useInfiniteQuery(
     queryKey,
     ({ pageParam = undefined }) => fetchFunction(pageParam),
     {
-      enabled: !!user,
+      enabled: user.id > 0,
       getNextPageParam: (lastPage) => lastPage.nextStartParam || undefined,
       refetchOnWindowFocus: false,
       refetchOnMount: false,
+      onSuccess: ({ pages }) => spreadPageDataOnEachKey('product', pages.at(-1)),
     },
   );
+
+  const spreadPageDataOnEachKey = (queryPrefix: string, page?: PagedResponseDto<T>) => {
+    if (!page) return;
+
+    page.data.forEach((dataItem) => {
+      queryClinet.setQueryData([queryPrefix, dataItem.id], dataItem);
+    });
+  };
 
   const observerRef = useRef<IntersectionObserver>();
   const triggerRef = useRef<HTMLDivElement>(null);

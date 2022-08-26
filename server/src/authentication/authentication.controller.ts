@@ -8,6 +8,7 @@ import {
   Get,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
+import extractRegionsFromUserRegions from 'src/util/parseUtil';
 import { UseAuthGuard } from './decorators/use.auth.guard.decorator';
 import { AuthenticationService } from './service/authentication.service';
 
@@ -42,6 +43,8 @@ export class AuthenticationController {
   @UseAuthGuard()
   async getAuthorizedUser(@Res() res: Response, @Req() req: Request) {
     const loginUser = req['user'];
-    return res.status(HttpStatus.OK).json(loginUser);
+    const userRegions = loginUser.regions;
+    const regions = extractRegionsFromUserRegions(userRegions);
+    return res.status(HttpStatus.OK).json({ ...loginUser, regions });
   }
 }

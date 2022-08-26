@@ -1,5 +1,4 @@
 import { createProduct } from '@apis/product';
-import { getUser } from '@apis/user';
 import NavigationBar from '@components/common/NavigationBar';
 import PageContainer from '@components/common/PageContainer';
 import {
@@ -12,7 +11,7 @@ import RegionFooter from '@components/Post/RegionFooter';
 import { SubmitButton } from '@components/Post/SubmitButton';
 import { padding } from '@constants/padding';
 import { CreateProductAPIDto } from '@customTypes/product';
-import { useQuery } from '@tanstack/react-query';
+import { useUser } from '@queries/useUser';
 import { getNumber } from '@utils/format';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -27,7 +26,7 @@ export default function PostPage() {
 }
 
 function PostForm() {
-  const { data: user } = useQuery(['user'], getUser);
+  const user = useUser();
 
   const { formInputMap } = useFormInputMap();
   const { isAllValidated } = useFormValidationState();
@@ -43,7 +42,7 @@ function PostForm() {
     const product = {
       ...formInputMap,
       price: Number(getNumber(formInputMap.price)),
-      regionId: user?.regions[0].regionId,
+      regionId: user.regions[0].id,
     } as CreateProductAPIDto;
 
     try {

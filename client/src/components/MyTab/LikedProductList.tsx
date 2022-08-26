@@ -1,4 +1,4 @@
-import LikeButton from '@components/common/LikeButton';
+import LikeButton from '@components/LikeButton';
 import ProductItem from '@components/ProductItem';
 import { useLikedProducts } from '@queries/useMyLikedProduct';
 
@@ -11,11 +11,8 @@ export default function LikedProductList() {
         data.map((product) => (
           <ProductItem
             key={product.id}
-            productInfo={product}
-            UtilButton={LikeButton({
-              productId: product.id,
-              likedUsers: product.likedUsers,
-            })}
+            productId={product.id}
+            UtilButton={<LikeButton productId={product.id} />}
           />
         ))}
     </div>

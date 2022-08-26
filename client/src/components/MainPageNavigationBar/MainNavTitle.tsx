@@ -1,11 +1,9 @@
-import { getUser } from '@apis/user';
 import MapPinIcon from '@assets/icons/MapPinIcon';
 import DropDown from '@components/common/DropDown';
 import LoadingIndicator from '@components/common/LoadingIndicator';
 import { Text } from '@components/common/Text';
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
-import { useQuery } from '@tanstack/react-query';
 import { getLastAddress } from '@utils/product';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -44,8 +42,6 @@ export default function MainNavTitle() {
         <DropDown dropDownItems={dropdownItems} top="85%" transform="translate(-25%,0)" />
       )}
     </Container>
-  ) : (
-    <LoadingIndicator />
   );
 }
 

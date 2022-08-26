@@ -1,22 +1,34 @@
+import { updateProduct } from '@apis/product';
 import ChevronDown from '@assets/icons/ChevronDown';
 import DropDown from '@components/common/DropDown';
 import { Text } from '@components/common/Text';
 import colors from '@constants/colors';
 import { SalesStatusType, SalesStatusEnum } from '@customTypes/product';
 import mixin from '@style/mixin';
+import { useMutation } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import useSalesStatusSelector from './useSalesStatusSelector';
 
 interface SaleStateSelectorProps {
   initialStatus: SalesStatusType;
+  productId: number;
 }
 
-export default function SaleStateSelector({ initialStatus }: SaleStateSelectorProps) {
+export default function SaleStateSelector({ initialStatus, productId }: SaleStateSelectorProps) {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const [salesStatus, setSalesStatus] = useState<SalesStatusType>(initialStatus);
+  const salesStatusMutator = useSalesStatusSelector(productId);
+
+  const handleDropDownItemClick = (newSalesStatus: SalesStatusType) => {
+    if (salesStatus === newSalesStatus) return;
+    setSalesStatus(newSalesStatus);
+    salesStatusMutator(newSalesStatus);
+  };
+
   const dropDownItems = Object.entries(SalesStatusEnum).map(([enumKey, enumValue]) => ({
     name: enumValue,
-    onClick: () => setSalesStatus(enumKey as SalesStatusType),
+    onClick: () => handleDropDownItemClick(enumKey as SalesStatusType),
   }));
 
   return (
