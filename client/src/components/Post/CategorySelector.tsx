@@ -4,15 +4,15 @@ import { useForm } from '@components/CustomForm/useForm';
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
 import styled from 'styled-components';
-import { useCategory } from '../../queries/useCategory';
+import useCategory from '../../queries/useCategory';
 
 interface CategorySelectorProps {
   categoryId?: number;
 }
 
 export default function CategorySelector({ categoryId: initialCategoryId }: CategorySelectorProps) {
-  // const categories = ['여성패션 잡화', '기타 물품', '가구 인테리어', '기타', 'it물품'];
-  const { data: categories } = useCategory();
+  const { getCategories } = useCategory();
+  const { data: categories } = getCategories();
 
   const validator = {
     exist: {
