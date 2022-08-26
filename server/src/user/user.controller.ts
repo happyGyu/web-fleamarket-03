@@ -9,6 +9,7 @@ import {
   Patch,
   Param,
   Req,
+  Delete,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Request, Response } from 'express';
@@ -60,6 +61,7 @@ export class UserController {
   }
 
   @Patch('region/:regionId')
+  @UseAuthGuard()
   async setUserRegionPrimary(
     @Res() res: Response,
     @Req() req: Request,
@@ -67,6 +69,22 @@ export class UserController {
   ) {
     const { id: userId } = req['user'];
     const updateResult = await this.userRegionService.setUserRegionPrimary(
+      userId,
+      Number(regionId),
+    );
+
+    return res.status(HttpStatus.OK).json({ ok: true, updateResult });
+  }
+
+  @Delete('region/:regionId')
+  @UseAuthGuard()
+  async deleteUserRegion(
+    @Res() res: Response,
+    @Req() req: Request,
+    @Param('regionId') regionId: number,
+  ) {
+    const { id: userId } = req['user'];
+    const updateResult = await this.userRegionService.deleteUserRegion(
       userId,
       Number(regionId),
     );
