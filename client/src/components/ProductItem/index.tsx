@@ -32,9 +32,9 @@ export default function ProductItem({ productId, UtilButton }: ProductItemProps)
     <Container onClick={moveToDetailPage}>
       <Thumbnail src={thumbnails[0]} size="medium" />
       <ProductInfoContainer>
-        <Text size="large" weight="bold">
+        <ProductName size="large" weight="bold">
           {name}
-        </Text>
+        </ProductName>
         <Caption captions={[getLastAddress(region.address), getPassedTimeString(createdAt)]} />
         <Text weight="bold">{getPriceString(price)}</Text>
       </ProductInfoContainer>
@@ -52,6 +52,13 @@ const Container = styled.div`
   display: flex;
   gap: 1rem;
   border-bottom: 1px solid ${colors.grey2};
+`;
+
+const ProductName = styled(Text)`
+  width: 9rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
 
 const ProductInfoContainer = styled.div`
