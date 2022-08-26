@@ -4,7 +4,7 @@ import LoadingIndicator from '@components/common/LoadingIndicator';
 import { Text } from '@components/common/Text';
 import Thumbnail from '@components/common/Thumbnail';
 import colors from '@constants/colors';
-import { useProduct } from '@queries/useProduct';
+import useProduct from '@queries/useProduct';
 import mixin from '@style/mixin';
 import { getPassedTimeString } from '@utils/common';
 import { getLastAddress, getPriceString } from '@utils/product';
@@ -19,7 +19,8 @@ interface ProductItemProps {
 
 export default function ProductItem({ productId, UtilButton }: ProductItemProps) {
   const navigate = useNavigate();
-  const { data: product } = useProduct(productId);
+  const { getProduct } = useProduct();
+  const { data: product } = getProduct(productId);
 
   if (!product) return <LoadingIndicator />;
 

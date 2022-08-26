@@ -47,7 +47,11 @@ export default function UserRegionPage() {
         </Caption>
         <RegionsContainer>
           {regions.map((region) => (
-            <Region isPrimary={region.isPrimary} onClick={updateRegionPrimary(region)}>
+            <Region
+              key={region.id}
+              isPrimary={region.isPrimary}
+              onClick={updateRegionPrimary(region)}
+            >
               {getLastAddress(region.address)}
               <IconWrapper onClick={deleteRegion(region)}>
                 <XIcon />

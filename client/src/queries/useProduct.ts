@@ -12,8 +12,18 @@ export async function getProductDetail(productId?: number) {
   }
 }
 
-export const useProduct = (productId?: number) =>
-  useQuery(['product', productId], () => getProductDetail(Number(productId)), {
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
+// export const useProduct = (productId?: number) =>
+//   useQuery(['product', productId], () => getProductDetail(Number(productId)), {
+//     refetchOnMount: false,
+//     refetchOnWindowFocus: false,
+//   });
+
+export default function useProduct() {
+  const getProduct = (productId?: number) =>
+    useQuery(['product', productId], () => getProductDetail(Number(productId)), {
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    });
+
+  return { getProduct };
+}

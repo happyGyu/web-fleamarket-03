@@ -1,7 +1,7 @@
 import { toggleLike } from '@apis/product';
 import { useToast } from '@components/common/Toast/toastContext';
 import { IProductItem } from '@customTypes/product';
-import { useProduct } from '@queries/useProduct';
+import useProduct from '@queries/useProduct';
 import { useUser } from '@queries/useUser';
 import { UseMutateFunction, useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -17,8 +17,8 @@ export default function useLikeButton({
   const user = useUser();
 
   const { toastError } = useToast();
-
-  const { refetch } = useProduct(productId);
+  const { getProduct } = useProduct();
+  const { refetch } = getProduct(productId);
   const { mutate } = useMutation(() => toggleLike(productId), {
     onMutate: () => {
       const snapshot = queryClient.getQueryData<IProductItem>(queryKey);

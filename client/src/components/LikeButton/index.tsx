@@ -3,7 +3,7 @@ import colors from '@constants/colors';
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { useUser } from '@queries/useUser';
-import { useProduct } from '@queries/useProduct';
+import useProduct from '@queries/useProduct';
 import useLikeButton from './useLikeButton';
 
 interface LikeButtonProps {
@@ -11,7 +11,8 @@ interface LikeButtonProps {
 }
 export default function LikeButton({ productId }: LikeButtonProps) {
   const user = useUser();
-  const { data: product } = useProduct(productId);
+  const { getProduct } = useProduct();
+  const { data: product } = getProduct(productId);
   const likedUsers = product?.likedUsers || [];
   const isUserPick = likedUsers.some((likedUser) => likedUser.userId === user.id);
   const mutateLikeButton = useLikeButton({ productId });
