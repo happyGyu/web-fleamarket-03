@@ -29,10 +29,11 @@ export default function CountIndicator({ type, count }: CountIndicatorProps) {
 }
 
 const CountIndicatorWrapper = styled.div`
-  ${mixin.flexMixin({ align: 'center' })}
-  gap: 0.5rem;
+  ${mixin.flexMixin({ align: 'center', justify: 'space-between' })}
+  width: 2.5rem;
 
   svg {
+    scale: 0.9;
     stroke: ${colors.grey1};
   }
 `;
