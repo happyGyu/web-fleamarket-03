@@ -2,6 +2,7 @@ import { Route, Routes as RouterRoutes } from 'react-router-dom';
 import DetailPage from './DetailPage';
 import ErrorPage from './ErrorPage';
 import LoginPage from './LoginPage';
+import LogOutPage from './LogOutPage';
 import MainPage from './MainPage';
 import MyPage from './MyPage';
 import OAuthRedirectPage from './OAuthRedirectPage';
@@ -23,6 +24,7 @@ export default function Routes() {
       <Route path="/my" element={<MyPage />} />
       <Route path="/user/region" element={<UserRegionPage />} />
       <Route path="/post" element={<PostPage />} />
+      <Route path="/logout" element={<LogOutPage />} />
     </RouterRoutes>
   );
 }

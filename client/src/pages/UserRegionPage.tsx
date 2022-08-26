@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { useEffect } from 'react';
 import NavigationBar from '@components/common/NavigationBar';
 import PageContainer from '@components/common/PageContainer';
-import { padding } from '@constants/padding';
 import { Text } from '@components/common/Text';
 import Button from '@components/common/Button';
 import colors from '@constants/colors';
@@ -85,8 +84,6 @@ const IconWrapper = styled.button`
 
 const SignUpPageWrapper = styled(PageContainer)`
   position: relative;
-  padding-right: ${padding.pageSide};
-  padding-left: ${padding.pageSide};
   width: 100%;
   height: 100%;
   background-color: white;

@@ -38,5 +38,4 @@ const Display = styled.div`
   background-color: ${colors.white};
   overflow-x: hidden;
   overflow-y: hidden;
-  border: 5px solid black;
 `;

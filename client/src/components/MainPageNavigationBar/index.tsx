@@ -16,7 +16,7 @@ export default function MainPageNavigationBar() {
         <CategoryIcon />
       </IconButton>
       <MainNavTitle />
-      <IconButton right="3.5rem" onClick={() => navigate('/error')}>
+      <IconButton right="3.5rem" onClick={() => navigate('/logout')}>
         <UserIcon />
       </IconButton>
       <IconButton right="1rem" onClick={() => navigate('/my')}>

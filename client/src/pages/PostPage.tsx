@@ -9,7 +9,6 @@ import {
 import Post from '@components/Post';
 import RegionFooter from '@components/Post/RegionFooter';
 import { SubmitButton } from '@components/Post/SubmitButton';
-import { padding } from '@constants/padding';
 import { CreateProductAPIDto } from '@customTypes/product';
 import { useUser } from '@queries/useUser';
 import { getNumber } from '@utils/format';
@@ -66,8 +65,6 @@ function PostForm() {
 
 const PostPageWrapper = styled(PageContainer)`
   position: relative;
-  padding-right: ${padding.pageSide};
-  padding-left: ${padding.pageSide};
   width: 100%;
   height: 100%;
   background-color: white;

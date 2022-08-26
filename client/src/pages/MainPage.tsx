@@ -1,7 +1,6 @@
 import { getRegionProducts } from '@apis/product';
 import CircleButton from '@components/common/CircleButton';
 import LikeButton from '@components/LikeButton';
-import PageContainer from '@components/common/PageContainer';
 import MainPageNavigationBar from '@components/MainPageNavigationBar';
 import ProductItem from '@components/ProductItem';
 import colors from '@constants/colors';
@@ -10,6 +9,7 @@ import useInfiniteScroll from '@hooks/useInfiniteScroll';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import portalUtil from '@utils/portal';
+import { padding } from '@constants/padding';
 import { useUser } from '../queries/useUser';
 
 export default function MainPage() {
@@ -47,7 +47,8 @@ export default function MainPage() {
   );
 }
 
-const MainPageWrapper = styled(PageContainer)`
+const MainPageWrapper = styled.div`
+  padding-top: ${padding.pageTop};
   background-color: ${colors.white};
   height: 100%;
   overflow-y: auto;
