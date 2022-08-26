@@ -1,7 +1,5 @@
 import { useParams } from 'react-router-dom';
 import DetailPageNavigationBar from '@components/DetailPageNavigationBar';
-import { useQuery } from '@tanstack/react-query';
-import { getProductDetail } from '@apis/product';
 import SaleStateSelector from '@components/SaleStateSelector';
 import LoadingIndicator from '@components/common/LoadingIndicator';
 import ImageSlider from '@components/ImageSlider.tsx';
