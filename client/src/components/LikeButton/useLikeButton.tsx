@@ -1,4 +1,5 @@
 import { toggleLike } from '@apis/product';
+import { useToast } from '@components/common/Toast/toastContext';
 import { IProductItem } from '@customTypes/product';
 import { useProduct } from '@queries/useProduct';
 import { useUser } from '@queries/useUser';
@@ -14,6 +15,9 @@ export default function useLikeButton({
   const queryKey = ['product', productId];
   const queryClient = useQueryClient();
   const user = useUser();
+
+  const { toastError } = useToast();
+
   const { refetch } = useProduct(productId);
   const { mutate } = useMutation(() => toggleLike(productId), {
     onMutate: () => {
@@ -28,7 +32,12 @@ export default function useLikeButton({
     },
 
     onError: (error, variables, context) => {
+      toastError(new Error('찜이 정상 처리되지 않았습니다.'));
       queryClient.setQueryData(queryKey, context?.snapshot);
+    },
+
+    onSuccess: () => {
+      refetch();
     },
   });
 

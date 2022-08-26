@@ -1,6 +1,6 @@
 import { useContext, createContext, ReactNode, useState, useMemo, useEffect } from 'react';
 
-type ToastType = 'SUCCESS' | 'ERROR';
+export type ToastType = 'SUCCESS' | 'ERROR';
 
 interface IToastMessage {
   toastType: ToastType;
@@ -14,7 +14,10 @@ interface IToastState {
 
 const initialToastState = { isOpened: false };
 const ToastStateContext = createContext<IToastState>(initialToastState);
-const ToastDispatchContext = createContext({});
+const ToastDispatchContext = createContext({
+  toastSuccess: (message: string) => {},
+  toastError: (error: unknown) => {},
+});
 
 export const useToastState = () => {
   const toastContext = useContext(ToastStateContext);
@@ -28,10 +31,10 @@ export const useToast = () => {
   return dispatchToast;
 };
 
-export function CartProvider({ children }: { children: ReactNode }) {
+export function ToastProvider({ children }: { children: ReactNode }) {
   const [toastState, setToastState] = useState<IToastState>(initialToastState);
 
-  const success = (successMessage: string) => {
+  const toastSuccess = (successMessage: string) => {
     setToastState({
       isOpened: true,
       message: {
@@ -41,7 +44,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  const error = (errorMessage: string) => {
+  const toastError = (error: unknown) => {
+    const errorMessage = error instanceof Error ? error.message : 'error connecting to server';
     setToastState({
       isOpened: true,
       message: {
@@ -57,7 +61,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }, 2000);
   }, [toastState]);
 
-  const actions = useMemo(() => ({ success, error }), []);
+  const actions = useMemo(() => ({ toastSuccess, toastError }), [setToastState]);
 
   return (
     <ToastStateContext.Provider value={toastState}>

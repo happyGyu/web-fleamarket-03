@@ -40,7 +40,7 @@ export default function ProductItem({ productId, UtilButton }: ProductItemProps)
       </ProductInfoContainer>
       <UtilButtonWrapper>{UtilButton}</UtilButtonWrapper>
       <CountIndicatorWrapper>
-        {likedUsers.length && <CountIndicator type="like" count={likedUsers.length} />}
+        <CountIndicator type="like" count={likedUsers.length} />
       </CountIndicatorWrapper>
     </Container>
   );

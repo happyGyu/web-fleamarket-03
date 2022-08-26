@@ -5,6 +5,7 @@ import portalUtil from '@utils/portal';
 import { useRef, useEffect } from 'react';
 import mixin from '@style/mixin';
 import colors from '@constants/colors';
+import Toast from '@components/common/Toast';
 
 export default function App() {
   const displayRef = useRef<HTMLDivElement | null>(null);
@@ -19,6 +20,7 @@ export default function App() {
       <Display ref={displayRef}>
         <GlobalStyle />
         <Routes />
+        <Toast />
       </Display>
     </AppWrapper>
   );
@@ -35,6 +37,6 @@ const Display = styled.div`
   height: 56rem;
   background-color: ${colors.white};
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   border: 5px solid black;
 `;
