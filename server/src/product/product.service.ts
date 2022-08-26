@@ -100,9 +100,9 @@ export class ProductService {
   async toggleLikeState(likeDto: LikeDto) {
     const like = await this.likeRepository.findLike(likeDto);
     if (like) {
-      this.likeRepository.deleteLike(likeDto);
+      await this.likeRepository.deleteLike(likeDto);
     } else {
-      this.likeRepository.addLike(likeDto);
+      await this.likeRepository.addLike(likeDto);
     }
   }
 

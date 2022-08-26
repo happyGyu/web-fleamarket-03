@@ -14,21 +14,21 @@ export default function useInfiniteScroll<T extends Data>({
 }: UseInfiniteScrollProps<PagedResponseDto<T>>) {
   const user = useUser();
   const queryClinet = useQueryClient();
+
   const { data, fetchNextPage, isLoading, hasNextPage } = useInfiniteQuery(
     queryKey,
     ({ pageParam = undefined }) => fetchFunction(pageParam),
     {
       enabled: user.id > 0,
-      getNextPageParam: (lastPage) => lastPage.nextStartParam || undefined,
-      refetchOnWindowFocus: false,
       refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      getNextPageParam: (lastPage) => lastPage.nextStartParam || undefined,
       onSuccess: ({ pages }) => spreadPageDataOnEachKey('product', pages.at(-1)),
     },
   );
 
   const spreadPageDataOnEachKey = (queryPrefix: string, page?: PagedResponseDto<T>) => {
     if (!page) return;
-
     page.data.forEach((dataItem) => {
       queryClinet.setQueryData([queryPrefix, dataItem.id], dataItem);
     });
