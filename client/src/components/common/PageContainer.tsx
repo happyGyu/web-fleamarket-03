@@ -2,7 +2,7 @@ import { padding } from '@constants/padding';
 import styled from 'styled-components';
 
 const PageContainer = styled.div`
-  padding: ${padding.pageTop} 0;
+  padding-top: ${padding.pageTop};
 `;
 
 export default PageContainer;

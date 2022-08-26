@@ -35,6 +35,7 @@ const Container = styled.div`
   padding: 1rem 1.5rem;
   background-color: ${colors.primary};
   border-radius: 0 0rem 1rem 1rem;
+  z-index: 10;
 `;
 
 const IconButton = styled.button<{ left?: string; right?: string }>`
