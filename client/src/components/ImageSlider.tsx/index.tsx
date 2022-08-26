@@ -5,10 +5,17 @@ interface ImageSliderProps {
 }
 
 export default function ImageSlider({ images }: ImageSliderProps) {
-  return <Container />;
+  const primaryImage = images[0];
+  return (
+    <Container imgSrc={primaryImage}>
+      <img src={primaryImage} alt="대표이미지" />
+    </Container>
+  );
 }
 
-const Container = styled.div`
+const Container = styled.div<{ imgSrc: string }>`
+  width: 26rem;
+  height: 26rem;
   background: linear-gradient(
     180deg,
     rgba(0, 0, 0, 0.24) 0%,
@@ -16,6 +23,10 @@ const Container = styled.div`
     rgba(0, 0, 0, 0) 87.36%,
     rgba(0, 0, 0, 0.24) 100%
   );
-  width: 26rem;
-  height: 26rem;
+
+  & img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 `;

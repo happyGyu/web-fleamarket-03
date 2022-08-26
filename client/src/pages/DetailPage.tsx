@@ -26,11 +26,12 @@ export default function DetailPage() {
   if (!product) {
     return <LoadingIndicator />;
   }
-  const { name, createdAt, region, description, views, likedUsers, seller, id, price } = product;
+  const { name, createdAt, region, description, views, likedUsers, seller, id, price, thumbnails } =
+    product;
   return (
     <Container>
       <DetailPageNavigationBar />
-      <ImageSlider images={['1']} />
+      <ImageSlider images={thumbnails} />
       <DetailPageBody>
         {user.id === product.seller.id && (
           <SaleStateSelector initialStatus={product.salesStatus} productId={id} />
