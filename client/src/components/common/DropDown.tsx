@@ -1,10 +1,11 @@
 import colors from '@constants/colors';
 import styled, { css } from 'styled-components';
+import React from 'react';
 import { Text } from './Text';
 
 interface IDropDownItem {
   name: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
   color?: string;
 }
 
