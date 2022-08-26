@@ -3,6 +3,8 @@ import DropDown from '@components/common/DropDown';
 import LoadingIndicator from '@components/common/LoadingIndicator';
 import { Text } from '@components/common/Text';
 import colors from '@constants/colors';
+import useUserRegion from '@hooks/useUserRegion';
+import { useUser } from '@queries/useUser';
 import mixin from '@style/mixin';
 import { getLastAddress } from '@utils/product';
 import { useState } from 'react';
@@ -10,16 +12,17 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 export default function MainNavTitle() {
-  const { data: user } = useQuery(['user'], getUser);
+  const user = useUser();
+
+  const { updateRegionPrimary, regions } = useUserRegion();
+  const primaryRegion = user.regions.find((region) => region.isPrimary) || user.regions[0];
 
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const navigate = useNavigate();
 
-  const regions = user?.regions || [];
-
   const dropdownItems = [
-    ...regions.map(({ region }) => ({
-      onClick: () => alert('primary region 를 바꿉니다.'),
+    ...regions.map((region) => ({
+      onClick: updateRegionPrimary(region),
       name: getLastAddress(region.address) || '',
     })),
     {
@@ -36,12 +39,13 @@ export default function MainNavTitle() {
       }}
     >
       <MapPinIcon />
-      {/* // ! TODO 여기 region이 프라이머리 region이 아님    */}
-      <Text color={colors.white}>{getLastAddress(user.regions[0].region.address)}</Text>
+      <Text color={colors.white}>{getLastAddress(primaryRegion.address)}</Text>
       {isDropDownOpen && (
         <DropDown dropDownItems={dropdownItems} top="85%" transform="translate(-25%,0)" />
       )}
     </Container>
+  ) : (
+    <LoadingIndicator />
   );
 }
 
