@@ -17,6 +17,16 @@ export class RegionService {
   }
 
   async createUserRegion(createUserRegionDto: CreateUserRegionDto) {
+    const userRegions = await this.userRegionRepository.findByUserId(
+      createUserRegionDto.userId,
+    );
+    if (
+      userRegions.find(
+        (userRegion) => userRegion.regionId === createUserRegionDto.regionId,
+      )
+    ) {
+      throw new HttpException('이미 선택한 지역입니다', HttpStatus.BAD_REQUEST);
+    }
     return await this.userRegionRepository.create(createUserRegionDto);
   }
 
@@ -51,5 +61,37 @@ export class RegionService {
 
   async searchByKeyword(keyword: string) {
     return this.regionRepository.findByKeyword(keyword);
+  }
+
+  async deleteUserRegion(userId: number, regionId: number) {
+    const userRegions = await this.userRegionRepository.findByUserId(userId);
+
+    if (userRegions.length < 2) {
+      throw new HttpException(
+        '지역은 하나 이상 선택해야합니다',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    const targetUserRegion = userRegions.find(
+      (userRegion) => userRegion.regionId === regionId,
+    );
+
+    if (!targetUserRegion) {
+      throw new HttpException('지역이 올바르지 않습니다', HttpStatus.NOT_FOUND);
+    }
+
+    if (targetUserRegion.isPrimary) {
+      const { regionId: newPrimaryRegionId } = userRegions.find(
+        (userRegion) => userRegion.regionId !== regionId,
+      );
+      this.userRegionRepository.updateIsPrimary(
+        userId,
+        newPrimaryRegionId,
+        true,
+      );
+    }
+
+    return this.userRegionRepository.deleteByRegionId(regionId, userId);
   }
 }
