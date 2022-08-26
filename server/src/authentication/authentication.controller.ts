@@ -24,11 +24,21 @@ export class AuthenticationController {
     const { isRegistered, refreshToken, ...loginResult } =
       await this.authenticationService.loginWithOAuth(oauthDto);
     if (isRegistered) {
-      const refreshCookie = `Refresh=${refreshToken}; HttpOnly; Path=/;}`;
-      res.setHeader('SET-COOKIE', refreshCookie);
+      res.cookie('Refresh', refreshToken, {
+        httpOnly: true,
+        path: '/',
+      });
     }
 
     return res.status(HttpStatus.OK).json({ isRegistered, ...loginResult });
+  }
+
+  @Post('logout')
+  logOut(@Res() res: Response) {
+    return res.clearCookie('Refresh', {
+      httpOnly: true,
+      path: '/',
+    });
   }
 
   @Get('resign')
