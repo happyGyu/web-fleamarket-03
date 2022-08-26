@@ -8,6 +8,7 @@ import OAuthRedirectPage from './OAuthRedirectPage';
 import PostPage from './PostPage';
 import ProductEditPage from './ProductEditPage';
 import SignUpPage from './SignUpPage';
+import UserRegionPage from './UserRegionPage';
 
 export default function Routes() {
   return (
@@ -20,6 +21,8 @@ export default function Routes() {
       <Route path="/product/:productId" element={<DetailPage />} />
       <Route path="/product/edit/:productId" element={<ProductEditPage />} />
       <Route path="/my" element={<MyPage />} />
+      <Route path="/user/region" element={<UserRegionPage />} />
+      {/* /product/edit/${productId} */}
       <Route path="/post" element={<PostPage />} />
     </RouterRoutes>
   );

@@ -14,7 +14,7 @@ import { useUser } from '../queries/useUser';
 
 export default function MainPage() {
   const user = useUser();
-  const primaryRegion = user.regions[0];
+  const primaryRegion = user.regions.find((region) => region.isPrimary) || user.regions[0];
   const queryKey = ['products', primaryRegion.id];
   const { data, Trigger } = useInfiniteScroll<IProductItem>({
     queryKey,
