@@ -39,6 +39,11 @@ export class UserRepository {
         },
       },
       select: ['id', 'name', 'regions'],
+      order: {
+        regions: {
+          isPrimary: 'DESC',
+        },
+      },
     });
   }
 }
