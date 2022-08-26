@@ -24,6 +24,12 @@ import { getParsedProducts } from './util';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
+  @Get('categories')
+  async getCategories(@Res() res: Response) {
+    const categories = await this.productService.getCategories();
+    return res.status(HttpStatus.OK).json(categories);
+  }
+
   @UseAuthGuard()
   @Get('liked')
   async getLikedProducts(@Res() res: Response, @Req() req: Request) {
@@ -74,12 +80,6 @@ export class ProductController {
       data: products,
       nextStartParam: nextStartParam || null,
     });
-  }
-
-  @Get('categories')
-  async getCategories(@Res() res: Response) {
-    const categories = await this.productService.getCategories();
-    return res.status(HttpStatus.OK).json(categories);
   }
 
   @Delete(':productId')

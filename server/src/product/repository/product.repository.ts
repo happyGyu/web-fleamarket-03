@@ -1,5 +1,5 @@
 import { CreateProductDto } from '../dto/createProduct.dto';
-import { DataSource, LessThanOrEqual, Repository } from 'typeorm';
+import { DataSource, LessThan, LessThanOrEqual, Repository } from 'typeorm';
 import { HttpException, Injectable, HttpStatus } from '@nestjs/common';
 import { Product } from '../entities/product.entity';
 import { SalesStatusEnum } from 'src/common/enums';
@@ -61,7 +61,7 @@ export class ProductRepository {
   ) {
     return this.repository.find({
       where: {
-        id: startProductId ? LessThanOrEqual(startProductId) : undefined,
+        id: startProductId ? LessThan(startProductId) : undefined,
         regionId: regionId,
         categoryId: categoryId,
       },
