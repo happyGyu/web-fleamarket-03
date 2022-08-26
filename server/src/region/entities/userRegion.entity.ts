@@ -10,6 +10,9 @@ export class UserRegion {
   @Column({ type: 'int', primary: true })
   userId: number;
 
+  @Column({ type: 'boolean' })
+  isPrimary: boolean;
+
   @ManyToOne(() => Region, (region) => region.users)
   @JoinColumn({ name: 'region_id' })
   region: Region;

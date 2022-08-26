@@ -18,7 +18,7 @@ export default function RegionSearchList({
 }: RegionSearchListProps) {
   return searchResult.length ? (
     <SearchListWrapper>
-      <Text size="small" weight="bolder">{`'${searchKeyword}'검색 결과`}</Text>
+      <Text weight="bolder">{`'${searchKeyword}'검색 결과`}</Text>
       <>
         {searchResult.map((region) => (
           <ResultItem
@@ -43,6 +43,7 @@ const SearchListWrapper = styled.div`
 
   ${Text} {
     margin: 0.5rem 0;
+    font-size: 14px;
   }
 `;
 
@@ -54,6 +55,6 @@ const ResultItem = styled.button`
   border-bottom: 1px solid ${colors.grey2};
 
   :hover {
-    background-color: ${colors.secondary};
+    background-color: ${colors.offWhite};
   }
 `;

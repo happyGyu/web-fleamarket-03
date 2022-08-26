@@ -6,6 +6,7 @@ export default function extractRegionsFromUserRegions(
   const regions = userRegions.map((userRegion) => ({
     id: userRegion.region.id,
     address: userRegion.region.address,
+    isPrimary: userRegion.isPrimary,
   }));
 
   return regions;

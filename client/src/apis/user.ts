@@ -1,4 +1,5 @@
 import { IOAuthUserInfo } from '@customTypes/auth';
+import { IRegion } from '@customTypes/region';
 import { CheckDuplicatedResponseDto, IUser, LoginResponseDto } from '@customTypes/user';
 import { makeQueryString } from '@utils/queryParser';
 import axios from 'axios';
@@ -43,4 +44,21 @@ export const requestResignToken = async () => {
 export const getUser = async () => {
   const { data: user } = await myAxios.get<IUser>('/auth/user');
   return user;
+};
+
+export const requestCreateUserRegion = async (region: IRegion) => {
+  const { data } = await myAxios.post(`/user/region`, { ...region, regionId: region.id });
+  return data;
+};
+
+export const requestChangePrimaryRegion = async (region: IRegion) => {
+  const { id } = region;
+  const { data } = await myAxios.patch(`/user/region/${id}`);
+  return data;
+};
+
+export const requestDeleteRegion = async (region: IRegion) => {
+  const { id } = region;
+  const { data } = await myAxios.delete(`/user/region/${id}`);
+  return data;
 };

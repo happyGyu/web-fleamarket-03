@@ -21,6 +21,7 @@ export class UserService {
       await this.regionRepository.create({
         userId: newUser.id,
         regionId,
+        isPrimary: true,
       });
     } catch (error) {
       switch (error.errno) {

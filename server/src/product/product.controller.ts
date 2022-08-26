@@ -34,6 +34,12 @@ export class ProductController {
     return res.status(HttpStatus.OK).json(parsedProducts);
   }
 
+  @Get('categories')
+  async getCategories(@Res() res: Response) {
+    const categories = await this.productService.getCategories();
+    return res.status(HttpStatus.OK).json(categories);
+  }
+
   @UseAuthGuard()
   @Get('sale')
   async getSaleProducts(@Res() res: Response, @Req() req: Request) {
@@ -74,12 +80,6 @@ export class ProductController {
       data: products,
       nextStartParam: nextStartParam || null,
     });
-  }
-
-  @Get('categories')
-  async getCategories(@Res() res: Response) {
-    const categories = await this.productService.getCategories();
-    return res.status(HttpStatus.OK).json(categories);
   }
 
   @Delete(':productId')

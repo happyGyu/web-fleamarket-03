@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 const initialUser = {
   id: -1,
   name: '',
-  regions: [{ id: -1, address: '' }],
+  regions: [{ id: -1, address: '', isPrimary: true }],
 };
 
 export const useUser = () => {
