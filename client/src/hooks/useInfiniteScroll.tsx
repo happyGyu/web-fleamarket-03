@@ -12,7 +12,7 @@ export default function useInfiniteScroll<T extends Data>({
   queryKey,
   fetchFunction,
 }: UseInfiniteScrollProps<PagedResponseDto<T>>) {
-  const user = useUser();
+  const { user } = useUser();
   const queryClinet = useQueryClient();
 
   const { data, fetchNextPage, isLoading, hasNextPage } = useInfiniteQuery(
