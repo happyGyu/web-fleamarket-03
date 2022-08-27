@@ -71,6 +71,7 @@ export default function DetailPage() {
 
 const Container = styled.div`
   ${mixin.flexMixin({ direction: 'column' })}
+  height: 100%;
   gap: 1.5rem;
 `;
 
@@ -88,6 +89,8 @@ const DetailContent = styled.section`
 
 const Description = styled(Text)`
   margin: 0.5rem 0;
+  max-height: 7rem;
+  overflow: auto;
 `;
 
 const SellerInfo = styled.div`
