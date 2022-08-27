@@ -41,7 +41,7 @@ export const requestResignToken = async () => {
   return accessToken;
 };
 
-export const getUser = async () => {
+export const requestUser = async () => {
   const { data: user } = await myAxios.get<IUser>('/auth/user');
   return user;
 };

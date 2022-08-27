@@ -10,7 +10,7 @@ import Post from '@components/Post';
 import RegionFooter from '@components/Post/RegionFooter';
 import { SubmitButton } from '@components/Post/SubmitButton';
 import { CreateProductAPIDto } from '@customTypes/product';
-import { useUser } from '@queries/useUser';
+import useUser from '@queries/useUser';
 import { getNumber } from '@utils/format';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -25,7 +25,8 @@ export default function PostPage() {
 }
 
 function PostForm() {
-  const user = useUser();
+  const { getUser } = useUser();
+  const { data: user } = getUser();
 
   const { formInputMap } = useFormInputMap();
   const { isAllValidated } = useFormValidationState();

@@ -11,7 +11,7 @@ import RegionFooter from '@components/Post/RegionFooter';
 import { SubmitButton } from '@components/Post/SubmitButton';
 import { CreateProductAPIDto } from '@customTypes/product';
 import useProduct from '@queries/useProduct';
-import { useUser } from '@queries/useUser';
+import useUser from '@queries/useUser';
 import { getNumber } from '@utils/format';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -26,7 +26,8 @@ export default function ProductEditPage() {
 }
 
 function PostEditForm() {
-  const user = useUser();
+  const { getUser } = useUser();
+  const { data: user } = getUser();
   const { productId } = useParams();
   const { getProduct } = useProduct();
   const { data: product } = getProduct(Number(productId));

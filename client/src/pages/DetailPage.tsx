@@ -13,14 +13,15 @@ import { getPassedTimeString } from '@utils/common';
 import colors from '@constants/colors';
 import LikeButton from '@components/LikeButton';
 import ChatButton from '@components/ChatButton';
-import { useUser } from '@queries/useUser';
+import useUser from '@queries/useUser';
 import useProduct from '@queries/useProduct';
 
 export default function DetailPage() {
   const { productId } = useParams();
   const { getProduct } = useProduct();
   const { data: product } = getProduct(Number(productId));
-  const user = useUser();
+  const { getUser } = useUser();
+  const { data: user } = getUser();
 
   if (!product) {
     return <LoadingIndicator />;
