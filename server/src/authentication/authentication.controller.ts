@@ -6,6 +6,7 @@ import {
   Body,
   Req,
   Get,
+  HttpException,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import extractRegionsFromUserRegions from 'src/util/parseUtil';
@@ -35,10 +36,20 @@ export class AuthenticationController {
 
   @Post('logout')
   logOut(@Res() res: Response) {
-    return res.clearCookie('Refresh', {
-      httpOnly: true,
-      path: '/',
-    });
+    try {
+      res.clearCookie('Refresh', {
+        httpOnly: true,
+        path: '/',
+      });
+      return res
+        .status(HttpStatus.NO_CONTENT)
+        .json({ message: '로그아웃 되었습니다.' });
+    } catch (e) {
+      throw new HttpException(
+        '로그아웃이 정상처리 되지 않았습니다.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   @Get('resign')
