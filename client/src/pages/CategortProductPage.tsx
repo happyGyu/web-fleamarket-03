@@ -1,5 +1,6 @@
 import { getRegionProducts } from '@apis/product';
 import NavigationBar from '@components/common/NavigationBar';
+import ProductItemList from '@components/ProductItemList';
 import ProductItem from '@components/ProductItemList/ProductItem';
 import colors from '@constants/colors';
 import { padding } from '@constants/padding';
@@ -34,25 +35,11 @@ export default function CategoryProductPage() {
   return (
     <>
       <NavigationBar title={pageState.categoryName} />
-      <MainPageWrapper>
-        {data?.pages.map((page) =>
-          page.data.map((product) => (
-            <ProductItem
-              key={product.id}
-              productId={product.id}
-              utilButtonInfo={{ type: 'like' }}
-            />
-          )),
-        )}
-        <Trigger />
-      </MainPageWrapper>
+      <ProductItemList
+        products={data}
+        utilButtonInfo={{ type: 'like' }}
+        scrollTriger={<Trigger />}
+      />
     </>
   );
 }
-
-const MainPageWrapper = styled.div`
-  padding-top: ${padding.pageTop};
-  background-color: ${colors.white};
-  height: 100%;
-  overflow-y: auto;
-`;
