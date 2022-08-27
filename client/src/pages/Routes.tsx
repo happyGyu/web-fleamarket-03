@@ -1,6 +1,6 @@
 import { AnimatePresence } from '@hooks/animation/AnimatedPresence';
-import { Route, Routes as RouterRoutes, useLocation, useNavigate } from 'react-router-dom';
-import CategoryProductPage from './CategortProductPage';
+import { Route, Routes as RouterRoutes, useLocation } from 'react-router-dom';
+import CategoryProductPage from './CategoryProductPage';
 import CategoryListPage from './CategoryListPage';
 import DetailPage from './DetailPage';
 import ErrorPage from './ErrorPage';

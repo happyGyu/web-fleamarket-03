@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import portalUtil from '@utils/portal';
 import ProductItemList from '@components/ProductItemList';
+import React from 'react';
+import TransitionPage from '@components/TransitionPage';
 import { useUser } from '../queries/useUser';
 
 export default function MainPage() {
@@ -20,7 +22,7 @@ export default function MainPage() {
   });
   const Portal = portalUtil.openPortal();
   return (
-    <>
+    <TransitionPage depth={0}>
       <MainPageNavigationBar />
       <ProductItemList
         products={data}
@@ -32,7 +34,7 @@ export default function MainPage() {
           <CircleButton />
         </RegisterNewProductLink>
       </Portal>
-    </>
+    </TransitionPage>
   );
 }
 
