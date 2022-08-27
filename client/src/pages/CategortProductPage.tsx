@@ -1,7 +1,6 @@
 import { getRegionProducts } from '@apis/product';
 import NavigationBar from '@components/common/NavigationBar';
-import LikeButton from '@components/LikeButton';
-import ProductItem from '@components/ProductItem';
+import ProductItem from '@components/ProductItemList/ProductItem';
 import colors from '@constants/colors';
 import { padding } from '@constants/padding';
 import { IProductItem } from '@customTypes/product';
@@ -41,7 +40,7 @@ export default function CategoryProductPage() {
             <ProductItem
               key={product.id}
               productId={product.id}
-              UtilButton={<LikeButton productId={product.id} />}
+              utilButtonInfo={{ type: 'like' }}
             />
           )),
         )}
