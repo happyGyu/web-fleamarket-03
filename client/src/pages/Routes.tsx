@@ -1,8 +1,10 @@
 import { Route, Routes as RouterRoutes } from 'react-router-dom';
-import CategoryPage from './CategoryPage';
+import CategoryProductPage from './CategortProductPage';
+import CategoryListPage from './CategoryListPage';
 import DetailPage from './DetailPage';
 import ErrorPage from './ErrorPage';
 import LoginPage from './LoginPage';
+import LogOutPage from './LogOutPage';
 import MainPage from './MainPage';
 import MyPage from './MyPage';
 import OAuthRedirectPage from './OAuthRedirectPage';
@@ -24,7 +26,9 @@ export default function Routes() {
       <Route path="/my" element={<MyPage />} />
       <Route path="/user/region" element={<UserRegionPage />} />
       <Route path="/post" element={<PostPage />} />
-      <Route path="/category" element={<CategoryPage />} />
+      <Route path="/category/list" element={<CategoryListPage />} />
+      <Route path="/category/products/:categoryId" element={<CategoryProductPage />} />
+      <Route path="/logout" element={<LogOutPage />} />
     </RouterRoutes>
   );
 }

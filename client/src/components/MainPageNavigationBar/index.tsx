@@ -12,7 +12,7 @@ export default function MainPageNavigationBar() {
 
   return (
     <Container>
-      <IconButton left="1rem" onClick={() => navigate('/category')}>
+      <IconButton left="1rem" onClick={() => navigate('/category/list')}>
         <CategoryIcon />
       </IconButton>
       <MainNavTitle />

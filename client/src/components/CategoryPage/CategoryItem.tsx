@@ -2,6 +2,7 @@ import { Text } from '@components/common/Text';
 import colors from '@constants/colors';
 import { ICategory } from '@customTypes/category';
 import mixin from '@style/mixin';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface CategoryItemProps {
@@ -10,9 +11,13 @@ interface CategoryItemProps {
 
 export default function CategoryItem({ category }: CategoryItemProps) {
   const { id, name } = category;
+  const navigate = useNavigate();
+  const moveToCategoryProductPage = () => {
+    navigate(`/category/products/${id}`, { state: { categoryName: name } });
+  };
   return (
     <Container>
-      <CategoryImage />
+      <CategoryImage onClick={moveToCategoryProductPage} />
       <Text size="small">{name}</Text>
     </Container>
   );
