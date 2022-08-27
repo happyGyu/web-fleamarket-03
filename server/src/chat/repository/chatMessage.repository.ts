@@ -1,5 +1,5 @@
 import { CreateChatMessageDto } from './../dto/CreateChatMessageDto';
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { ChatMessage } from '../entities/chatMessage.entity';
 
@@ -12,6 +12,13 @@ export class ChatMessageRepository {
   }
 
   public async createMessage(createMessageDto: CreateChatMessageDto) {
-    return this.repository.save(createMessageDto);
+    try {
+      return this.repository.save(createMessageDto);
+    } catch (error) {
+      throw new HttpException(
+        '채팅 메시지 생성에 실패했습니다.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }
