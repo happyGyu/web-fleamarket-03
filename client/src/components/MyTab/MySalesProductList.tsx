@@ -1,5 +1,4 @@
-import MoreButton from '@components/MoreButton';
-import ProductItem from '@components/ProductItem';
+import ProductItem from '@components/ProductItemList/ProductItem';
 import colors from '@constants/colors';
 import { useMySalesProducts } from '@queries/useMySalesProducts';
 
@@ -13,7 +12,7 @@ export default function MySalesProductList() {
           <ProductItem
             key={product.id}
             productId={product.id}
-            UtilButton={<MoreButton color={colors.grey2} />}
+            utilButtonInfo={{ type: 'more', color: colors.grey2 }}
           />
         ))}
     </div>

@@ -51,7 +51,7 @@ const GlobalStyle = createGlobalStyle`
     text-decoration:none;
   }
   body{
-    background-color: ${colors.offWhite};
+    background-color: ${colors.grey3};
     color: ${colors.black};
   }
 `;

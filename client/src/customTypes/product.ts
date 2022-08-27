@@ -1,5 +1,4 @@
-import { InfiniteFetchFunctionDto } from './common';
-import { Category } from './category';
+import { ICategory } from './category';
 import { IRegion } from './region';
 import { IUser } from './user';
 
@@ -20,7 +19,7 @@ export interface IProduct {
   createdAt: string;
   updatedAt: string;
   thumbnails: string[];
-  category: Category;
+  category: ICategory;
   description: string;
   views: number;
   seller: IUser;

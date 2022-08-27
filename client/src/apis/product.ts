@@ -1,6 +1,5 @@
-import { Category } from '@customTypes/category';
 import { PagedResponseDto } from '@customTypes/common';
-import { CreateProductAPIDto, IProduct, IProductItem, PatchProductDto } from '@customTypes/product';
+import { CreateProductAPIDto, IProductItem, PatchProductDto } from '@customTypes/product';
 import myAxios from './myAxios';
 
 interface GetRegionProductsProps {
@@ -36,15 +35,6 @@ export async function createProduct(product: CreateProductAPIDto) {
 export async function updateProduct(product: PatchProductDto, productId: number) {
   try {
     const { data } = await myAxios.patch(`/products/${productId}`, product);
-    return data;
-  } catch (e) {
-    throw new Error('상품 수정에 실패했습니다.');
-  }
-}
-
-export async function getCategories() {
-  try {
-    const { data } = await myAxios.get<Category[]>(`/products/categories`);
     return data;
   } catch (e) {
     throw new Error('상품 수정에 실패했습니다.');

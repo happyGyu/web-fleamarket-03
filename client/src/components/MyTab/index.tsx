@@ -21,7 +21,11 @@ export default function MyTab() {
     <Container>
       <TabHeader>
         {tabInfos.map(({ name, id }) => (
-          <TabHeaderItem isActive={selectedTabId === id} onClick={() => setSelectedTabId(id)}>
+          <TabHeaderItem
+            key={id}
+            isActive={selectedTabId === id}
+            onClick={() => setSelectedTabId(id)}
+          >
             {name}
           </TabHeaderItem>
         ))}
