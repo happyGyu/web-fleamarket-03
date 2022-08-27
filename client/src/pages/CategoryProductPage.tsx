@@ -1,14 +1,12 @@
 import { getRegionProducts } from '@apis/product';
 import NavigationBar from '@components/common/NavigationBar';
 import ProductItemList from '@components/ProductItemList';
-import ProductItem from '@components/ProductItemList/ProductItem';
-import colors from '@constants/colors';
-import { padding } from '@constants/padding';
+import TransitionPage from '@components/TransitionPage';
 import { IProductItem } from '@customTypes/product';
 import useInfiniteScroll from '@hooks/useInfiniteScroll';
+import useCategory from '@queries/useCategory';
 import { useUser } from '@queries/useUser';
 import { useLocation, useParams } from 'react-router-dom';
-import styled from 'styled-components';
 
 interface pageState {
   categoryName: string;
@@ -16,12 +14,14 @@ interface pageState {
 
 export default function CategoryProductPage() {
   const { categoryId } = useParams();
-  const location = useLocation();
-  const pageState = location.state as pageState;
+  const { getCategories } = useCategory();
+  const { data: categories } = getCategories();
 
   const { user } = useUser();
+
   const primaryRegion = user.regions.find((region) => region.isPrimary) || user.regions[0];
   const queryKey = ['products', primaryRegion.id, Number(categoryId)];
+  const category = categories?.find((categoryItem) => categoryItem.id === Number(categoryId));
   const { data, Trigger } = useInfiniteScroll<IProductItem>({
     queryKey,
     fetchFunction: (pageParam?: number) =>
@@ -33,13 +33,13 @@ export default function CategoryProductPage() {
   });
 
   return (
-    <>
-      <NavigationBar title={pageState.categoryName} />
+    <TransitionPage depth={2}>
+      <NavigationBar title={category?.name} />
       <ProductItemList
         products={data}
         utilButtonInfo={{ type: 'like' }}
         scrollTriger={<Trigger />}
       />
-    </>
+    </TransitionPage>
   );
 }

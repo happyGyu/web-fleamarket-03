@@ -9,6 +9,7 @@ import {
 import Post from '@components/Post';
 import RegionFooter from '@components/Post/RegionFooter';
 import { SubmitButton } from '@components/Post/SubmitButton';
+import TransitionPage from '@components/TransitionPage';
 import { CreateProductAPIDto } from '@customTypes/product';
 import useProduct from '@queries/useProduct';
 import { useUser } from '@queries/useUser';
@@ -62,13 +63,15 @@ function PostEditForm() {
   }
 
   return (
-    <Form onSubmit={registerProduct}>
-      <NavigationBar title="글쓰기" actionItem={<SubmitButton />} />
-      <PostPageWrapper>
-        <Post product={product} />
-        <RegionFooter />
-      </PostPageWrapper>
-    </Form>
+    <TransitionPage depth={3}>
+      <Form onSubmit={registerProduct}>
+        <NavigationBar title="글쓰기" actionItem={<SubmitButton />} />
+        <PostPageWrapper>
+          <Post product={product} />
+          <RegionFooter />
+        </PostPageWrapper>
+      </Form>
+    </TransitionPage>
   );
 }
 

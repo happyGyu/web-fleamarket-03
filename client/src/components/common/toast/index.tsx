@@ -1,6 +1,6 @@
 import colors from '@constants/colors';
 import styled, { css } from 'styled-components';
-import { ToastType, useToastState } from './toastContext';
+import { useToastState, ToastType } from './toastContext';
 
 export default function Toast() {
   const { isOpened, message } = useToastState();
@@ -13,6 +13,7 @@ export default function Toast() {
 
 const Container = styled.div<{ isOpened: boolean; toastType?: ToastType }>`
   position: absolute;
+  z-index: 999;
   left: 50%;
   width: 240px;
   bottom: 0;

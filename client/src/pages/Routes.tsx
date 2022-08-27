@@ -1,5 +1,6 @@
-import { Route, Routes as RouterRoutes } from 'react-router-dom';
-import CategoryProductPage from './CategortProductPage';
+import { AnimatePresence } from '@hooks/animation/AnimatedPresence';
+import { Route, Routes as RouterRoutes, useLocation } from 'react-router-dom';
+import CategoryProductPage from './CategoryProductPage';
 import CategoryListPage from './CategoryListPage';
 import DetailPage from './DetailPage';
 import ErrorPage from './ErrorPage';
@@ -14,21 +15,24 @@ import SignUpPage from './SignUpPage';
 import UserRegionPage from './UserRegionPage';
 
 export default function Routes() {
+  const location = useLocation();
   return (
-    <RouterRoutes>
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/oauth-redirect" element={<OAuthRedirectPage />} />
-      <Route path="/signUp" element={<SignUpPage />} />
-      <Route path="/error" element={<ErrorPage />} />
-      <Route path="/" element={<MainPage />} />
-      <Route path="/product/:productId" element={<DetailPage />} />
-      <Route path="/product/edit/:productId" element={<ProductEditPage />} />
-      <Route path="/my" element={<MyPage />} />
-      <Route path="/user/region" element={<UserRegionPage />} />
-      <Route path="/post" element={<PostPage />} />
-      <Route path="/category/list" element={<CategoryListPage />} />
-      <Route path="/category/products/:categoryId" element={<CategoryProductPage />} />
-      <Route path="/logout" element={<LogOutPage />} />
-    </RouterRoutes>
+    <AnimatePresence animateBeforeExit>
+      <RouterRoutes location={location} key={location.pathname}>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/oauth-redirect" element={<OAuthRedirectPage />} />
+        <Route path="/signUp" element={<SignUpPage />} />
+        <Route path="/error" element={<ErrorPage />} />
+        <Route path="/" element={<MainPage />} />
+        <Route path="/product/:productId" element={<DetailPage />} />
+        <Route path="/product/edit/:productId" element={<ProductEditPage />} />
+        <Route path="/my" element={<MyPage />} />
+        <Route path="/user/region" element={<UserRegionPage />} />
+        <Route path="/post" element={<PostPage />} />
+        <Route path="/category/list" element={<CategoryListPage />} />
+        <Route path="/category/products/:categoryId" element={<CategoryProductPage />} />
+        <Route path="/logout" element={<LogOutPage />} />
+      </RouterRoutes>
+    </AnimatePresence>
   );
 }

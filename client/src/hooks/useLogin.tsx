@@ -19,7 +19,7 @@ export default function useLogin() {
 
     if (isRegistered && accessToken) {
       setAccessTokenOnHeader(accessToken);
-      navigate('/');
+      window.location.href = '/';
     }
 
     if (error) {

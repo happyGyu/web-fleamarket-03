@@ -14,6 +14,7 @@ import XIcon from '@assets/icons/XIcon';
 import PlusIcon from '@assets/icons/PlusIcon';
 import useUserRegion from '@hooks/useUserRegion';
 import { useUser } from '@queries/useUser';
+import TransitionPage from '@components/TransitionPage';
 
 export default function UserRegionPage() {
   const { isModalOpen, toggleModalOpen, selectedRegion, setSelectedRegion } = useRegionModal();
@@ -38,7 +39,7 @@ export default function UserRegionPage() {
   );
 
   return (
-    <>
+    <TransitionPage depth={1}>
       <NavigationBar title="내 동네 설정하기" />
       <SignUpPageWrapper>
         <Caption color={colors.grey3} as="p">
@@ -65,7 +66,7 @@ export default function UserRegionPage() {
         toggleModalOpen={toggleModalOpen}
         setSelectedRegion={setSelectedRegion}
       />
-    </>
+    </TransitionPage>
   );
 }
 
