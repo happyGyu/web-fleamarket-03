@@ -63,7 +63,7 @@ function PostEditForm() {
   }
 
   return (
-    <TransitionPage depth={2}>
+    <TransitionPage depth={3}>
       <Form onSubmit={registerProduct}>
         <NavigationBar title="글쓰기" actionItem={<SubmitButton />} />
         <PostPageWrapper>

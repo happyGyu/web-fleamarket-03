@@ -29,7 +29,7 @@ export default function DetailPage() {
   const { name, createdAt, region, description, views, likedUsers, seller, id, price, thumbnails } =
     product;
   return (
-    <TransitionPage depth={1}>
+    <TransitionPage depth={2}>
       <Container>
         <DetailPageNavigationBar />
         <ImageSlider images={thumbnails} />
