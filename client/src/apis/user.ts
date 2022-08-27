@@ -36,6 +36,11 @@ export const requestLogin = async (code: string, oAuthOrigin: string) => {
   return loginResponse;
 };
 
+export const requestLogout = async () => {
+  const { data: logoutResponse } = await myAxios.post('/auth/logout');
+  return logoutResponse;
+};
+
 export const requestResignToken = async () => {
   const { data: accessToken } = await axios.get<string>('/auth/resign');
   return accessToken;

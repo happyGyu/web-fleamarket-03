@@ -10,12 +10,10 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import portalUtil from '@utils/portal';
 import { padding } from '@constants/padding';
-import useUser from '../queries/useUser';
+import { useUser } from '../queries/useUser';
 
 export default function MainPage() {
-  const { getUser } = useUser();
-  const { data: user } = getUser();
-
+  const { user } = useUser();
   const primaryRegion = user.regions.find((region) => region.isPrimary) || user.regions[0];
   const queryKey = ['products', primaryRegion.id];
   const { data, Trigger } = useInfiniteScroll<IProductItem>({

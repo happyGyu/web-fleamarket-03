@@ -1,5 +1,5 @@
 import { Data, PagedResponseDto } from '@customTypes/common';
-import useUser from '@queries/useUser';
+import { useUser } from '@queries/useUser';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 
@@ -12,8 +12,7 @@ export default function useInfiniteScroll<T extends Data>({
   queryKey,
   fetchFunction,
 }: UseInfiniteScrollProps<PagedResponseDto<T>>) {
-  const { getUser } = useUser();
-  const { data: user } = getUser();
+  const { user } = useUser();
   const queryClinet = useQueryClient();
 
   const { data, fetchNextPage, isLoading, hasNextPage } = useInfiniteQuery(

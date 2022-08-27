@@ -4,7 +4,7 @@ import LoadingIndicator from '@components/common/LoadingIndicator';
 import { Text } from '@components/common/Text';
 import colors from '@constants/colors';
 import useUserRegion from '@hooks/useUserRegion';
-import useUser from '@queries/useUser';
+import { useUser } from '@queries/useUser';
 import mixin from '@style/mixin';
 import { getLastAddress } from '@utils/product';
 import { useState } from 'react';
@@ -12,8 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 export default function MainNavTitle() {
-  const { getUser } = useUser();
-  const { data: user } = getUser();
+  const { user } = useUser();
   const { updateRegionPrimary, regions } = useUserRegion();
 
   const primaryRegion = user.regions.find((region) => region.isPrimary) || user.regions[0];

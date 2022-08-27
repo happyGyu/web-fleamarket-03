@@ -2,7 +2,7 @@ import { toggleLike } from '@apis/product';
 import { useToast } from '@components/common/Toast/toastContext';
 import { IProductItem } from '@customTypes/product';
 import useProduct from '@queries/useProduct';
-import useUser from '@queries/useUser';
+import { useUser } from '@queries/useUser';
 import { UseMutateFunction, useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface UseLikeButtonprops {
@@ -14,8 +14,7 @@ export default function useLikeButton({
 }: UseLikeButtonprops): UseMutateFunction<void, unknown, void, unknown> {
   const queryKey = ['product', productId];
   const queryClient = useQueryClient();
-  const { getUser } = useUser();
-  const { data: user } = getUser();
+  const { user } = useUser();
 
   const { toastError } = useToast();
   const { getProduct } = useProduct();

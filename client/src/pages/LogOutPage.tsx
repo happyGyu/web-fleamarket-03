@@ -1,10 +1,10 @@
 import NavigationBar from '@components/common/NavigationBar';
 import PageContainer from '@components/common/PageContainer';
 import LogOutButton from '@components/LogOutPage/LogOutButton';
-import useUser from '@queries/useUser';
+import { useUser } from '@queries/useUser';
 
 export default function LogOutPage() {
-  const { data: user } = useUser().getUser();
+  const { user } = useUser();
 
   return (
     <>

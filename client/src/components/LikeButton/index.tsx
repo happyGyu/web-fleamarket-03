@@ -2,7 +2,7 @@ import HeartIcon from '@assets/icons/HeartIcon';
 import colors from '@constants/colors';
 import React from 'react';
 import styled, { css } from 'styled-components';
-import useUser from '@queries/useUser';
+import { useUser } from '@queries/useUser';
 import useProduct from '@queries/useProduct';
 import useLikeButton from './useLikeButton';
 
@@ -10,8 +10,7 @@ interface LikeButtonProps {
   productId: number;
 }
 export default function LikeButton({ productId }: LikeButtonProps) {
-  const { getUser } = useUser();
-  const { data: user } = getUser();
+  const { user } = useUser();
   const { getProduct } = useProduct();
   const { data: product } = getProduct(productId);
 
