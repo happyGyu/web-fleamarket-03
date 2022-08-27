@@ -3,8 +3,10 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { ChatRoom } from './chatRoom.entity';
 
 @Entity()
 export class ChatMessage {
@@ -20,7 +22,9 @@ export class ChatMessage {
   @Column({ type: 'text' })
   content: string;
 
-  @ManyToOne(() => ChatRoom, (chatRoom) => chatRoom.messages)
+  @ManyToOne(() => ChatRoom, (chatRoom) => chatRoom.messages, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'chat_room_id' })
   chatRoom: ChatRoom;
 
