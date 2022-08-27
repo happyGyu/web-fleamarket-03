@@ -13,6 +13,7 @@ export default function Toast() {
 
 const Container = styled.div<{ isOpened: boolean; toastType?: ToastType }>`
   position: absolute;
+  z-index: 999;
   left: 50%;
   width: 240px;
   bottom: 0;

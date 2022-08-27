@@ -15,6 +15,7 @@ import LikeButton from '@components/LikeButton';
 import ChatButton from '@components/ChatButton';
 import { useUser } from '@queries/useUser';
 import useProduct from '@queries/useProduct';
+import TransitionPage from '@components/TransitionPage';
 
 export default function DetailPage() {
   const { productId } = useParams();
@@ -28,44 +29,46 @@ export default function DetailPage() {
   const { name, createdAt, region, description, views, likedUsers, seller, id, price, thumbnails } =
     product;
   return (
-    <Container>
-      <DetailPageNavigationBar sellerId={seller.id} />
-      <ImageSlider images={thumbnails} />
-      <DetailPageBody>
-        {user.id === product.seller.id && (
-          <SaleStateSelector initialStatus={product.salesStatus} productId={id} />
-        )}
-        <DetailContent>
-          <Text size="large" weight="bold">
-            {name}
-          </Text>
-          <Caption
-            size="small"
-            captions={[getLastAddress(region.address), getPassedTimeString(createdAt)]}
-          />
-          <Description as="p" size="small">
-            {description}
-          </Description>
-        </DetailContent>
-        <Caption size="small" captions={[`관심 ${likedUsers.length}`, `조회 ${views}`]} />
-        <SellerInfo>
-          <Text size="small" weight="bold">
-            판매자 정보
-          </Text>
-          <Text size="small" weight="bolder">
-            {seller.name}
-          </Text>
-          <Text size="small" weight="medium" color={colors.grey1}>
-            {getLastAddress(seller.regions[0].address)}
-          </Text>
-        </SellerInfo>
-      </DetailPageBody>
-      <DetailPageFooter>
-        <LikeButton productId={id} />
-        <Text weight="bolder">{getPriceString(price)}</Text>
-        <ChatButton />
-      </DetailPageFooter>
-    </Container>
+    <TransitionPage depth={2}>
+      <Container>
+        <DetailPageNavigationBar sellerId={seller.id} />
+        <ImageSlider images={thumbnails} />
+        <DetailPageBody>
+          {user.id === product.seller.id && (
+            <SaleStateSelector initialStatus={product.salesStatus} productId={id} />
+          )}
+          <DetailContent>
+            <Text size="large" weight="bold">
+              {name}
+            </Text>
+            <Caption
+              size="small"
+              captions={[getLastAddress(region.address), getPassedTimeString(createdAt)]}
+            />
+            <Description as="p" size="small">
+              {description}
+            </Description>
+          </DetailContent>
+          <Caption size="small" captions={[`관심 ${likedUsers.length}`, `조회 ${views}`]} />
+          <SellerInfo>
+            <Text size="small" weight="bold">
+              판매자 정보
+            </Text>
+            <Text size="small" weight="bolder">
+              {seller.name}
+            </Text>
+            <Text size="small" weight="medium" color={colors.grey1}>
+              {getLastAddress(seller.regions[0].address)}
+            </Text>
+          </SellerInfo>
+        </DetailPageBody>
+        <DetailPageFooter>
+          <LikeButton productId={id} />
+          <Text weight="bolder">{getPriceString(price)}</Text>
+          <ChatButton />
+        </DetailPageFooter>
+      </Container>
+    </TransitionPage>
   );
 }
 
