@@ -16,7 +16,7 @@ export default function MainPageNavigationBar() {
         <CategoryIcon />
       </IconButton>
       <MainNavTitle />
-      <IconButton right="3.5rem" onClick={() => navigate('/error')}>
+      <IconButton right="3.5rem" onClick={() => navigate('/logout')}>
         <UserIcon />
       </IconButton>
       <IconButton right="1rem" onClick={() => navigate('/my')}>
@@ -35,6 +35,7 @@ const Container = styled.div`
   padding: 1rem 1.5rem;
   background-color: ${colors.primary};
   border-radius: 0 0rem 1rem 1rem;
+  z-index: 10;
 `;
 
 const IconButton = styled.button<{ left?: string; right?: string }>`

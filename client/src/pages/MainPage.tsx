@@ -1,7 +1,6 @@
 import { getRegionProducts } from '@apis/product';
 import CircleButton from '@components/common/CircleButton';
 import LikeButton from '@components/LikeButton';
-import PageContainer from '@components/common/PageContainer';
 import MainPageNavigationBar from '@components/MainPageNavigationBar';
 import ProductItem from '@components/ProductItem';
 import colors from '@constants/colors';
@@ -9,6 +8,8 @@ import { IProductItem } from '@customTypes/product';
 import useInfiniteScroll from '@hooks/useInfiniteScroll';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import portalUtil from '@utils/portal';
+import { padding } from '@constants/padding';
 import { useUser } from '../queries/useUser';
 
 export default function MainPage() {
@@ -20,6 +21,7 @@ export default function MainPage() {
     fetchFunction: (pageParam?: number) =>
       getRegionProducts({ regionId: primaryRegion.id, start: pageParam }),
   });
+  const Portal = portalUtil.openPortal();
 
   return (
     <>
@@ -35,17 +37,21 @@ export default function MainPage() {
           )),
         )}
         <Trigger />
+      </MainPageWrapper>
+      <Portal>
         <RegisterNewProductLink to="/post">
           <CircleButton />
         </RegisterNewProductLink>
-      </MainPageWrapper>
+      </Portal>
     </>
   );
 }
 
-const MainPageWrapper = styled(PageContainer)`
+const MainPageWrapper = styled.div`
+  padding-top: ${padding.pageTop};
   background-color: ${colors.white};
   height: 100%;
+  overflow-y: auto;
 `;
 
 const RegisterNewProductLink = styled(Link)`

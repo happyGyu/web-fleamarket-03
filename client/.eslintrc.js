@@ -22,6 +22,7 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint'],
   rules: {
+    '@typescript-eslint/no-empty-function': 'warn',
     'import/prefer-default-export': 'off',
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],

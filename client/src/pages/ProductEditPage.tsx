@@ -1,4 +1,4 @@
-import { getProductDetail, updateProduct } from '@apis/product';
+import { updateProduct } from '@apis/product';
 import NavigationBar from '@components/common/NavigationBar';
 import PageContainer from '@components/common/PageContainer';
 import {
@@ -9,10 +9,9 @@ import {
 import Post from '@components/Post';
 import RegionFooter from '@components/Post/RegionFooter';
 import { SubmitButton } from '@components/Post/SubmitButton';
-import { padding } from '@constants/padding';
 import { CreateProductAPIDto } from '@customTypes/product';
+import useProduct from '@queries/useProduct';
 import { useUser } from '@queries/useUser';
-import { useQuery } from '@tanstack/react-query';
 import { getNumber } from '@utils/format';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -29,9 +28,8 @@ export default function ProductEditPage() {
 function PostEditForm() {
   const user = useUser();
   const { productId } = useParams();
-  const { data: product } = useQuery(['product', productId], () =>
-    getProductDetail(Number(productId)),
-  );
+  const { getProduct } = useProduct();
+  const { data: product } = getProduct(Number(productId));
   const { formInputMap } = useFormInputMap();
   const { isAllValidated } = useFormValidationState();
 
@@ -76,8 +74,6 @@ function PostEditForm() {
 
 const PostPageWrapper = styled(PageContainer)`
   position: relative;
-  padding-right: ${padding.pageSide};
-  padding-left: ${padding.pageSide};
   width: 100%;
   height: 100%;
   background-color: white;

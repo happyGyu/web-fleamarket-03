@@ -11,6 +11,6 @@ export class CategoryRepository {
   }
 
   public async findAll() {
-    return await this.repository.find({});
+    return await this.repository.find();
   }
 }
