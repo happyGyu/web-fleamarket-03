@@ -30,7 +30,7 @@ export default function MainPage() {
         scrollTriger={<Trigger />}
       />
       <Portal>
-        <RegisterNewProductLink to="/post">
+        <RegisterNewProductLink to="/product/post">
           <CircleButton />
         </RegisterNewProductLink>
       </Portal>

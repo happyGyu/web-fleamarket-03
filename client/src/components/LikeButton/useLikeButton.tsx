@@ -1,6 +1,5 @@
 import { toggleLike } from '@apis/product';
-import { useToast } from '@components/common/Toast/toastContext';
-
+import { useToast } from '@components/common/Toast/ToastContext';
 import { IProductItem } from '@customTypes/product';
 import useProduct from '@queries/useProduct';
 import { useUser } from '@queries/useUser';

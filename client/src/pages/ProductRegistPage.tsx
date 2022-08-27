@@ -1,4 +1,4 @@
-import { createProduct } from '@apis/product';
+import { createProduct, updateProduct } from '@apis/product';
 import NavigationBar from '@components/common/NavigationBar';
 import PageContainer from '@components/common/PageContainer';
 import {
@@ -11,13 +11,14 @@ import RegionFooter from '@components/Post/RegionFooter';
 import { SubmitButton } from '@components/Post/SubmitButton';
 import TransitionPage from '@components/TransitionPage';
 import { CreateProductAPIDto } from '@customTypes/product';
+import useProduct from '@queries/useProduct';
 import { useUser } from '@queries/useUser';
 import { getNumber } from '@utils/format';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-export default function PostPage() {
+export default function ProductRegistPage() {
   return (
     <FormProvider>
       <PostForm />
@@ -27,11 +28,16 @@ export default function PostPage() {
 
 function PostForm() {
   const { user } = useUser();
-
   const { formInputMap } = useFormInputMap();
   const { isAllValidated } = useFormValidationState();
 
+  const { productId } = useParams();
+  const isEdit = !!productId;
+  const { getProduct } = useProduct();
+  const { data: originalProduct } = getProduct(Number(productId));
+
   const navigate = useNavigate();
+
   const registerProduct = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isAllValidated) {
@@ -46,7 +52,11 @@ function PostForm() {
     } as CreateProductAPIDto;
 
     try {
-      await createProduct(product);
+      if (isEdit) {
+        await updateProduct(product, Number(productId));
+      } else {
+        await createProduct(product);
+      }
       navigate('/');
     } catch (error) {
       navigate('error');
@@ -54,11 +64,11 @@ function PostForm() {
   };
 
   return (
-    <TransitionPage depth={1}>
+    <TransitionPage depth={3}>
       <Form onSubmit={registerProduct}>
-        <NavigationBar title="글쓰기" actionItem={<SubmitButton />} />
+        <NavigationBar title={isEdit ? '상품 수정' : '상품 등록'} actionItem={<SubmitButton />} />
         <PostPageWrapper>
-          <Post />
+          <Post product={originalProduct} />
           <RegionFooter />
         </PostPageWrapper>
       </Form>

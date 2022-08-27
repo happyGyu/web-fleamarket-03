@@ -1,6 +1,6 @@
 import colors from '@constants/colors';
 import styled, { css } from 'styled-components';
-import { useToastState, ToastType } from './toastContext';
+import { ToastType, useToastState } from './ToastContext';
 
 export default function Toast() {
   const { isOpened, message } = useToastState();

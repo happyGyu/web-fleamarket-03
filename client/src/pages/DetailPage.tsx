@@ -31,7 +31,7 @@ export default function DetailPage() {
   return (
     <TransitionPage depth={2}>
       <Container>
-        <DetailPageNavigationBar />
+        <DetailPageNavigationBar sellerId={seller.id} />
         <ImageSlider images={thumbnails} />
         <DetailPageBody>
           {user.id === product.seller.id && (
@@ -74,11 +74,13 @@ export default function DetailPage() {
 
 const Container = styled.div`
   ${mixin.flexMixin({ direction: 'column' })}
+  height: 100%;
   gap: 1.5rem;
 `;
 
 const DetailPageBody = styled.div`
   width: 100%;
+  margin-top: 0.5rem;
   padding: 0 ${padding.pageSide};
   ${mixin.flexMixin({ direction: 'column' })}
   gap: 1.5rem;
@@ -91,6 +93,8 @@ const DetailContent = styled.section`
 
 const Description = styled(Text)`
   margin: 0.5rem 0;
+  max-height: 7rem;
+  overflow: auto;
 `;
 
 const SellerInfo = styled.div`
