@@ -27,7 +27,7 @@ export class ChatRoom {
   seller: User;
 
   @Column({ type: 'date' })
-  sellerLeaveTime: Date;
+  sellerLastVisit: Date;
 
   @Column({ type: 'int' })
   buyerId: number;
@@ -37,14 +37,15 @@ export class ChatRoom {
   buyer: User;
 
   @Column({ type: 'date' })
-  buyerLeaveTime: Date;
+  buyerLastVisit: Date;
+
+  @Column({ type: 'int' })
+  leavedUserId: number;
 
   @Column({ type: 'int' })
   productId: number;
 
-  @ManyToOne(() => Product, {
-    onDelete: 'CASCADE',
-  })
+  @ManyToOne(() => Product, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'product_id' })
   product: Product;
 

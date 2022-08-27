@@ -16,10 +16,10 @@ export class ChatMessage {
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', nullable: true })
   senderId: number;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: true })
   content: string;
 
   @ManyToOne(() => ChatRoom, (chatRoom) => chatRoom.messages, {
