@@ -10,9 +10,10 @@ interface LikeButtonProps {
   productId: number;
 }
 export default function LikeButton({ productId }: LikeButtonProps) {
-  const user = useUser();
+  const { user } = useUser();
   const { getProduct } = useProduct();
   const { data: product } = getProduct(productId);
+
   const likedUsers = product?.likedUsers || [];
   const isUserPick = likedUsers.some((likedUser) => likedUser.userId === user.id);
   const mutateLikeButton = useLikeButton({ productId });

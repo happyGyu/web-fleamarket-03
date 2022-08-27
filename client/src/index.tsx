@@ -7,7 +7,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ToastProvider } from '@components/common/Toast/toastContext';
 import App from './App';
 
-axios.defaults.withCredentials = true;
 axios.defaults.baseURL = SERVER_URL;
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);

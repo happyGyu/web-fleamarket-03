@@ -25,7 +25,7 @@ export default function PostPage() {
 }
 
 function PostForm() {
-  const user = useUser();
+  const { user } = useUser();
 
   const { formInputMap } = useFormInputMap();
   const { isAllValidated } = useFormValidationState();

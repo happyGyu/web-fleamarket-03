@@ -8,22 +8,22 @@ import { Text } from '@components/common/Text';
 import Button from '@components/common/Button';
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
-import { useQuery } from '@tanstack/react-query';
-import { getUser, requestCreateUserRegion } from '@apis/user';
+import { requestCreateUserRegion } from '@apis/user';
 import { getLastAddress } from '@utils/product';
 import XIcon from '@assets/icons/XIcon';
 import PlusIcon from '@assets/icons/PlusIcon';
 import useUserRegion from '@hooks/useUserRegion';
+import { useUser } from '@queries/useUser';
 
 export default function UserRegionPage() {
   const { isModalOpen, toggleModalOpen, selectedRegion, setSelectedRegion } = useRegionModal();
-  const { data: user, refetch } = useQuery(['user'], getUser);
+  const { refetchUser } = useUser();
   const { regions, deleteRegion, updateRegionPrimary } = useUserRegion();
 
   useEffect(() => {
     if (selectedRegion) {
       requestCreateUserRegion(selectedRegion).then((data) => {
-        refetch();
+        refetchUser();
         setSelectedRegion(null);
       });
     }

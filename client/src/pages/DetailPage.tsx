@@ -20,7 +20,7 @@ export default function DetailPage() {
   const { productId } = useParams();
   const { getProduct } = useProduct();
   const { data: product } = getProduct(Number(productId));
-  const user = useUser();
+  const { user } = useUser();
 
   if (!product) {
     return <LoadingIndicator />;

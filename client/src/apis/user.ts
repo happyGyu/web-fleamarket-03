@@ -29,11 +29,29 @@ export const requestSignUp = async ({ name, regionId, oAuthInfo }: SignUpRequest
 };
 
 export const requestLogin = async (code: string, oAuthOrigin: string) => {
-  const { data: loginResponse } = await myAxios.post<LoginResponseDto>('/auth/login', {
-    code,
-    oAuthOrigin,
-  });
+  const { data: loginResponse } = await myAxios.post<LoginResponseDto>(
+    '/auth/login',
+    {
+      code,
+      oAuthOrigin,
+    },
+    {
+      withCredentials: true,
+    },
+  );
   return loginResponse;
+};
+
+export const requestLogout = async () => {
+  const { data: logoutResponse } = await myAxios.post(
+    '/auth/logout',
+    {},
+    {
+      withCredentials: true,
+    },
+  );
+  myAxios.defaults.headers.common.Authorization = '';
+  return logoutResponse;
 };
 
 export const requestResignToken = async () => {
@@ -41,7 +59,7 @@ export const requestResignToken = async () => {
   return accessToken;
 };
 
-export const getUser = async () => {
+export const requestUser = async () => {
   const { data: user } = await myAxios.get<IUser>('/auth/user');
   return user;
 };

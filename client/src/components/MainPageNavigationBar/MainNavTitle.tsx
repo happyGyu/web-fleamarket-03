@@ -12,11 +12,10 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 export default function MainNavTitle() {
-  const user = useUser();
-
+  const { user } = useUser();
   const { updateRegionPrimary, regions } = useUserRegion();
-  const primaryRegion = user.regions.find((region) => region.isPrimary) || user.regions[0];
 
+  const primaryRegion = user.regions.find((region) => region.isPrimary) || user.regions[0];
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const navigate = useNavigate();
 

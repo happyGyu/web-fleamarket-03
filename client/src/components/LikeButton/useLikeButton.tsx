@@ -14,7 +14,7 @@ export default function useLikeButton({
 }: UseLikeButtonprops): UseMutateFunction<void, unknown, void, unknown> {
   const queryKey = ['product', productId];
   const queryClient = useQueryClient();
-  const user = useUser();
+  const { user } = useUser();
 
   const { toastError } = useToast();
   const { getProduct } = useProduct();
