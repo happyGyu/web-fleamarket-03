@@ -1,3 +1,4 @@
+import { ChatRoom } from './../../chat/entities/chatRoom.entity';
 import { Product } from './../../product/entities/product.entity';
 import { OAuthOriginEnum } from 'src/common/enums';
 import { UserRegion } from 'src/region/entities/userRegion.entity';
@@ -26,4 +27,10 @@ export class User {
 
   @OneToMany(() => Like, (like) => like.user)
   likedProducts: Like[];
+
+  @OneToMany(() => ChatRoom, (chatRoom) => chatRoom.seller)
+  chatRoomAsSeller: ChatRoom[];
+
+  @OneToMany(() => ChatRoom, (chatRoom) => chatRoom.buyer)
+  chatRoomAsBuyer: ChatRoom[];
 }

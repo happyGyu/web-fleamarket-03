@@ -13,6 +13,7 @@ import { Category } from './category.entity';
 import { User } from 'src/user/entities/user.entity';
 import { Region } from 'src/region/entities/region.entity';
 import { Like } from './like.entity';
+import { ChatRoom } from 'src/chat/entities/chatRoom.entity';
 
 @Entity()
 export class Product {
@@ -66,4 +67,7 @@ export class Product {
 
   @OneToMany(() => Like, (like) => like.product)
   likedUsers: Like[];
+
+  @OneToMany(() => ChatRoom, (chatRoom) => chatRoom.product)
+  chatRooms: ChatRoom[];
 }
