@@ -26,12 +26,18 @@ export class ChatRoom {
   @JoinColumn({ name: 'seller_id' })
   seller: User;
 
+  @Column({ type: 'date' })
+  sellerLeaveTime: Date;
+
   @Column({ type: 'int' })
   buyerId: number;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'buyer_id' })
   buyer: User;
+
+  @Column({ type: 'date' })
+  buyerLeaveTime: Date;
 
   @Column({ type: 'int' })
   productId: number;
