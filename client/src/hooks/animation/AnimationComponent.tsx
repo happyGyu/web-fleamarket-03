@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { getSharedAnimationKeyFrame } from './animate';
 import { usePresence } from './PresenceChild';
 
-type AnimatedKeyFrame = {
+export type AnimatedKeyFrame = {
   [key in keyof React.CSSProperties]: string;
 };
 
