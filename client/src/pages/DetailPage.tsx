@@ -29,7 +29,7 @@ export default function DetailPage() {
     product;
   return (
     <Container>
-      <DetailPageNavigationBar />
+      <DetailPageNavigationBar sellerId={seller.id} />
       <ImageSlider images={thumbnails} />
       <DetailPageBody>
         {user.id === product.seller.id && (
