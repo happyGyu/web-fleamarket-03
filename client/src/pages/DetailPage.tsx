@@ -77,6 +77,7 @@ const Container = styled.div`
 
 const DetailPageBody = styled.div`
   width: 100%;
+  margin-top: 0.5rem;
   padding: 0 ${padding.pageSide};
   ${mixin.flexMixin({ direction: 'column' })}
   gap: 1.5rem;
