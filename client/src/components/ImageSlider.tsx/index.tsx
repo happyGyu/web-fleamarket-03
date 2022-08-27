@@ -1,21 +1,33 @@
 import styled from 'styled-components';
+import Slider from 'react-slick';
 
 interface ImageSliderProps {
   images: string[];
 }
 
 export default function ImageSlider({ images }: ImageSliderProps) {
-  const primaryImage = images[0];
   return (
-    <Container imgSrc={primaryImage}>
-      <img src={primaryImage} alt="대표이미지" />
+    <Container>
+      <Slider dots infinite={false} speed={500} slidesToShow={1} slidesToScroll={1}>
+        {images.map((image) => (
+          <ImageContainer>
+            <img key={image} src={image} alt="상품이미지" />
+          </ImageContainer>
+        ))}
+      </Slider>
     </Container>
   );
 }
 
-const Container = styled.div<{ imgSrc: string }>`
+const Container = styled.div`
   width: 26rem;
   height: 26rem;
+`;
+
+const ImageContainer = styled.div`
+  width: 26rem;
+  height: 26rem;
+
   background: linear-gradient(
     180deg,
     rgba(0, 0, 0, 0.24) 0%,
@@ -25,6 +37,8 @@ const Container = styled.div<{ imgSrc: string }>`
   );
 
   & img {
+    position: relative;
+    z-index: -1;
     width: 100%;
     height: 100%;
     object-fit: contain;

@@ -5,10 +5,9 @@ import colors from '@constants/colors';
 export default function DetailPageNavigationBar() {
   return (
     <NavigationBar
-      color={colors.white}
       backgroundColor="transparent"
       shadowColor="transparent"
-      actionItem={<MoreButton color={colors.white} />}
+      actionItem={<MoreButton color={colors.black} />}
     />
   );
 }
