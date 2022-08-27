@@ -3,26 +3,38 @@ import CountIndicator from '@components/common/CountIndicator';
 import LoadingIndicator from '@components/common/LoadingIndicator';
 import { Text } from '@components/common/Text';
 import Thumbnail from '@components/common/Thumbnail';
+import LikeButton from '@components/LikeButton';
+import MoreButton from '@components/MoreButton';
 import colors from '@constants/colors';
 import useProduct from '@queries/useProduct';
 import mixin from '@style/mixin';
 import { getPassedTimeString } from '@utils/common';
 import { getLastAddress, getPriceString } from '@utils/product';
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-interface ProductItemProps {
-  productId: number;
-  UtilButton: React.ReactNode;
+type UtilButtonType = 'like' | 'more';
+
+export interface IUtilButtonInfo {
+  type: UtilButtonType;
+  color?: string;
 }
 
-export default function ProductItem({ productId, UtilButton }: ProductItemProps) {
+interface ProductItemProps {
+  productId: number;
+  utilButtonInfo: IUtilButtonInfo;
+}
+
+export default function ProductItem({ productId, utilButtonInfo }: ProductItemProps) {
   const navigate = useNavigate();
   const { getProduct } = useProduct();
   const { data: product } = getProduct(productId);
 
   if (!product) return <LoadingIndicator />;
+  const { type, color } = utilButtonInfo;
+
+  const UtilButton =
+    type === 'like' ? <LikeButton productId={product.id} /> : <MoreButton color={color} />;
 
   const moveToDetailPage = () => {
     navigate(`/product/${product.id}`);

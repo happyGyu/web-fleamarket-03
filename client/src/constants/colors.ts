@@ -11,6 +11,7 @@ const colors = {
   grey3: '#D7D7D7',
   offWhite: '#F6F6F6',
   white: '#FFF',
+  yellow: '#F0C21B',
 };
 
 export default colors;
