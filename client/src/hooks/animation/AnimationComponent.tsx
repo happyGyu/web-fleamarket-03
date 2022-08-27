@@ -34,13 +34,7 @@ function AnimatedComponent<T extends HTMLElement>(Tag: keyof React.ReactHTML) {
     const { isVisible, onExitAnimationDone } = usePresence();
 
     const elementRef = slideRef || useRef<HTMLElement>(null);
-    const defaultEnterKeyFrameOption: KeyframeAnimationOptions = {
-      duration: 500,
-      easing: 'ease-in-out',
-      fill: 'forwards',
-    };
-
-    const defaultExitKeyFrameOption: KeyframeAnimationOptions = {
+    const defaultKeyFrameOption: KeyframeAnimationOptions = {
       duration: 500,
       easing: 'ease-in-out',
       fill: 'forwards',
@@ -51,7 +45,7 @@ function AnimatedComponent<T extends HTMLElement>(Tag: keyof React.ReactHTML) {
       const sharedKeyframe = getSharedAnimationKeyFrame(sharedRef, elementRef);
       if (isVisible) {
         const animation = elementRef.current.animate(sharedKeyframe || onEnter, {
-          ...defaultEnterKeyFrameOption,
+          ...defaultKeyFrameOption,
           ...keyframeOption,
         });
 
@@ -59,7 +53,7 @@ function AnimatedComponent<T extends HTMLElement>(Tag: keyof React.ReactHTML) {
         return () => animation.cancel();
       }
       const animation = elementRef.current.animate(sharedKeyframe || onExit, {
-        ...defaultExitKeyFrameOption,
+        ...defaultKeyFrameOption,
         direction: sharedKeyframe ? 'reverse' : 'normal',
         ...keyframeOption,
       });
