@@ -22,6 +22,11 @@ export default function ImageSlider({ images }: ImageSliderProps) {
 const Container = styled.div`
   width: 26rem;
   height: 26rem;
+
+  .slick-dots {
+    position: absolute;
+    bottom: 5%;
+  }
 `;
 
 const ImageContainer = styled.div`
