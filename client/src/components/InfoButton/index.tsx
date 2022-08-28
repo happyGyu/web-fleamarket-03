@@ -1,8 +1,8 @@
-import { createNewChattingRoom } from '@apis/chatRoom';
 import Button from '@components/common/Button';
 import { useNavigate } from 'react-router-dom';
 import { IChatRoom } from '@customTypes/chat';
 import { useUser } from '@queries/useUser';
+import { useCreateChatRoom } from '@queries/useChatRoom';
 
 interface InfoButtonProps {
   numberOfBuyer?: number;
@@ -13,13 +13,14 @@ interface InfoButtonProps {
 export default function InfoButton({ chattingRooms, numberOfBuyer, productId }: InfoButtonProps) {
   const navigate = useNavigate();
   const { user } = useUser();
+  const { createChatRoom } = useCreateChatRoom();
   const enterChatRoom = async () => {
     const existedRoom = chattingRooms?.find((chattingRoom) => chattingRoom.peer.id === user.id);
     if (existedRoom) {
       navigate(`/chatting-room/${existedRoom.id}`);
     }
 
-    const newChattingId = await createNewChattingRoom(productId);
+    const newChattingId = await createChatRoom(productId);
     navigate(`/chatting-room/${newChattingId}`);
   };
 

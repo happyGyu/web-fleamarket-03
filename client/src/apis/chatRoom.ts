@@ -10,7 +10,7 @@ export async function getMyProductChatRoom(productId: number) {
   return chatRooms;
 }
 
-export async function createNewChattingRoom(productId: number) {
+export async function createNewChatRoom(productId: number) {
   try {
     const { data } = await myAxios.post(`/chatRooms`);
     return data.chatRoomId;

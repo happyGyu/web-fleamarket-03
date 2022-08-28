@@ -1,9 +1,8 @@
 import { useUser } from '@queries/useUser';
-import { getAllChatRoom, getMyProductChatRoom } from '@apis/chatRoom';
-import myAxios from '@apis/myAxios';
+import { createNewChatRoom, getAllChatRoom, getMyProductChatRoom } from '@apis/chatRoom';
 import { useToast } from '@components/common/Toast/ToastContext';
 import { IChatRoom, IChatRoomResponse } from '@customTypes/chat';
-import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 export function useChatRooms() {
@@ -39,35 +38,16 @@ function selectPeer(userId: number, originalChatRooms: IChatRoomResponse[]) {
   });
 }
 
-// export function useCreateChatRoom(productId: number) {
-//   const { mutate } = useMutation(createNewChatRoom, {
-//     onSuccess: () => {
+export function useCreateChatRoom() {
+  const { toastError } = useToast();
+  const { mutate: createChatRoom } = useMutation(
+    (productId: number) => createNewChatRoom(productId),
+    {
+      onError: () => {
+        toastError(new Error('채팅방 생성에 실패했습니다.'));
+      },
+    },
+  );
 
-//     },
-//   });
-// }
-
-export async function createNewChattingRoom(productId: number) {
-  try {
-    const { data } = await myAxios.post(`/chatRooms`);
-    return data.chatRoomId;
-  } catch (e) {
-    throw new Error('채팅방 입장에 실패했습니다.');
-  }
+  return { createChatRoom };
 }
-
-// export const useLogOut = () => {
-//   const queryClinet = useQueryClient();
-//   const { toastSuccess, toastError } = useToast();
-//   const { mutate } = useMutation(requestLogout, {
-//     onSuccess: () => {
-//       queryClinet.setQueryData(['user'], initialUser);
-//       toastSuccess('로그아웃 되었습니다.');
-//     },
-//     onError: () => {
-//       toastError(new Error('로그아웃에 실패했습니다.'));
-//     },
-//   });
-
-//   return mutate;
-// };
