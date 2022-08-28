@@ -1,5 +1,6 @@
 import { Text } from '@components/common/Text';
 import colors from '@constants/colors';
+import { SalesStatusEnum } from '@customTypes/product';
 import useProduct from '@queries/useProduct';
 import mixin from '@style/mixin';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +13,7 @@ interface ChattingProductInfoProps {
 export default function ChattingProductInfo({ productId }: ChattingProductInfoProps) {
   const { product } = useProduct(productId);
   const navigate = useNavigate();
+  const salesStatus = product?.salesStatus || 'sale';
   return (
     <Container onClick={() => navigate(`/product/${product?.id}`)}>
       <FlexColumnContainer>
@@ -24,7 +26,7 @@ export default function ChattingProductInfo({ productId }: ChattingProductInfoPr
         </Text>
       </FlexColumnContainer>
       <FlexColumnContainer>
-        <StatusContainer>{product?.salesStatus}</StatusContainer>
+        <StatusContainer> {SalesStatusEnum[salesStatus]}</StatusContainer>
       </FlexColumnContainer>
     </Container>
   );
