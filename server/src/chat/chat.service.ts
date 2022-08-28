@@ -19,12 +19,11 @@ export class ChatService {
     return this.chatMessageRepository.create(createChatMessageDto);
   }
 
-  async createChatRoom(creatChatRoomRequestDto: CreatChatRoomRequestDto) {
-    const { productId } = creatChatRoomRequestDto;
+  async createChatRoom(productId: number, buyerId: number) {
     const { sellerId } = await this.productRepository.findOneByProductId(
       productId,
     );
-    const createChatRoomDto = { sellerId, ...creatChatRoomRequestDto };
+    const createChatRoomDto = { sellerId, productId, buyerId };
     return this.chatRoomRepository.create(createChatRoomDto);
   }
 

@@ -9,7 +9,6 @@ import {
   Param,
   Post,
   Body,
-  Delete,
   Patch,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
@@ -17,13 +16,14 @@ import { UseAuthGuard } from 'src/authentication/decorators/use.auth.guard.decor
 import { CreatChatRoomRequestDto } from './dto/CreateChatRoomRequest.dto';
 
 @Controller('chatRooms')
-@UseAuthGuard()
+// @UseAuthGuard()
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}
 
   @Get()
   async getMyAllChatRoom(@Res() res: Response, @Req() req: Request) {
-    const { id: userId } = req['user'];
+    //const { id: userId } = req['user'];
+    const userId = 39;
     const rooms = await this.chatService.getAllChatRoom(userId);
     return res.status(HttpStatus.OK).json(rooms);
   }
@@ -34,7 +34,8 @@ export class ChatController {
     @Req() req: Request,
     @Param('productId') productId: number,
   ) {
-    const { id: userId } = req['user'];
+    //const { id: userId } = req['user'];
+    const userId = 39;
     const rooms = await this.chatService.getAllSellingProductChatRoom(
       userId,
       productId,
@@ -53,11 +54,15 @@ export class ChatController {
 
   @Post()
   async createChatRoom(
+    @Req() req: Request,
     @Res() res: Response,
-    @Body() createChatRoomRequestDto: CreatChatRoomRequestDto,
+    @Body() { productId }: CreatChatRoomRequestDto,
   ) {
+    //const { id: buyerId } = req['user'];
+    const buyerId = 39;
     const newChatRoom = await this.chatService.createChatRoom(
-      createChatRoomRequestDto,
+      productId,
+      buyerId,
     );
     return res.status(HttpStatus.CREATED).json({ chatRoomId: newChatRoom.id });
   }
@@ -68,7 +73,8 @@ export class ChatController {
     @Res() res: Response,
     @Param('chatRoomId') chatRoomId: number,
   ) {
-    const { id: userId } = req['user'];
+    //const { id: userId } = req['user'];
+    const userId = 39;
     await this.chatService.leaveChatRoom(userId, chatRoomId);
     return res
       .status(HttpStatus.OK)
