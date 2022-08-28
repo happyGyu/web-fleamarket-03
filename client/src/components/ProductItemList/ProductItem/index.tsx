@@ -39,7 +39,7 @@ export default function ProductItem({ productId, utilButtonInfo }: ProductItemPr
     navigate(`/product/${product.id}`);
   };
 
-  const { thumbnails, name, region, createdAt, price, likedUsers } = product;
+  const { thumbnails, name, region, createdAt, price, likedUsers, chatRooms } = product;
   return (
     <Container onClick={moveToDetailPage}>
       <Thumbnail src={thumbnails[0]} size="medium" />
@@ -52,6 +52,7 @@ export default function ProductItem({ productId, utilButtonInfo }: ProductItemPr
       </ProductInfoContainer>
       <UtilButtonWrapper>{UtilButton}</UtilButtonWrapper>
       <CountIndicatorWrapper>
+        <CountIndicator type="chat" count={chatRooms.length} />
         <CountIndicator type="like" count={likedUsers.length} />
       </CountIndicatorWrapper>
     </Container>
