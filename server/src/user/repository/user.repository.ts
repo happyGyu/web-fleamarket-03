@@ -46,4 +46,18 @@ export class UserRepository {
       },
     });
   }
+
+  public async findAllChatRoomByUserId(userId: number) {
+    return this.repository.find({
+      where: { id: userId },
+      relations: {
+        chatRoomAsSeller: true,
+        chatRoomAsBuyer: true,
+      },
+      select: {
+        chatRoomAsSeller: true,
+        chatRoomAsBuyer: true,
+      },
+    });
+  }
 }

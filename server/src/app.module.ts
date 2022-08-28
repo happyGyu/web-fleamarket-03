@@ -11,6 +11,7 @@ import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from './core/exception.filter';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { UploadImageModule } from './upload-image/upload-image.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { UploadImageModule } from './upload-image/upload-image.module';
     AuthenticationModule,
     ProductModule,
     UploadImageModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [
