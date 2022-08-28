@@ -52,4 +52,6 @@ const StyledAnimatedDiv = styled(AnimatedDiv)`
   top: 0;
   overflow-y: hidden;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 `;

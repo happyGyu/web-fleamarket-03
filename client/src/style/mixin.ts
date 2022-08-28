@@ -1,6 +1,6 @@
 import { css, FlattenSimpleInterpolation } from 'styled-components';
 
-type flexDirectionType = 'row' | 'column';
+type flexDirectionType = 'row' | 'column' | 'column-reverse' | 'row-reverse';
 type flexAlignmentType = 'flex-start' | 'flex-end' | 'center' | 'space-around' | 'space-between';
 type flexWrapType = 'wrap' | 'no-wrap';
 interface IFlexOptions {
