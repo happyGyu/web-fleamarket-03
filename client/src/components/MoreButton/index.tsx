@@ -2,6 +2,7 @@ import MoreIcon from '@assets/icons/MoreIcon';
 import DropDown from '@components/common/DropDown';
 import colors from '@constants/colors';
 import { useDeleteProduct } from '@queries/useProduct';
+import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -16,7 +17,7 @@ export default function MoreButton({ color, productId, goBackAfterDelete }: More
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const { deleteProduct } = useDeleteProduct();
   const navigate = useNavigate();
-
+  const queryClient = useQueryClient();
   const handleClickEditButton = () => {
     navigate(`/product/edit/${productId}`);
   };
@@ -24,6 +25,7 @@ export default function MoreButton({ color, productId, goBackAfterDelete }: More
   const handleDeletButtonClick = () => {
     deleteProduct(Number(productId));
     if (goBackAfterDelete) {
+      queryClient.removeQueries(['product', String(productId)]);
       navigate(-1);
     }
   };

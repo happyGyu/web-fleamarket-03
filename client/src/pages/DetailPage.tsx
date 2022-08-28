@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import DetailPageNavigationBar from '@components/DetailPageNavigationBar';
 import SaleStateSelector from '@components/SaleStateSelector';
 import LoadingIndicator from '@components/common/LoadingIndicator';
@@ -23,7 +23,6 @@ export default function DetailPage() {
   const { product } = useProduct(Number(productId));
 
   const { user } = useUser();
-
   if (!product) {
     return <LoadingIndicator />;
   }

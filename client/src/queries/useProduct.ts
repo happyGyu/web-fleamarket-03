@@ -1,7 +1,7 @@
 import { requestDeleteProduct, requestProductDetail } from '@apis/product';
 import { useToast } from '@components/common/Toast/ToastContext';
 import { IProduct } from '@customTypes/product';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 export default function useProduct(productId?: number) {
   const { data: product, refetch: refetchProduct } = useQuery<IProduct>(
@@ -16,11 +16,15 @@ export default function useProduct(productId?: number) {
 }
 
 export function useDeleteProduct() {
+  const queryClient = useQueryClient();
   const { toastSuccess, toastError } = useToast();
   const { mutate: deleteProduct } = useMutation(
     (productId: number) => requestDeleteProduct(productId),
     {
-      onSuccess: () => {
+      onSuccess: (productId) => {
+        // todo: 로직 개선
+        queryClient.refetchQueries(['products']);
+        queryClient.removeQueries(['product', productId]);
         toastSuccess('상품이 삭제되었습니다.');
       },
       onError: () => {

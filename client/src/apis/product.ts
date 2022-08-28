@@ -45,6 +45,7 @@ export async function requestDeleteProduct(productId: number) {
   try {
     const { data } = await myAxios.delete(`/products/${productId}`);
     if (!data.ok) throw new Error('상품 삭제에 실패했습니다.');
+    return productId;
   } catch (e) {
     throw new Error('상품 삭제에 실패했습니다.');
   }
