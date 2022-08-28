@@ -3,8 +3,8 @@ import { useUser } from '@queries/useUser';
 import { useState, useEffect, useMemo } from 'react';
 import { io } from 'socket.io-client';
 
-export default function useChat(chatRoomId: number) {
-  const [messages, setMessages] = useState<IMessage[]>([]);
+export default function useChat(chatRoomId: number, initialMessages: IMessage[]) {
+  const [messages, setMessages] = useState<IMessage[]>(initialMessages);
   const [isConnected, setIsConnected] = useState(false);
   const { user } = useUser();
 

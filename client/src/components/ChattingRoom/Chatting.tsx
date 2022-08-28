@@ -1,16 +1,18 @@
 import colors from '@constants/colors';
+import { IChatRoom } from '@customTypes/chat';
 import useChat from '@hooks/chat/useChat';
 import mixin from '@style/mixin';
-import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 // import useChat from '@hooks/chat/useChat';
 import ChatDisplay from './ChatDisplay';
 import ChatInput from './ChatInput';
 
-export default function Chatting() {
-  const { chatRoomId } = useParams();
-  const { messages, sendMessage } = useChat(Number(chatRoomId));
+interface ChattingProps {
+  chatRoom?: IChatRoom;
+}
 
+export default function Chatting({ chatRoom }: ChattingProps) {
+  const { messages, sendMessage } = useChat(Number(chatRoom?.id), chatRoom?.messages || []);
   return (
     <Container>
       <ChatDisplay messages={messages} />
