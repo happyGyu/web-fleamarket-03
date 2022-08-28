@@ -12,7 +12,7 @@ export default function ChattingPage() {
   return isLoading ? (
     <LoadingIndicator />
   ) : (
-    <TransitionPage depth={2}>
+    <TransitionPage depth={4}>
       <NavigationBar title="채팅" />
       <ChattingProductInfo productId={chatRoom?.productId || 0} />
       <Chatting chatRoom={chatRoom} />

@@ -12,7 +12,7 @@ export default function MyProductChatRoomPage() {
   const { myProductChatRooms } = useMyProductChatRooms(Number(productId));
 
   return (
-    <TransitionPage depth={2}>
+    <TransitionPage depth={3}>
       <NavigationBar title="채팅하기" />
       <Container>
         <ChattingRoom chattingRoomsInfo={myProductChatRooms || []} />
