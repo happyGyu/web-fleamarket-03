@@ -1,7 +1,7 @@
 import { ChatEvent, IMessage, SendChatDto } from '@customTypes/chat';
 import { useUser } from '@queries/useUser';
 import { useState, useEffect, useMemo } from 'react';
-import io from 'socket.io-client';
+import { io } from 'socket.io-client';
 
 export default function useChat(chatRoomId: number) {
   const [messages, setMessages] = useState<IMessage[]>([]);

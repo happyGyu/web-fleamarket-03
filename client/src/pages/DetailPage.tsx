@@ -12,11 +12,11 @@ import { getLastAddress, getPriceString } from '@utils/product';
 import { getPassedTimeString } from '@utils/common';
 import colors from '@constants/colors';
 import LikeButton from '@components/LikeButton';
-import ChatButton from '@components/ChatButton';
 import { useUser } from '@queries/useUser';
 import useProduct from '@queries/useProduct';
 import TransitionPage from '@components/TransitionPage';
 import InfoButton from '@components/InfoButton';
+import ChatButton from '@components/MySellingProductChatLink';
 
 export default function DetailPage() {
   const { productId } = useParams();
@@ -78,9 +78,9 @@ export default function DetailPage() {
           <LikeButton productId={id} />
           <Text weight="bolder">{getPriceString(price)}</Text>
           {seller.id === user.id ? (
-            <ChatButton chattingRooms={chatRooms} />
-          ) : (
             <InfoButton productId={id} chattingRooms={chatRooms} />
+          ) : (
+            <ChatButton productId={id} chattingRooms={chatRooms} />
           )}
         </DetailPageFooter>
       </Container>
