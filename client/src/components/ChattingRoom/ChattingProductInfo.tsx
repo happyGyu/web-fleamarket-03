@@ -5,8 +5,7 @@ import mixin from '@style/mixin';
 import styled, { css } from 'styled-components';
 
 export default function ChattingProductInfo() {
-  const { getProduct } = useProduct();
-  const { data: product } = getProduct(21);
+  const { product } = useProduct(21);
   return (
     <Container>
       <FlexColumnContainer>

@@ -12,44 +12,44 @@ interface ChattingRooInfoProps {
 }
 export default function ChattingRoom({ chattingRoomsInfo }: ChattingRooInfoProps) {
   const navigate = useNavigate();
-  const { getProduct } = useProduct();
-  const { data: product } = getProduct();
-
   return (
     <ul>
-      {chattingRoomsInfo.map(({ id, peer, createdAt, messages }) => (
-        <ChattingRoomContainer
-          key={createdAt.toDateString()}
-          onClick={() => navigate('/chatting-room')}
-        >
-          <BorderBox>
-            <FlexColumnContainer>
-              <Text size="medium" weight="bold">
-                {peer.name}
-              </Text>
-              <Text size="medium" color={colors.grey1}>
-                {messages[0].content}
-              </Text>
-            </FlexColumnContainer>
-
-            <FlexRowContainer>
+      {chattingRoomsInfo.map((chatRoomInfo) => {
+        const { id, peer, messages } = chatRoomInfo;
+        const { product } = useProduct(chatRoomInfo.productId);
+        const latestMessage = messages[0];
+        const latestMessageTime = new Date(latestMessage?.createdAt);
+        return (
+          <ChattingRoomContainer key={id} onClick={() => navigate('/chatting-room')}>
+            <BorderBox>
               <FlexColumnContainer>
-                <Text color={colors.grey1} size="xSmall">
-                  {calculatePassedTime(messages[0].createdAt)}
+                <Text size="medium" weight="bold">
+                  {peer.name}
                 </Text>
-                {/* <Notification>
+                <Text size="medium" color={colors.grey1}>
+                  {latestMessage && latestMessage.content}
+                </Text>
+              </FlexColumnContainer>
+
+              <FlexRowContainer>
+                <FlexColumnContainer>
+                  <Text color={colors.grey1} size="xSmall">
+                    {latestMessage && calculatePassedTime(latestMessageTime)}
+                  </Text>
+                  {/* <Notification>
                     <Text size="xSmall" color={colors.white}>
                       {countOfUnreadMessage}
                     </Text>
                   </Notification> */}
-              </FlexColumnContainer>
-              <FlexColumnContainer>
-                <img src={product?.thumbnails[0] || ''} alt="" />
-              </FlexColumnContainer>
-            </FlexRowContainer>
-          </BorderBox>
-        </ChattingRoomContainer>
-      ))}
+                </FlexColumnContainer>
+                <FlexColumnContainer>
+                  <img src={product?.thumbnails[0] || ''} alt="" />
+                </FlexColumnContainer>
+              </FlexRowContainer>
+            </BorderBox>
+          </ChattingRoomContainer>
+        );
+      })}
     </ul>
   );
 }

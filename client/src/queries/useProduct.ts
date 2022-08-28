@@ -12,12 +12,24 @@ export async function getProductDetail(productId?: number) {
   }
 }
 
-export default function useProduct() {
-  const getProduct = (productId?: number) =>
-    useQuery(['product', productId], () => getProductDetail(Number(productId)), {
+// export default function useProduct() {
+//   const getProduct = (productId?: number) =>
+//     useQuery(['product', productId], () => getProductDetail(Number(productId)), {
+//       refetchOnMount: false,
+//       refetchOnWindowFocus: false,
+//     });
+
+//   return { getProduct };
+// }
+
+export default function useProduct(productId?: number) {
+  const { data: product, refetch: refectProduct } = useQuery<IProduct>(
+    ['product', productId],
+    () => getProductDetail(Number(productId)),
+    {
       refetchOnMount: false,
       refetchOnWindowFocus: false,
-    });
-
-  return { getProduct };
+    },
+  );
+  return { product, refectProduct };
 }

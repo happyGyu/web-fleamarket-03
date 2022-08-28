@@ -11,8 +11,7 @@ interface LikeButtonProps {
 }
 export default function LikeButton({ productId }: LikeButtonProps) {
   const { user } = useUser();
-  const { getProduct } = useProduct();
-  const { data: product } = getProduct(productId);
+  const { product } = useProduct(productId);
 
   const likedUsers = product?.likedUsers || [];
   const isUserPick = likedUsers.some((likedUser) => likedUser.userId === user.id);

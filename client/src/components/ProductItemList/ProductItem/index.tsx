@@ -27,8 +27,7 @@ interface ProductItemProps {
 
 export default function ProductItem({ productId, utilButtonInfo }: ProductItemProps) {
   const navigate = useNavigate();
-  const { getProduct } = useProduct();
-  const { data: product } = getProduct(productId);
+  const { product } = useProduct(productId);
 
   if (!product) return <LoadingIndicator />;
   const { type, color } = utilButtonInfo;

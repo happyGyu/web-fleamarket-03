@@ -33,8 +33,7 @@ function PostForm() {
 
   const { productId } = useParams();
   const isEdit = !!productId;
-  const { getProduct } = useProduct();
-  const { data: originalProduct } = getProduct(Number(productId));
+  const { product: originalProduct } = useProduct(Number(productId));
 
   const navigate = useNavigate();
 

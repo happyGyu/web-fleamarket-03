@@ -20,8 +20,8 @@ import InfoButton from '@components/InfoButton';
 
 export default function DetailPage() {
   const { productId } = useParams();
-  const { getProduct } = useProduct();
-  const { data: product } = getProduct(Number(productId));
+  const { product } = useProduct(Number(productId));
+
   const { user } = useUser();
 
   if (!product) {
