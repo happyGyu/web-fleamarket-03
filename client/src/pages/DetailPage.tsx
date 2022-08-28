@@ -78,9 +78,9 @@ export default function DetailPage() {
           <LikeButton productId={id} />
           <Text weight="bolder">{getPriceString(price)}</Text>
           {seller.id === user.id ? (
-            <InfoButton productId={id} chattingRooms={chatRooms} />
-          ) : (
             <ChatButton chattingRooms={chatRooms} />
+          ) : (
+            <InfoButton productId={id} chattingRooms={chatRooms} />
           )}
         </DetailPageFooter>
       </Container>
