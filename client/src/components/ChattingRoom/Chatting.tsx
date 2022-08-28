@@ -1,14 +1,18 @@
 import colors from '@constants/colors';
+import useChat from '@hooks/chat/useChat';
 import mixin from '@style/mixin';
 import styled from 'styled-components';
+// import useChat from '@hooks/chat/useChat';
 import ChatDisplay from './ChatDisplay';
 import ChatInput from './ChatInput';
 
 export default function Chatting() {
+  const { messages, sendMessage } = useChat(1);
+
   return (
     <Container>
-      <ChatDisplay />
-      <ChatInput />
+      <ChatDisplay messages={messages} />
+      <ChatInput sendMessage={sendMessage} />
     </Container>
   );
 }

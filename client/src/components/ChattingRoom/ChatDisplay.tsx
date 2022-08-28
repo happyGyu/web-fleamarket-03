@@ -1,57 +1,21 @@
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
 import styled, { css } from 'styled-components';
+import { Message } from '@hooks/chat/useChat';
+import { useUser } from '@queries/useUser';
+import { useRef } from 'react';
 
-export default function ChatDisplay() {
-  const chats = [
-    {
-      id: 1,
-      content: '안녕하세요1 저는 금교영이라는 사람입니다. 앞으로도 잘 부탁 드려요',
-    },
-    {
-      id: 1,
-      content: '안녕하세요1 저는 금교영이라는 사람입니다. 앞으로도 잘 부탁 드려요',
-    },
-    {
-      id: 1,
-      content: '안녕하세요1 저는 금교영이라는 사람입니다. 앞으로도 잘 부탁 드려요',
-    },
-    {
-      id: 1,
-      content: '안녕하세요1 저는 금교영이라는 사람입니다. 앞으로도 잘 부탁 드려요',
-    },
+interface ChatDisplayProps {
+  messages?: Message[];
+}
 
-    {
-      id: 2,
-      content: '안녕하세요1 저는 금교영이라는 사람입니다. 앞으로도 잘 부탁 드려요',
-    },
-    {
-      id: 1,
-      content: '안녕하세요3',
-    },
-    {
-      id: 2,
-      content: '안녕하세요4',
-    },
-    {
-      id: 1,
-      content: '안녕하세요5',
-    },
-    {
-      id: 2,
-      content: '안녕하세요6',
-    },
-    {
-      id: 1,
-      content: '안녕하세요7',
-    },
-  ];
-
+export default function ChatDisplay({ messages = [] }: ChatDisplayProps) {
+  const { user } = useUser();
   return (
     <ChatDisplayContainer>
-      {chats.map((chat) => (
-        <ChatContainer isUser={chat.id === 1}>
-          <Chat isUser={chat.id === 1}>{chat.content}</Chat>
+      {messages.map((message) => (
+        <ChatContainer key={message.id} isUser={message.senderId === user.id}>
+          <Chat isUser={message.senderId === user.id}>{message.content}</Chat>
         </ChatContainer>
       ))}
     </ChatDisplayContainer>

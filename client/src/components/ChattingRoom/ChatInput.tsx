@@ -1,13 +1,36 @@
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
+import { SendChat } from '@hooks/chat/chatType';
+import { useUser } from '@queries/useUser';
 
-export default function ChatInput() {
+interface ChatInputProps {
+  sendMessage: (message: Omit<SendChat, 'chatRoomId'>) => void;
+}
+
+export default function ChatInput({ sendMessage }: ChatInputProps) {
+  const [inputValue, setInputValue] = useState<string>('');
+  const { user } = useUser();
+  const inputRef = useRef<HTMLInputElement>(null);
+
   return (
-    <InputContainer>
-      <CustomInput placeholder="메세지를 입력해주세요" />
-      <SubmitBtn>보내기</SubmitBtn>
-    </InputContainer>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        sendMessage({ content: inputValue, senderId: user.id });
+        setInputValue('');
+      }}
+    >
+      <InputContainer>
+        <CustomInput
+          value={inputValue}
+          onChange={(e) => setInputValue(e.currentTarget.value)}
+          placeholder="메세지를 입력해주세요"
+        />
+        <SubmitBtn>보내기</SubmitBtn>
+      </InputContainer>
+    </form>
   );
 }
 
