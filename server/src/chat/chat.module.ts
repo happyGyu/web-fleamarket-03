@@ -1,3 +1,4 @@
+import { ChatGateWay } from './chat.gateway';
 import { ProductRepository } from './../product/repository/product.repository';
 import { UserRepository } from './../user/repository/user.repository';
 import { ChatMessageRepository } from './repository/chatMessage.repository';
@@ -11,6 +12,7 @@ import { ChatService } from './chat.service';
   imports: [AuthenticationModule],
   controllers: [ChatController],
   providers: [
+    ChatGateWay,
     ChatService,
     ChatRoomRepository,
     ChatMessageRepository,

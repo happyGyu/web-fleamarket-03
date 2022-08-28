@@ -51,6 +51,15 @@ export class ChatRoomRepository {
     );
   }
 
+  async updateVisitTime(chatRoomId: number, isSeller: boolean) {
+    return await this.repository.update(
+      { id: chatRoomId },
+      isSeller
+        ? { sellerLastVisit: new Date() }
+        : { buyerLastVisit: new Date() },
+    );
+  }
+
   async delete(chatRoomId: number) {
     return await this.repository.delete({ id: chatRoomId });
   }

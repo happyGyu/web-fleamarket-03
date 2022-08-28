@@ -58,4 +58,11 @@ export class ChatService {
     }
     return this.chatRoomRepository.delete(chatRoomId);
   }
+
+  async updateLastVisitTime(chatRoomId: number, userId: number) {
+    const chatRoom = await this.getChatRoom(chatRoomId);
+    // todo: buyer는 맞는지 확인해야함
+    const isSeller = chatRoom.sellerId === userId;
+    return this.chatRoomRepository.updateVisitTime(chatRoomId, isSeller);
+  }
 }
