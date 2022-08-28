@@ -31,7 +31,7 @@ export default function Routes() {
         <Route path="/user/region" element={<UserRegionPage />} />
         <Route path="/category/list" element={<CategoryListPage />} />
         <Route path="/category/products/:categoryId" element={<CategoryProductPage />} />
-        <Route path="/chatting-room" element={<ChattingPage />} />
+        <Route path="/chatting-room/:chatRoomId" element={<ChattingPage />} />
         <Route path="/logout" element={<LogOutPage />} />
       </RouterRoutes>
     </AnimatePresence>
