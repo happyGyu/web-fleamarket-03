@@ -46,7 +46,7 @@ export class ChatGateWay implements OnGatewayConnection, OnGatewayDisconnect {
     try {
       const chatRoom = await this.chatService.getChatRoom(+chatRoomId);
       if (!chatRoom) throw Error('존재하지 않는 채팅방입니다.');
-      if (chatRoom.buyerId !== userId && chatRoom.sellerId !== userId) {
+      if (chatRoom.buyer.id !== userId && chatRoom.seller.id !== userId) {
         throw Error('당신의 채팅방이 아닙니다.');
       }
       this.chatRooms[chatRoomId] = { userId, chatRoomId };

@@ -7,10 +7,10 @@ import { IChatRoom } from '@customTypes/chat';
 import { calculatePassedTime } from '@utils/common';
 import useProduct from '@queries/useProduct';
 
-interface ChattingRooInfoProps {
+interface ChattingRoomInfoProps {
   chattingRoomsInfo: IChatRoom[];
 }
-export default function ChattingRoom({ chattingRoomsInfo }: ChattingRooInfoProps) {
+export default function ChattingRoom({ chattingRoomsInfo }: ChattingRoomInfoProps) {
   const navigate = useNavigate();
   return (
     <ul>
