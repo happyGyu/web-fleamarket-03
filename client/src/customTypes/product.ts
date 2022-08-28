@@ -39,7 +39,7 @@ export interface ILikedUser {
 export interface IProductItem
   extends Pick<
     IProduct,
-    'id' | 'name' | 'price' | 'region' | 'salesStatus' | 'createdAt' | 'likedUsers'
+    'id' | 'name' | 'price' | 'region' | 'salesStatus' | 'createdAt' | 'likedUsers' | 'chatRooms'
   > {
   thumbnail: string;
 }
