@@ -7,8 +7,9 @@ type FontWeightType = 'bolder' | 'bold' | 'medium';
 const textSizeMap = {
   large: '1.4rem',
   medium: '1.2rem',
+  xxSmall: '0.8rem',
   small: '1rem',
-  xSmall: '0.8rem',
+  xSmall: '0.9rem',
 };
 
 const fontWeightMap = {
