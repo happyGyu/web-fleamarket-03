@@ -12,7 +12,7 @@ export default function ChatButton({ chattingRooms, productId }: ChatButtonProps
   const navigate = useNavigate();
 
   const onClick = () => {
-    navigate(`/products/chatting-room/${productId}`);
+    navigate(`/product/chatting-room/${productId}`);
   };
 
   return (
