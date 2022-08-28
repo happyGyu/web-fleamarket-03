@@ -1,6 +1,6 @@
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { useUser } from '@queries/useUser';
@@ -17,6 +17,7 @@ export default function ChatInput({ sendMessage }: ChatInputProps) {
 
   return (
     <form
+      style={{ width: '100%' }}
       onSubmit={(e) => {
         e.preventDefault();
         sendMessage({ content: inputValue, senderId: user.id });
