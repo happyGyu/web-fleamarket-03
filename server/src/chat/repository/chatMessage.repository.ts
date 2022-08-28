@@ -1,4 +1,4 @@
-import { CreateChatMessageDto } from './../dto/CreateChatMessageDto';
+import { CreateChatMessageDto } from '../dto/CreateChatMessage.dto';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { ChatMessage } from '../entities/chatMessage.entity';
@@ -11,7 +11,7 @@ export class ChatMessageRepository {
     this.repository = this.dataSource.getRepository(ChatMessage);
   }
 
-  public async createMessage(createMessageDto: CreateChatMessageDto) {
+  public async create(createMessageDto: CreateChatMessageDto) {
     try {
       return this.repository.save(createMessageDto);
     } catch (error) {
