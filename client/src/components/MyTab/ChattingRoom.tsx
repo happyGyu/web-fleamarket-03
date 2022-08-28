@@ -10,7 +10,7 @@ export default function ChattingRoom({ chattingRoomsInfo }: ChattingRoomInfoProp
       {chattingRoomsInfo.map((chatRoomInfo) => {
         const { productId, id, peer, messages } = chatRoomInfo;
         const latestMessage = messages[0];
-        const latestMessageTime = latestMessage?.createdAt;
+        const latestMessageTime = new Date(latestMessage?.createdAt);
         return <ChattingList {...{ id, peer, latestMessage, latestMessageTime, productId }} />;
       })}
     </ul>
