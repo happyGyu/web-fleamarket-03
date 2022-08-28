@@ -1,5 +1,5 @@
 import { PagedResponseDto } from '@customTypes/common';
-import { CreateProductAPIDto, IProductItem, PatchProductDto } from '@customTypes/product';
+import { CreateProductAPIDto, IProduct, IProductItem, PatchProductDto } from '@customTypes/product';
 import myAxios from './myAxios';
 
 interface GetRegionProductsProps {
@@ -38,5 +38,24 @@ export async function updateProduct(product: PatchProductDto, productId: number)
     return data;
   } catch (e) {
     throw new Error('상품 수정에 실패했습니다.');
+  }
+}
+
+export async function requestDeleteProduct(productId: number) {
+  try {
+    const { data } = await myAxios.delete(`/products/${productId}`);
+    if (!data.ok) throw new Error('상품 삭제에 실패했습니다.');
+  } catch (e) {
+    throw new Error('상품 삭제에 실패했습니다.');
+  }
+}
+
+export async function requestProductDetail(productId?: number) {
+  if (!productId) throw new Error('상품이 존재하지 않습니다.');
+  try {
+    const { data: product } = await myAxios.get<IProduct>(`/products/${productId}`);
+    return product;
+  } catch (e) {
+    throw new Error('상품 조회에 실패했습니다.');
   }
 }

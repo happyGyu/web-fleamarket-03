@@ -1,35 +1,32 @@
-import myAxios from '@apis/myAxios';
+import { requestDeleteProduct, requestProductDetail } from '@apis/product';
+import { useToast } from '@components/common/Toast/ToastContext';
 import { IProduct } from '@customTypes/product';
-import { useQuery } from '@tanstack/react-query';
-
-export async function getProductDetail(productId?: number) {
-  if (!productId) throw new Error('상품이 존재하지 않습니다.');
-  try {
-    const { data: product } = await myAxios.get<IProduct>(`/products/${productId}`);
-    return product;
-  } catch (e) {
-    throw new Error('상품 조회에 실패했습니다.');
-  }
-}
-
-// export default function useProduct() {
-//   const getProduct = (productId?: number) =>
-//     useQuery(['product', productId], () => getProductDetail(Number(productId)), {
-//       refetchOnMount: false,
-//       refetchOnWindowFocus: false,
-//     });
-
-//   return { getProduct };
-// }
+import { useQuery, useMutation } from '@tanstack/react-query';
 
 export default function useProduct(productId?: number) {
   const { data: product, refetch: refetchProduct } = useQuery<IProduct>(
     ['product', productId],
-    () => getProductDetail(Number(productId)),
+    () => requestProductDetail(Number(productId)),
     {
       refetchOnMount: false,
       refetchOnWindowFocus: false,
     },
   );
   return { product, refetchProduct };
+}
+
+export function useDeleteProduct() {
+  const { toastSuccess, toastError } = useToast();
+  const { mutate: deleteProduct } = useMutation(
+    (productId: number) => requestDeleteProduct(productId),
+    {
+      onSuccess: () => {
+        toastSuccess('상품이 삭제되었습니다.');
+      },
+      onError: () => {
+        toastError(new Error('삭제를 실패했습니다.'));
+      },
+    },
+  );
+  return { deleteProduct };
 }

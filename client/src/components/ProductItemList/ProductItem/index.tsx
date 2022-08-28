@@ -33,7 +33,11 @@ export default function ProductItem({ productId, utilButtonInfo }: ProductItemPr
   const { type, color } = utilButtonInfo;
 
   const UtilButton =
-    type === 'like' ? <LikeButton productId={product.id} /> : <MoreButton color={color} />;
+    type === 'like' ? (
+      <LikeButton productId={product.id} />
+    ) : (
+      <MoreButton color={color} productId={productId} />
+    );
 
   const moveToDetailPage = () => {
     navigate(`/product/${product.id}`);

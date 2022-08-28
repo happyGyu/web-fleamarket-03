@@ -43,7 +43,7 @@ export default function DetailPage() {
   return (
     <TransitionPage depth={2}>
       <Container>
-        <DetailPageNavigationBar sellerId={seller.id} />
+        <DetailPageNavigationBar sellerId={seller.id} productId={Number(productId)} />
         <ImageSlider images={thumbnails} />
         <DetailPageBody>
           {user.id === product.seller.id && (

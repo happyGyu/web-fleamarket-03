@@ -65,9 +65,9 @@ export class Product {
   @JoinColumn({ name: 'region_id' })
   region: Region;
 
-  @OneToMany(() => Like, (like) => like.product)
+  @OneToMany(() => Like, (like) => like.product, { cascade: true })
   likedUsers: Like[];
 
-  @OneToMany(() => ChatRoom, (chatRoom) => chatRoom.product)
+  @OneToMany(() => ChatRoom, (chatRoom) => chatRoom.product, { cascade: true })
   chatRooms: ChatRoom[];
 }
