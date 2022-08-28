@@ -69,6 +69,7 @@ export class ChatGateWay implements OnGatewayConnection, OnGatewayDisconnect {
       senderId: +userId,
       chatRoomId: +chatRoomId,
     });
+    client.emit('receive', chatMessage);
     client.to(String(chatRoomId)).emit('receive', chatMessage);
   }
 }

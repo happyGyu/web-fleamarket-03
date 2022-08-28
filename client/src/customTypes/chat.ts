@@ -4,28 +4,28 @@ export interface IMessage {
   content: string;
   senderId: number;
   id: number;
-  createdAt: Date;
+  createdAt: string;
 }
 
 export interface IChatRoomResponse {
   id: number;
-  createdAt: Date;
-  sellerLastVisit: Date;
+  createdAt: string;
+  sellerLastVisit: string;
   seller: IUser;
   buyer: IUser;
   messages: IMessage[];
-  buyerLastVisit: Date;
+  buyerLastVisit: string;
   leavedUserId: number;
   productId: number;
 }
 
 export interface IChatRoom {
   id: number;
-  createdAt: Date;
-  sellerLastVisit: Date;
+  createdAt: string;
+  sellerLastVisit: string;
   peer: IUser;
   messages: IMessage[];
-  buyerLastVisit: Date;
+  buyerLastVisit: string;
   leavedUserId: number;
   productId: number;
 }
