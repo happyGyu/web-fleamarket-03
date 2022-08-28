@@ -1,9 +1,9 @@
 import Button from '@components/common/Button';
-import { IChatRoom } from '@customTypes/chat';
+import { IProductChatRoom } from '@customTypes/product';
 import { useNavigate } from 'react-router-dom';
 
 interface ChatButtonProps {
-  chattingRooms: IChatRoom[];
+  chattingRooms: IProductChatRoom[];
   productId: number;
 }
 

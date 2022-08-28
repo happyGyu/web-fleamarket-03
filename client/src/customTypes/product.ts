@@ -10,7 +10,7 @@ export enum SalesStatusEnum {
   sold = '판매완료',
 }
 
-export interface ProductChatRoom {
+export interface IProductChatRoom {
   id: number;
   buyer: { id: number };
 }
@@ -28,7 +28,7 @@ export interface IProduct {
   views: number;
   seller: IUser;
   likedUsers: ILikedUser[];
-  chatRooms: ProductChatRoom[];
+  chatRooms: IProductChatRoom[];
 }
 
 export interface ILikedUser {
