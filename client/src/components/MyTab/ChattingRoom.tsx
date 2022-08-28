@@ -1,9 +1,11 @@
 import { Text } from '@components/common/Text';
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 export default function ChattingRoom() {
+  const navigate = useNavigate();
   const chattingRoomsInfo = [
     {
       peerUserName: '금교영',
@@ -27,7 +29,7 @@ export default function ChattingRoom() {
     <ul>
       {chattingRoomsInfo.map(
         ({ lastMessage, lastMessageTime, peerUserName, thumbnail, countOfUnreadMessage }) => (
-          <ChattingRoomContainer key={peerUserName}>
+          <ChattingRoomContainer key={peerUserName} onClick={() => navigate('/chatting-room')}>
             <BorderBox>
               <FlexColumnContainer>
                 <Text size="medium" weight="bold">
@@ -70,7 +72,7 @@ const BorderBox = styled.div`
 const ChattingRoomContainer = styled.li`
   width: 100%;
   height: 100px;
-  padding: 0 1.6rem;
+  padding: 0 1.4rem;
   /* border: 0.4px solid #d7d7d7; */
   :hover {
     background-color: ${colors.offWhite};
