@@ -23,7 +23,7 @@ export async function getProductDetail(productId?: number) {
 // }
 
 export default function useProduct(productId?: number) {
-  const { data: product, refetch: refectProduct } = useQuery<IProduct>(
+  const { data: product, refetch: refetchProduct } = useQuery<IProduct>(
     ['product', productId],
     () => getProductDetail(Number(productId)),
     {
@@ -31,5 +31,5 @@ export default function useProduct(productId?: number) {
       refetchOnWindowFocus: false,
     },
   );
-  return { product, refectProduct };
+  return { product, refetchProduct };
 }
