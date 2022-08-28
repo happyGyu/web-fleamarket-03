@@ -30,10 +30,10 @@ export default function ChattingList({
     <ChattingRoomContainer key={id} onClick={() => navigate(`/chatting-room/${id}`)}>
       <BorderBox>
         <FlexColumnContainer>
-          <Text size="medium" weight="bold">
+          <Text size="small" weight="bold">
             {peer.name}
           </Text>
-          <Text size="medium" color={colors.grey1}>
+          <Text size="small" color={colors.grey1}>
             {latestMessage && latestMessage.content}
           </Text>
         </FlexColumnContainer>
