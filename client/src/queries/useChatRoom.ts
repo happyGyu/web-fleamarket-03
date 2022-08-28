@@ -5,7 +5,7 @@ import {
   getChatRoom,
   getMyProductChatRoom,
 } from '@apis/chatRoom';
-import { useToast } from '@components/common/Toast/ToastContext';
+import { useToast } from '@components/common/CommonToast/ToastContext';
 import { IChatRoom, IChatRoomResponse } from '@customTypes/chat';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';

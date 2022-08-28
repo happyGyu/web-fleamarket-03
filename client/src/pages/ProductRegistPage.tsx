@@ -1,7 +1,7 @@
 import { createProduct, updateProduct } from '@apis/product';
 import NavigationBar from '@components/common/NavigationBar';
 import PageContainer from '@components/common/PageContainer';
-import { useToast } from '@components/common/Toast/ToastContext';
+import { useToast } from '@components/common/CommonToast/ToastContext';
 import {
   FormProvider,
   useFormInputMap,

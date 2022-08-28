@@ -5,7 +5,7 @@ import portalUtil from '@utils/portal';
 import { useRef, useEffect } from 'react';
 import mixin from '@style/mixin';
 import colors from '@constants/colors';
-import Toast from '@components/common/Toast';
+import Toast from '@components/common/CommonToast';
 
 export default function App() {
   const displayRef = useRef<HTMLDivElement | null>(null);

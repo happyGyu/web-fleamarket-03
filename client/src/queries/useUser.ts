@@ -1,4 +1,4 @@
-import { useToast } from '@components/common/Toast/ToastContext';
+import { useToast } from '@components/common/CommonToast/ToastContext';
 import { IUser } from '@customTypes/user';
 import { requestUser, requestLogout } from '@apis/user';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';

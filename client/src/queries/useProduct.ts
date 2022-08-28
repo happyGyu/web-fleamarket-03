@@ -1,5 +1,5 @@
 import { requestDeleteProduct, requestProductDetail } from '@apis/product';
-import { useToast } from '@components/common/Toast/ToastContext';
+import { useToast } from '@components/common/CommonToast/ToastContext';
 import { IProduct } from '@customTypes/product';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
