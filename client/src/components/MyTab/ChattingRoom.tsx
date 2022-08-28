@@ -20,7 +20,7 @@ export default function ChattingRoom({ chattingRoomsInfo }: ChattingRooInfoProps
         const latestMessage = messages[0];
         const latestMessageTime = new Date(latestMessage?.createdAt);
         return (
-          <ChattingRoomContainer key={id} onClick={() => navigate('/chatting-room')}>
+          <ChattingRoomContainer key={id} onClick={() => navigate(`/chatting-room/${id}`)}>
             <BorderBox>
               <FlexColumnContainer>
                 <Text size="medium" weight="bold">
