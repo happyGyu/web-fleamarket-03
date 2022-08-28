@@ -4,11 +4,10 @@ import DropDown from '@components/common/DropDown';
 import { Text } from '@components/common/Text';
 import colors from '@constants/colors';
 import { SalesStatusType, SalesStatusEnum } from '@customTypes/product';
+import useProduct from '@queries/useProduct';
 import mixin from '@style/mixin';
-import { useMutation } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-import useSalesStatusSelector from './useSalesStatusSelector';
 
 interface SaleStateSelectorProps {
   initialStatus: SalesStatusType;
@@ -17,13 +16,13 @@ interface SaleStateSelectorProps {
 
 export default function SaleStateSelector({ initialStatus, productId }: SaleStateSelectorProps) {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
-  const [salesStatus, setSalesStatus] = useState<SalesStatusType>(initialStatus);
-  const salesStatusMutator = useSalesStatusSelector(productId);
+
+  const { refetchProduct, product } = useProduct(Number(productId));
+  const salesStatus = product?.salesStatus || 'sale';
 
   const handleDropDownItemClick = (newSalesStatus: SalesStatusType) => {
-    if (salesStatus === newSalesStatus) return;
-    setSalesStatus(newSalesStatus);
-    salesStatusMutator(newSalesStatus);
+    if (initialStatus === newSalesStatus) return;
+    updateProduct({ salesStatus: newSalesStatus }, productId).then(() => refetchProduct());
   };
 
   const dropDownItems = Object.entries(SalesStatusEnum).map(([enumKey, enumValue]) => ({

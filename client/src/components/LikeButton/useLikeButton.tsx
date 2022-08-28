@@ -17,8 +17,7 @@ export default function useLikeButton({
   const { user } = useUser();
 
   const { toastError } = useToast();
-  const { getProduct } = useProduct();
-  const { refetch } = getProduct(productId);
+  const { refetchProduct } = useProduct(productId);
   const { mutate } = useMutation(() => toggleLike(productId), {
     onMutate: () => {
       const snapshot = queryClient.getQueryData<IProductItem>(queryKey);
@@ -37,7 +36,7 @@ export default function useLikeButton({
     },
 
     onSuccess: () => {
-      refetch();
+      refetchProduct();
     },
   });
 

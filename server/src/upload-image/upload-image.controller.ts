@@ -25,7 +25,7 @@ export class UploadImageController {
           cb(null, `${randomUUID()}.${mime.extension(file.mimetype)}`),
       }),
       fileFilter: (req, file, cb) => {
-        if (['image/png', 'image/jpg'].includes(file.mimetype)) {
+        if (['image/png', 'image/jpg', 'image/jpeg'].includes(file.mimetype)) {
           cb(null, true);
         } else {
           cb(

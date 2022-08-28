@@ -12,6 +12,7 @@ export const getParsedProducts = (products: Product[]) => {
       createdAt,
       thumbnails,
       likedUsers,
+      chatRooms,
     } = product;
     return {
       id,
@@ -21,6 +22,7 @@ export const getParsedProducts = (products: Product[]) => {
       salesStatus,
       createdAt,
       likedUsers,
+      chatRooms,
       thumbnail: thumbnails[0],
     };
   });

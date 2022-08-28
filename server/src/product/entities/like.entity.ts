@@ -10,7 +10,9 @@ export class Like {
   @Column({ type: 'int', primary: true })
   userId: number;
 
-  @ManyToOne(() => Product, (product) => product.likedUsers)
+  @ManyToOne(() => Product, (product) => product.likedUsers, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'product_id' })
   product: Product;
 

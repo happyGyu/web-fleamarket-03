@@ -1,14 +1,21 @@
 import { Text } from '@components/common/Text';
 import colors from '@constants/colors';
+import { SalesStatusEnum } from '@customTypes/product';
 import useProduct from '@queries/useProduct';
 import mixin from '@style/mixin';
+import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
-export default function ChattingProductInfo() {
-  const { getProduct } = useProduct();
-  const { data: product } = getProduct(21);
+interface ChattingProductInfoProps {
+  productId: number;
+}
+
+export default function ChattingProductInfo({ productId }: ChattingProductInfoProps) {
+  const { product } = useProduct(productId);
+  const navigate = useNavigate();
+  const salesStatus = product?.salesStatus || 'sale';
   return (
-    <Container>
+    <Container onClick={() => navigate(`/product/${product?.id}`)}>
       <FlexColumnContainer>
         <img src={product?.thumbnails[0]} alt="" />
       </FlexColumnContainer>
@@ -19,7 +26,7 @@ export default function ChattingProductInfo() {
         </Text>
       </FlexColumnContainer>
       <FlexColumnContainer>
-        <StatusContainer>{product?.salesStatus}</StatusContainer>
+        <StatusContainer> {SalesStatusEnum[salesStatus]}</StatusContainer>
       </FlexColumnContainer>
     </Container>
   );

@@ -6,7 +6,7 @@ export default function LoadingIndicator() {
 
   return (
     <Portal>
-      <IndicatorWrapper>로딩 중</IndicatorWrapper>
+      <IndicatorWrapper />
     </Portal>
   );
 }

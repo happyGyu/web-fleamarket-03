@@ -1,4 +1,3 @@
-import { CreateChatRoomDto } from './dto/CreateChatRoom.dto';
 import { ChatService } from './chat.service';
 import {
   Controller,
@@ -9,7 +8,6 @@ import {
   Param,
   Post,
   Body,
-  Delete,
   Patch,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
@@ -53,11 +51,14 @@ export class ChatController {
 
   @Post()
   async createChatRoom(
+    @Req() req: Request,
     @Res() res: Response,
-    @Body() createChatRoomRequestDto: CreatChatRoomRequestDto,
+    @Body() { productId }: CreatChatRoomRequestDto,
   ) {
+    const { id: buyerId } = req['user'];
     const newChatRoom = await this.chatService.createChatRoom(
-      createChatRoomRequestDto,
+      productId,
+      buyerId,
     );
     return res.status(HttpStatus.CREATED).json({ chatRoomId: newChatRoom.id });
   }

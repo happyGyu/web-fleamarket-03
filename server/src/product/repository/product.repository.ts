@@ -16,7 +16,7 @@ export class ProductRepository {
   public async findProductsByRegion(regionId: number): Promise<Product[]> {
     return this.repository.find({
       where: { regionId },
-      relations: ['region', 'likedUsers'],
+      relations: ['region', 'likedUsers', 'chatRooms'],
     });
   }
 
@@ -43,6 +43,7 @@ export class ProductRepository {
           'category',
           'seller.regions.region',
           'likedUsers',
+          'chatRooms',
         ],
       });
     } catch (e) {
@@ -66,7 +67,13 @@ export class ProductRepository {
         categoryId: categoryId,
       },
       order: { id: 'DESC' },
-      relations: ['region', 'likedUsers', 'category', 'seller.regions.region'],
+      relations: [
+        'region',
+        'likedUsers',
+        'category',
+        'seller.regions.region',
+        'chatRooms',
+      ],
       take: limit + 1,
     });
   }
@@ -109,7 +116,7 @@ export class ProductRepository {
     try {
       return this.repository.find({
         where: { sellerId },
-        relations: ['region', 'likedUsers'],
+        relations: ['region', 'likedUsers', 'chatRooms'],
       });
     } catch (e) {
       throw new HttpException(

@@ -25,3 +25,10 @@ export const getPassedTimeString = (timeString: string) => {
   const createdTime = new Date(timeString);
   return `${calculatePassedTime(createdTime)} 전`;
 };
+
+export const getHourAndMinite = (timeString: string) => {
+  const time = new Date(timeString);
+  const hourString = String(time.getHours()).padStart(2, '0');
+  const minuteString = String(time.getMinutes()).padStart(2, '0');
+  return `${hourString}:${minuteString}`;
+};

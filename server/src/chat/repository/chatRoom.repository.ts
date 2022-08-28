@@ -22,10 +22,27 @@ export class ChatRoomRepository {
     }
   }
 
+  async findByUserId(userId: number) {
+    return await this.repository.find({
+      where: [{ sellerId: userId }, { buyerId: userId }],
+      relations: { messages: true },
+      order: {
+        messages: {
+          createdAt: 'DESC',
+        },
+      },
+    });
+  }
+
   async findByChatRoomId(chatRoomId: number) {
     return await this.repository.findOne({
       where: { id: chatRoomId },
       relations: { messages: true },
+      order: {
+        messages: {
+          createdAt: 'DESC',
+        },
+      },
     });
   }
 
@@ -33,6 +50,11 @@ export class ChatRoomRepository {
     return await this.repository.find({
       where: { sellerId, productId },
       relations: { messages: true },
+      order: {
+        messages: {
+          createdAt: 'DESC',
+        },
+      },
     });
   }
 
@@ -48,6 +70,15 @@ export class ChatRoomRepository {
     return await this.repository.update(
       { id: chatRoomId },
       { leavedUserId: leavingUserId },
+    );
+  }
+
+  async updateVisitTime(chatRoomId: number, isSeller: boolean) {
+    return await this.repository.update(
+      { id: chatRoomId },
+      isSeller
+        ? { sellerLastVisit: new Date() }
+        : { buyerLastVisit: new Date() },
     );
   }
 

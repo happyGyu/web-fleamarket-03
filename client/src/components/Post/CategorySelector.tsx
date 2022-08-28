@@ -81,7 +81,11 @@ const ItemWrapper = styled.div<{ isActive?: boolean }>`
 `;
 const CategoriesContainer = styled.div`
   overflow-x: auto;
-
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none;
+  }
   margin-top: 0.8rem;
   ${mixin.flexMixin({ align: 'center' })};
   gap: 4px;

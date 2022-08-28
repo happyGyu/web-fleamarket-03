@@ -3,6 +3,8 @@ import { redirectToOAuthUrl } from '@utils/oAuth';
 import Button from '@components/common/Button';
 import mixin from '@style/mixin';
 import TransitionPage from '@components/TransitionPage';
+import GithubIcon from '@assets/icons/Github';
+import { Text } from '@components/common/Text';
 
 export default function LoginPage() {
   return (
@@ -18,15 +20,17 @@ export default function LoginPage() {
         <Logo src="./goldmarket-logo.png" />
         <WelcomeMessage>간편하게 황금마켓을 시작하세요</WelcomeMessage>
         <StartButtonWrapper>
-          <Button type="button" size="large" onClick={() => alert('카카오톡으로 시작')}>
-            카카오톡으로 시작
-          </Button>
-          <Button type="button" size="large" onClick={() => redirectToOAuthUrl('GITHUB')}>
-            깃허브로 시작
-          </Button>
-          <Button type="button" size="large" onClick={() => alert('네이버로 시작')}>
-            네이버로 시작
-          </Button>
+          <LogoButton
+            color="#21262d"
+            type="button"
+            size="large"
+            onClick={() => redirectToOAuthUrl('GITHUB')}
+          >
+            <GithubIcon />
+            <Text style={{}} size="small" color="white">
+              Github로 시작
+            </Text>
+          </LogoButton>
         </StartButtonWrapper>
       </LoginPageWrapper>
     </TransitionPage>
@@ -56,4 +60,17 @@ const StartButtonWrapper = styled.div`
   width: 100%;
   ${mixin.flexMixin({ direction: 'column', align: 'center' })}
   gap: 1rem;
+`;
+
+const LogoButton = styled(Button)`
+  background-color: #21262d;
+  ${mixin.flexMixin({ align: 'center', justify: 'center' })};
+  gap: 8px;
+  &:hover {
+    background-color: #0d1117;
+  }
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 `;

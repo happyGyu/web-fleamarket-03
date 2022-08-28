@@ -2,58 +2,39 @@ import colors from '@constants/colors';
 import mixin from '@style/mixin';
 import styled, { css } from 'styled-components';
 
-export default function ChatDisplay() {
-  const chats = [
-    {
-      id: 1,
-      content: '안녕하세요1 저는 금교영이라는 사람입니다. 앞으로도 잘 부탁 드려요',
-    },
-    {
-      id: 1,
-      content: '안녕하세요1 저는 금교영이라는 사람입니다. 앞으로도 잘 부탁 드려요',
-    },
-    {
-      id: 1,
-      content: '안녕하세요1 저는 금교영이라는 사람입니다. 앞으로도 잘 부탁 드려요',
-    },
-    {
-      id: 1,
-      content: '안녕하세요1 저는 금교영이라는 사람입니다. 앞으로도 잘 부탁 드려요',
-    },
+import { useUser } from '@queries/useUser';
+import { IMessage } from '@customTypes/chat';
+import { getHourAndMinite } from '@utils/common';
 
-    {
-      id: 2,
-      content: '안녕하세요1 저는 금교영이라는 사람입니다. 앞으로도 잘 부탁 드려요',
-    },
-    {
-      id: 1,
-      content: '안녕하세요3',
-    },
-    {
-      id: 2,
-      content: '안녕하세요4',
-    },
-    {
-      id: 1,
-      content: '안녕하세요5',
-    },
-    {
-      id: 2,
-      content: '안녕하세요6',
-    },
-    {
-      id: 1,
-      content: '안녕하세요7',
-    },
-  ];
+interface ChatDisplayProps {
+  messages?: IMessage[];
+}
+
+export default function ChatDisplay({ messages = [] }: ChatDisplayProps) {
+  const { user } = useUser();
+
+  const isSameTimeWithPrevMessage = (currentMessage: IMessage, prevMessage: IMessage) => {
+    if (!prevMessage) return false;
+    if (currentMessage.senderId !== prevMessage.senderId) return false;
+    const currentMessageMinute = new Date(currentMessage.createdAt).getMinutes();
+    const nextMessageMinute = new Date(prevMessage.createdAt).getMinutes();
+    return currentMessageMinute === nextMessageMinute;
+  };
 
   return (
     <ChatDisplayContainer>
-      {chats.map((chat) => (
-        <ChatContainer isUser={chat.id === 1}>
-          <Chat isUser={chat.id === 1}>{chat.content}</Chat>
-        </ChatContainer>
-      ))}
+      {messages.map((message, idx) => {
+        const { id, senderId, content, createdAt } = message;
+        const prevMessage = messages[idx - 1];
+        return (
+          <ChatContainer key={id} isUser={senderId === user.id}>
+            <Chat isUser={senderId === user.id}>{content}</Chat>
+            {!isSameTimeWithPrevMessage(message, prevMessage) && (
+              <ChatTime>{getHourAndMinite(createdAt)}</ChatTime>
+            )}
+          </ChatContainer>
+        );
+      })}
     </ChatDisplayContainer>
   );
 }
@@ -68,10 +49,8 @@ const ChatDisplayContainer = styled.div`
 `;
 
 const Chat = styled.div<{ isUser: boolean }>`
-  display: flex;
   margin: 10px;
-  flex-direction: row;
-  align-items: flex-start;
+  ${mixin.flexMixin({ align: 'flex-end' })}
   padding: 12px;
   font-size: 14px;
   max-width: 50%;
@@ -92,7 +71,14 @@ const Chat = styled.div<{ isUser: boolean }>`
         `}
 `;
 
+const ChatTime = styled.span`
+  color: ${colors.grey1};
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+`;
+
 const ChatContainer = styled.div<{ isUser: boolean }>`
   width: 100%;
-  ${({ isUser }) => mixin.flexMixin({ direction: isUser ? 'row-reverse' : 'row' })};
+  ${({ isUser }) =>
+    mixin.flexMixin({ direction: isUser ? 'row-reverse' : 'row', align: 'flex-end' })};
 `;

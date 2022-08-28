@@ -1,6 +1,7 @@
 import { createProduct, updateProduct } from '@apis/product';
 import NavigationBar from '@components/common/NavigationBar';
 import PageContainer from '@components/common/PageContainer';
+import { useToast } from '@components/common/Toast/ToastContext';
 import {
   FormProvider,
   useFormInputMap,
@@ -13,6 +14,7 @@ import TransitionPage from '@components/TransitionPage';
 import { CreateProductAPIDto } from '@customTypes/product';
 import useProduct from '@queries/useProduct';
 import { useUser } from '@queries/useUser';
+import { useQueryClient } from '@tanstack/react-query';
 import { getNumber } from '@utils/format';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -30,18 +32,17 @@ function PostForm() {
   const { user } = useUser();
   const { formInputMap } = useFormInputMap();
   const { isAllValidated } = useFormValidationState();
-
+  const { toastSuccess, toastError } = useToast();
   const { productId } = useParams();
   const isEdit = !!productId;
-  const { getProduct } = useProduct();
-  const { data: originalProduct } = getProduct(Number(productId));
-
+  const { product: originalProduct } = useProduct(Number(productId));
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const registerProduct = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isAllValidated) {
-      alert('값을 확인해주세요!');
+      toastError(new Error('필수 입력값을 채워주세요'));
       return;
     }
 
@@ -56,6 +57,8 @@ function PostForm() {
         await updateProduct(product, Number(productId));
       } else {
         await createProduct(product);
+        toastSuccess('상품 등록이 완료되었습니다.');
+        queryClient.refetchQueries(['products']);
       }
       navigate('/');
     } catch (error) {

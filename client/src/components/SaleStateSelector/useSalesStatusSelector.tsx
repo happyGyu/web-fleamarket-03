@@ -10,8 +10,8 @@ export default function useSalesStatusSelector(
   const { mutate } = useMutation(
     (newSalesStatus: SalesStatusType) => updateProduct({ salesStatus: newSalesStatus }, productId),
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['product', String(productId)]);
+      onSuccess: (data) => {
+        queryClient.refetchQueries(['product', String(productId)]);
       },
     },
   );

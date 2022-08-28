@@ -19,20 +19,20 @@ export class ChatRoom {
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', select: false })
   sellerId: number;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'seller_id' })
   seller: User;
 
   @Column({ type: 'date' })
   sellerLastVisit: Date;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', select: false })
   buyerId: number;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'buyer_id' })
   buyer: User;
 

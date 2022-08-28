@@ -12,7 +12,8 @@ import { HttpExceptionFilter } from './core/exception.filter';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { UploadImageModule } from './upload-image/upload-image.module';
 import { ChatModule } from './chat/chat.module';
-
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -36,6 +37,10 @@ import { ChatModule } from './chat/chat.module';
           decimalNumbers: true,
         },
       }),
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(process.cwd(), '..', 'client', 'build'),
+      exclude: ['/api*', '/docs*'],
     }),
     UserModule,
     RegionModule,

@@ -11,8 +11,7 @@ interface LikeButtonProps {
 }
 export default function LikeButton({ productId }: LikeButtonProps) {
   const { user } = useUser();
-  const { getProduct } = useProduct();
-  const { data: product } = getProduct(productId);
+  const { product } = useProduct(productId);
 
   const likedUsers = product?.likedUsers || [];
   const isUserPick = likedUsers.some((likedUser) => likedUser.userId === user.id);
@@ -32,13 +31,15 @@ export default function LikeButton({ productId }: LikeButtonProps) {
 
 const LikeButtonWrapper = styled.button<{ isUserPick: boolean }>`
   svg {
-    scale: 1.2;
+    scale: 1;
     stroke-width: 2;
     stroke: ${colors.grey1};
+    transition: 0.4s ease-in-out;
     ${({ isUserPick }) =>
       isUserPick &&
       css`
         fill: ${colors.primary};
+        stroke: transparent;
       `}
   }
 `;

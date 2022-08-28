@@ -1,14 +1,22 @@
 import colors from '@constants/colors';
+import { IChatRoom } from '@customTypes/chat';
+import useChat from '@hooks/chat/useChat';
 import mixin from '@style/mixin';
 import styled from 'styled-components';
+// import useChat from '@hooks/chat/useChat';
 import ChatDisplay from './ChatDisplay';
 import ChatInput from './ChatInput';
 
-export default function Chatting() {
+interface ChattingProps {
+  chatRoom?: IChatRoom;
+}
+
+export default function Chatting({ chatRoom }: ChattingProps) {
+  const { messages, sendMessage } = useChat(Number(chatRoom?.id), chatRoom?.messages || []);
   return (
     <Container>
-      <ChatDisplay />
-      <ChatInput />
+      <ChatDisplay messages={messages} />
+      <ChatInput sendMessage={sendMessage} />
     </Container>
   );
 }

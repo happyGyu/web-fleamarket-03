@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import DetailPageNavigationBar from '@components/DetailPageNavigationBar';
 import SaleStateSelector from '@components/SaleStateSelector';
 import LoadingIndicator from '@components/common/LoadingIndicator';
@@ -12,26 +12,37 @@ import { getLastAddress, getPriceString } from '@utils/product';
 import { getPassedTimeString } from '@utils/common';
 import colors from '@constants/colors';
 import LikeButton from '@components/LikeButton';
-import ChatButton from '@components/ChatButton';
 import { useUser } from '@queries/useUser';
 import useProduct from '@queries/useProduct';
 import TransitionPage from '@components/TransitionPage';
+import InfoButton from '@components/InfoButton';
+import ChatButton from '@components/MySellingProductChatLink';
 
 export default function DetailPage() {
   const { productId } = useParams();
-  const { getProduct } = useProduct();
-  const { data: product } = getProduct(Number(productId));
-  const { user } = useUser();
+  const { product } = useProduct(Number(productId));
 
+  const { user } = useUser();
   if (!product) {
     return <LoadingIndicator />;
   }
-  const { name, createdAt, region, description, views, likedUsers, seller, id, price, thumbnails } =
-    product;
+  const {
+    name,
+    createdAt,
+    region,
+    description,
+    views,
+    likedUsers,
+    seller,
+    id,
+    price,
+    thumbnails,
+    chatRooms,
+  } = product;
   return (
     <TransitionPage depth={2}>
       <Container>
-        <DetailPageNavigationBar sellerId={seller.id} />
+        <DetailPageNavigationBar sellerId={seller.id} productId={Number(productId)} />
         <ImageSlider images={thumbnails} />
         <DetailPageBody>
           {user.id === product.seller.id && (
@@ -65,7 +76,11 @@ export default function DetailPage() {
         <DetailPageFooter>
           <LikeButton productId={id} />
           <Text weight="bolder">{getPriceString(price)}</Text>
-          <ChatButton />
+          {seller.id === user.id ? (
+            <ChatButton productId={id} chattingRooms={chatRooms} />
+          ) : (
+            <InfoButton productId={id} chattingRooms={chatRooms} />
+          )}
         </DetailPageFooter>
       </Container>
     </TransitionPage>

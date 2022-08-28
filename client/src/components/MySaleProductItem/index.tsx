@@ -6,7 +6,7 @@ import Thumbnail from '@components/common/Thumbnail';
 import LikeButton from '@components/LikeButton';
 import MoreButton from '@components/MoreButton';
 import colors from '@constants/colors';
-import useProduct from '@queries/useProduct';
+import { IProductItem } from '@customTypes/product';
 import mixin from '@style/mixin';
 import { getPassedTimeString } from '@utils/common';
 import { getLastAddress, getPriceString } from '@utils/product';
@@ -23,30 +23,34 @@ export interface IUtilButtonInfo {
 interface ProductItemProps {
   productId: number;
   utilButtonInfo: IUtilButtonInfo;
+  product: IProductItem;
 }
 
-export default function ProductItem({ productId, utilButtonInfo }: ProductItemProps) {
+export default function MySaleProductItem({
+  product,
+  productId,
+  utilButtonInfo,
+}: ProductItemProps) {
   const navigate = useNavigate();
-  const { product } = useProduct(productId);
 
   if (!product) return <LoadingIndicator />;
   const { type, color } = utilButtonInfo;
-
   const UtilButton =
     type === 'like' ? (
       <LikeButton productId={product.id} />
     ) : (
-      <MoreButton color={color} productId={productId} />
+      <MoreButton productId={productId} color={color} />
     );
 
   const moveToDetailPage = () => {
     navigate(`/product/${product.id}`);
   };
 
-  const { thumbnails, name, region, createdAt, price, likedUsers, chatRooms } = product;
+  const { thumbnail, name, region, createdAt, price, likedUsers, chatRooms } = product;
+
   return (
     <Container onClick={moveToDetailPage}>
-      <Thumbnail src={thumbnails[0]} size="medium" />
+      <Thumbnail src={thumbnail} size="medium" />
       <ProductInfoContainer>
         <ProductName size="medium" weight="bold">
           {name}

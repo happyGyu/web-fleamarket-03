@@ -4,14 +4,12 @@ import { CreateChatMessageDto } from './dto/CreateChatMessage.dto';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { ChatMessageRepository } from './repository/chatMessage.repository';
 import { ChatRoomRepository } from './repository/chatRoom.repository';
-import { UserRepository } from 'src/user/repository/user.repository';
 
 @Injectable()
 export class ChatService {
   constructor(
     private readonly chatRoomRepository: ChatRoomRepository,
     private readonly chatMessageRepository: ChatMessageRepository,
-    private readonly userRepository: UserRepository,
     private readonly productRepository: ProductRepository,
   ) {}
 
@@ -19,12 +17,12 @@ export class ChatService {
     return this.chatMessageRepository.create(createChatMessageDto);
   }
 
-  async createChatRoom(creatChatRoomRequestDto: CreatChatRoomRequestDto) {
-    const { productId } = creatChatRoomRequestDto;
-    const { sellerId } = await this.productRepository.findOneByProductId(
+  async createChatRoom(productId: number, buyerId: number) {
+    const { seller } = await this.productRepository.findOneByProductId(
       productId,
     );
-    const createChatRoomDto = { sellerId, ...creatChatRoomRequestDto };
+    const sellerId = seller.id;
+    const createChatRoomDto = { sellerId, productId, buyerId };
     return this.chatRoomRepository.create(createChatRoomDto);
   }
 
@@ -33,7 +31,7 @@ export class ChatService {
   }
 
   getAllChatRoom(userId: number) {
-    return this.userRepository.findAllChatRoomByUserId(userId);
+    return this.chatRoomRepository.findByUserId(userId);
   }
 
   getAllSellingProductChatRoom(userId: number, productId: number) {
@@ -57,5 +55,12 @@ export class ChatService {
       );
     }
     return this.chatRoomRepository.delete(chatRoomId);
+  }
+
+  async updateLastVisitTime(chatRoomId: number, userId: number) {
+    const chatRoom = await this.getChatRoom(chatRoomId);
+    // todo: buyer는 맞는지 확인해야함
+    const isSeller = chatRoom.sellerId === userId;
+    return this.chatRoomRepository.updateVisitTime(chatRoomId, isSeller);
   }
 }
