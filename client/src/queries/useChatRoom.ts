@@ -12,14 +12,14 @@ import { AxiosError } from 'axios';
 
 export function useChatRoom(chatRoomId: number) {
   const { user } = useUser();
-  const { data: chatRoom } = useQuery<IChatRoomResponse, AxiosError, IChatRoom>(
+  const { data: chatRoom, isLoading } = useQuery<IChatRoomResponse, AxiosError, IChatRoom>(
     ['chatRoom', chatRoomId],
     () => getChatRoom(chatRoomId),
     {
       select: (originalChatRoom) => selectPeer(user.id, originalChatRoom),
     },
   );
-  return { chatRoom };
+  return { chatRoom, isLoading };
 }
 
 export function useChatRooms() {
