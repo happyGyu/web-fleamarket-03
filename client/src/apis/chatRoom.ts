@@ -1,5 +1,10 @@
 import myAxios from '@apis/myAxios';
 
+export async function getChatRoom(chatRoomId: number) {
+  const { data: chatRoom } = await myAxios.get(`/chatRooms/${chatRoomId}`);
+  return chatRoom;
+}
+
 export async function getAllChatRoom() {
   const { data: chatRooms } = await myAxios.get('/chatRooms');
   return chatRooms;

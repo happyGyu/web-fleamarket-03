@@ -1,9 +1,26 @@
 import { useUser } from '@queries/useUser';
-import { createNewChatRoom, getAllChatRoom, getMyProductChatRoom } from '@apis/chatRoom';
+import {
+  createNewChatRoom,
+  getAllChatRoom,
+  getChatRoom,
+  getMyProductChatRoom,
+} from '@apis/chatRoom';
 import { useToast } from '@components/common/Toast/ToastContext';
 import { IChatRoom, IChatRoomResponse } from '@customTypes/chat';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+
+export function useChatRoom(chatRoomId: number) {
+  const { user } = useUser();
+  const { data: chatRoom } = useQuery<IChatRoomResponse, AxiosError, IChatRoom>(
+    ['chatRoom', chatRoomId],
+    () => getChatRoom(chatRoomId),
+    {
+      select: (originalChatRoom) => selectPeer(user.id, originalChatRoom),
+    },
+  );
+  return { chatRoom };
+}
 
 export function useChatRooms() {
   const { user } = useUser();
@@ -12,7 +29,8 @@ export function useChatRooms() {
     AxiosError,
     IChatRoom[]
   >(['chatRooms'], getAllChatRoom, {
-    select: (originalChatRooms) => selectPeer(user.id, originalChatRooms),
+    select: (originalChatRooms) =>
+      originalChatRooms.map((originalChatRoom) => selectPeer(user.id, originalChatRoom)),
   });
   return { chatRooms, refetchChatRooms };
 }
@@ -24,18 +42,17 @@ export function useMyProductChatRooms(productId: number) {
     ['chatRooms', 'myProduct', productId],
     () => getMyProductChatRoom(productId),
     {
-      select: (originalChatRooms) => selectPeer(user.id, originalChatRooms),
+      select: (originalChatRooms) =>
+        originalChatRooms.map((originalChatRoom) => selectPeer(user.id, originalChatRoom)),
     },
   );
   return { myProductChatRooms };
 }
 
-function selectPeer(userId: number, originalChatRooms: IChatRoomResponse[]) {
-  return originalChatRooms.map((originalChatRoom) => {
-    const { buyer, seller, ...restData } = originalChatRoom;
-    const peer = buyer.id === userId ? seller : buyer;
-    return { ...restData, peer };
-  });
+function selectPeer(userId: number, originalChatRoom: IChatRoomResponse) {
+  const { buyer, seller, ...restData } = originalChatRoom;
+  const peer = buyer.id === userId ? seller : buyer;
+  return { ...restData, peer };
 }
 
 export function useCreateChatRoom() {
