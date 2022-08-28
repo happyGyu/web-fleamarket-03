@@ -2,11 +2,12 @@ import colors from '@constants/colors';
 import mixin from '@style/mixin';
 import { useRef, useState } from 'react';
 import styled from 'styled-components';
-import { SendChat } from '@hooks/chat/chatType';
+
 import { useUser } from '@queries/useUser';
+import { SendChatDto } from '@customTypes/chat';
 
 interface ChatInputProps {
-  sendMessage: (message: Omit<SendChat, 'chatRoomId'>) => void;
+  sendMessage: (message: Omit<SendChatDto, 'chatRoomId'>) => void;
 }
 
 export default function ChatInput({ sendMessage }: ChatInputProps) {

@@ -1,12 +1,12 @@
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
 import styled, { css } from 'styled-components';
-import { Message } from '@hooks/chat/useChat';
+
 import { useUser } from '@queries/useUser';
-import { useRef } from 'react';
+import { IMessage } from '@customTypes/chat';
 
 interface ChatDisplayProps {
-  messages?: Message[];
+  messages?: IMessage[];
 }
 
 export default function ChatDisplay({ messages = [] }: ChatDisplayProps) {
