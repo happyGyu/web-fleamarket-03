@@ -72,6 +72,7 @@ const TabHeaderItem = styled.div<{ isActive?: boolean }>`
 `;
 
 const TabContent = styled.div`
+  overflow-y: auto;
   height: 100%;
   width: 100%;
 `;
