@@ -11,7 +11,9 @@ export default function ChattingRoom({ chattingRoomsInfo }: ChattingRoomInfoProp
         const { productId, id, peer, messages } = chatRoomInfo;
         const latestMessage = messages[0];
         const latestMessageTime = new Date(latestMessage?.createdAt);
-        return <ChattingList {...{ id, peer, latestMessage, latestMessageTime, productId }} />;
+        return (
+          <ChattingList key={id} {...{ id, peer, latestMessage, latestMessageTime, productId }} />
+        );
       })}
     </ul>
   );

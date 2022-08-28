@@ -36,7 +36,11 @@ export default function MySaleProductItem({
   if (!product) return <LoadingIndicator />;
   const { type, color } = utilButtonInfo;
   const UtilButton =
-    type === 'like' ? <LikeButton productId={product.id} /> : <MoreButton color={color} />;
+    type === 'like' ? (
+      <LikeButton productId={product.id} />
+    ) : (
+      <MoreButton productId={productId} color={color} />
+    );
 
   const moveToDetailPage = () => {
     navigate(`/product/${product.id}`);
