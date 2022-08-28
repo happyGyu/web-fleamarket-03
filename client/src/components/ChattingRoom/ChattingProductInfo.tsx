@@ -2,12 +2,18 @@ import { Text } from '@components/common/Text';
 import colors from '@constants/colors';
 import useProduct from '@queries/useProduct';
 import mixin from '@style/mixin';
+import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
-export default function ChattingProductInfo() {
-  const { product } = useProduct(21);
+interface ChattingProductInfoProps {
+  productId: number;
+}
+
+export default function ChattingProductInfo({ productId }: ChattingProductInfoProps) {
+  const { product } = useProduct(productId);
+  const navigate = useNavigate();
   return (
-    <Container>
+    <Container onClick={() => navigate(`/product/${product?.id}`)}>
       <FlexColumnContainer>
         <img src={product?.thumbnails[0]} alt="" />
       </FlexColumnContainer>
