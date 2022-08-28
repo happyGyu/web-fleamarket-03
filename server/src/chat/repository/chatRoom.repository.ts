@@ -1,6 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { CreateChatRoomDto } from '../dto/CreateChatRoomDto';
+import { CreateChatRoomDto } from '../dto/CreateChatRoom.dto';
 import { ChatRoom } from '../entities/chatRoom.entity';
 
 @Injectable()
@@ -29,18 +29,19 @@ export class ChatRoomRepository {
     });
   }
 
-  async findAllSellingProductChatRoom(sellerId: number) {
+  async findSellingProductChatRooms(sellerId: number, productId: number) {
     return await this.repository.find({
-      where: { sellerId },
+      where: { sellerId, productId },
       relations: { messages: true },
     });
   }
 
   async getLeavedUserId(chatRoomId: number) {
-    return await this.repository.findOne({
+    const chatRoom = await this.repository.findOne({
       where: { id: chatRoomId },
       select: { leavedUserId: true },
     });
+    return chatRoom.leavedUserId;
   }
 
   async updateLeavedUserId(chatRoomId: number, leavingUserId: number) {
