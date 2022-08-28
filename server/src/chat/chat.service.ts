@@ -18,9 +18,10 @@ export class ChatService {
   }
 
   async createChatRoom(productId: number, buyerId: number) {
-    const { sellerId } = await this.productRepository.findOneByProductId(
+    const { seller } = await this.productRepository.findOneByProductId(
       productId,
     );
+    const sellerId = seller.id;
     const createChatRoomDto = { sellerId, productId, buyerId };
     return this.chatRoomRepository.create(createChatRoomDto);
   }
