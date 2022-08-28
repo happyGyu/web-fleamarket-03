@@ -3,6 +3,7 @@ import { componentSize } from '@constants/componentSize';
 import mixin from '@style/mixin';
 import { useState } from 'react';
 import styled from 'styled-components';
+import { useChatRooms } from '@queries/useChatRoom';
 import ChattingRoom from './ChattingRoom';
 import LikedProductList from './LikedProductList';
 import MySalesProductLis from './MySalesProductList';
@@ -13,7 +14,7 @@ export default function MyTab() {
     { id: 2, name: '채팅목록', component: ChattingRoom },
     { id: 3, name: '관심목록', component: LikedProductList },
   ];
-
+  const { chatRooms } = useChatRooms();
   const [selectedTabId, setSelectedTabId] = useState(1);
   const SelectedTabComponent = tabInfos.find(({ id }) => id === selectedTabId)?.component;
 
@@ -30,7 +31,9 @@ export default function MyTab() {
           </TabHeaderItem>
         ))}
       </TabHeader>
-      <TabContent>{SelectedTabComponent && <SelectedTabComponent />}</TabContent>
+      <TabContent>
+        {SelectedTabComponent && <SelectedTabComponent chattingRoomsInfo={chatRooms || []} />}
+      </TabContent>
     </Container>
   );
 }

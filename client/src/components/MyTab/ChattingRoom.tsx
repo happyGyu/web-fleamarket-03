@@ -3,62 +3,53 @@ import colors from '@constants/colors';
 import mixin from '@style/mixin';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { IChatRoom } from '@customTypes/chat';
+import { calculatePassedTime } from '@utils/common';
+import useProduct from '@queries/useProduct';
 
-export default function ChattingRoom() {
+interface ChattingRooInfoProps {
+  chattingRoomsInfo: IChatRoom[];
+}
+export default function ChattingRoom({ chattingRoomsInfo }: ChattingRooInfoProps) {
   const navigate = useNavigate();
-  const chattingRoomsInfo = [
-    {
-      peerUserName: '금교영',
-      lastMessage: '파나요',
-      lastMessageTime: '3분전',
-      thumbnail:
-        'https://img.29cm.co.kr/next-product/2022/05/17/0edb5a93efb1471eb9df7e9e31ed1909_20220517105255.png?width=600',
-      countOfUnreadMessage: 2,
-    },
-    {
-      peerUserName: '황태규',
-      lastMessage: '오늘 끝내나요?',
-      lastMessageTime: '2분전',
-      thumbnail:
-        'https://img.29cm.co.kr/next-product/2022/04/29/ef792e9fae8f4e6a9883d3a1a338a012_20220429103845.jpg?width=600',
-      countOfUnreadMessage: 2,
-    },
-  ];
+  const { getProduct } = useProduct();
+  const { data: product } = getProduct();
 
   return (
     <ul>
-      {chattingRoomsInfo.map(
-        ({ lastMessage, lastMessageTime, peerUserName, thumbnail, countOfUnreadMessage }) => (
-          <ChattingRoomContainer key={peerUserName} onClick={() => navigate('/chatting-room')}>
-            <BorderBox>
-              <FlexColumnContainer>
-                <Text size="medium" weight="bold">
-                  {peerUserName}
-                </Text>
-                <Text size="medium" color={colors.grey1}>
-                  {lastMessage}
-                </Text>
-              </FlexColumnContainer>
+      {chattingRoomsInfo.map(({ id, peer, createdAt, messages }) => (
+        <ChattingRoomContainer
+          key={createdAt.toDateString()}
+          onClick={() => navigate('/chatting-room')}
+        >
+          <BorderBox>
+            <FlexColumnContainer>
+              <Text size="medium" weight="bold">
+                {peer.name}
+              </Text>
+              <Text size="medium" color={colors.grey1}>
+                {messages[0].content}
+              </Text>
+            </FlexColumnContainer>
 
-              <FlexRowContainer>
-                <FlexColumnContainer>
-                  <Text color={colors.grey1} size="xSmall">
-                    {lastMessageTime}
-                  </Text>
-                  <Notification>
+            <FlexRowContainer>
+              <FlexColumnContainer>
+                <Text color={colors.grey1} size="xSmall">
+                  {calculatePassedTime(messages[0].createdAt)}
+                </Text>
+                {/* <Notification>
                     <Text size="xSmall" color={colors.white}>
                       {countOfUnreadMessage}
                     </Text>
-                  </Notification>
-                </FlexColumnContainer>
-                <FlexColumnContainer>
-                  <img src={thumbnail} alt="" />
-                </FlexColumnContainer>
-              </FlexRowContainer>
-            </BorderBox>
-          </ChattingRoomContainer>
-        ),
-      )}
+                  </Notification> */}
+              </FlexColumnContainer>
+              <FlexColumnContainer>
+                <img src={product?.thumbnails[0] || ''} alt="" />
+              </FlexColumnContainer>
+            </FlexRowContainer>
+          </BorderBox>
+        </ChattingRoomContainer>
+      ))}
     </ul>
   );
 }
