@@ -2,15 +2,20 @@ import MapPinIcon from '@assets/icons/MapPinIcon';
 import { Text } from '@components/common/Text';
 import colors from '@constants/colors';
 import { padding } from '@constants/padding';
+import { useUser } from '@queries/useUser';
 import mixin from '@style/mixin';
+import { getLastAddress } from '@utils/product';
 import styled from 'styled-components';
 
 export default function RegionFooter() {
+  const { user } = useUser();
+  const primaryRegion = user.regions.find((region) => region.isPrimary) || user.regions[0];
+
   return (
     <>
       <Container>
         <MapPinIcon />
-        <Text size="small">역삼동</Text>
+        <Text size="small"> {getLastAddress(primaryRegion.address)}</Text>
       </Container>
       <div />
     </>

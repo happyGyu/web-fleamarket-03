@@ -30,7 +30,7 @@ export default function CountIndicator({ type, count }: CountIndicatorProps) {
 
 const CountIndicatorWrapper = styled.div`
   ${mixin.flexMixin({ align: 'center', justify: 'space-between' })}
-  width: 2.5rem;
+  width: 2rem;
 
   svg {
     scale: 0.9;

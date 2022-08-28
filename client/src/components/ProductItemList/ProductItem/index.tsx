@@ -44,11 +44,16 @@ export default function ProductItem({ productId, utilButtonInfo }: ProductItemPr
     <Container onClick={moveToDetailPage}>
       <Thumbnail src={thumbnails[0]} size="medium" />
       <ProductInfoContainer>
-        <ProductName size="large" weight="bold">
+        <ProductName size="medium" weight="bold">
           {name}
         </ProductName>
-        <Caption captions={[getLastAddress(region.address), getPassedTimeString(createdAt)]} />
-        <Text weight="bold">{getPriceString(price)}</Text>
+        <Caption
+          size="small"
+          captions={[getLastAddress(region.address), getPassedTimeString(createdAt)]}
+        />
+        <Text size="small" weight="bold">
+          {getPriceString(price)}
+        </Text>
       </ProductInfoContainer>
       <UtilButtonWrapper>{UtilButton}</UtilButtonWrapper>
       <CountIndicatorWrapper>
