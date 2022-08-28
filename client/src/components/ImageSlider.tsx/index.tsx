@@ -10,7 +10,7 @@ export default function ImageSlider({ images }: ImageSliderProps) {
     <Container>
       <Slider dots infinite={false} speed={500} slidesToShow={1} slidesToScroll={1}>
         {images.map((image) => (
-          <ImageContainer>
+          <ImageContainer key={image}>
             <img key={image} src={image} alt="상품이미지" />
           </ImageContainer>
         ))}
