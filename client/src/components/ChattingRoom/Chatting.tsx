@@ -1,13 +1,15 @@
 import colors from '@constants/colors';
 import useChat from '@hooks/chat/useChat';
 import mixin from '@style/mixin';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 // import useChat from '@hooks/chat/useChat';
 import ChatDisplay from './ChatDisplay';
 import ChatInput from './ChatInput';
 
 export default function Chatting() {
-  const { messages, sendMessage } = useChat(1);
+  const { chatRoomId } = useParams();
+  const { messages, sendMessage } = useChat(Number(chatRoomId));
 
   return (
     <Container>
