@@ -1,4 +1,5 @@
 import { ICategory } from './category';
+import { IChatRoom } from './chat';
 import { IRegion } from './region';
 import { IUser } from './user';
 
@@ -15,7 +16,6 @@ export interface IProduct {
   price: number;
   region: IRegion;
   salesStatus: SalesStatusType;
-  // categoryId: number;
   createdAt: string;
   updatedAt: string;
   thumbnails: string[];
@@ -24,6 +24,7 @@ export interface IProduct {
   views: number;
   seller: IUser;
   likedUsers: ILikedUser[];
+  chatRooms: IChatRoom[];
 }
 
 export interface ILikedUser {

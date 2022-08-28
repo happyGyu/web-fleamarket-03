@@ -16,6 +16,7 @@ import ChatButton from '@components/ChatButton';
 import { useUser } from '@queries/useUser';
 import useProduct from '@queries/useProduct';
 import TransitionPage from '@components/TransitionPage';
+import InfoButton from '@components/InfoButton';
 
 export default function DetailPage() {
   const { productId } = useParams();
@@ -26,8 +27,19 @@ export default function DetailPage() {
   if (!product) {
     return <LoadingIndicator />;
   }
-  const { name, createdAt, region, description, views, likedUsers, seller, id, price, thumbnails } =
-    product;
+  const {
+    name,
+    createdAt,
+    region,
+    description,
+    views,
+    likedUsers,
+    seller,
+    id,
+    price,
+    thumbnails,
+    chatRooms,
+  } = product;
   return (
     <TransitionPage depth={2}>
       <Container>
@@ -65,7 +77,11 @@ export default function DetailPage() {
         <DetailPageFooter>
           <LikeButton productId={id} />
           <Text weight="bolder">{getPriceString(price)}</Text>
-          <ChatButton />
+          {seller.id === user.id ? (
+            <InfoButton productId={id} chattingRooms={chatRooms} />
+          ) : (
+            <ChatButton chattingRooms={chatRooms} />
+          )}
         </DetailPageFooter>
       </Container>
     </TransitionPage>

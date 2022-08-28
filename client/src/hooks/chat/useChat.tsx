@@ -1,19 +1,14 @@
+import { ChatEvent, IMessage, SendChatDto } from '@customTypes/chat';
 import { useUser } from '@queries/useUser';
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import io from 'socket.io-client';
-import { SendChat, ChatEvent } from './chatType';
 
-export interface Message {
-  content: string;
-  senderId: number;
-  id: number;
-}
 export default function useChat(chatRoomId: number) {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<IMessage[]>([]);
   const [isConnected, setIsConnected] = useState(false);
   const { user } = useUser();
 
-  const receiveMessage = (newMessage: Message) => {
+  const receiveMessage = (newMessage: IMessage) => {
     setMessages((prev) => [newMessage, ...prev]);
   };
 
@@ -27,7 +22,7 @@ export default function useChat(chatRoomId: number) {
       setIsConnected(false);
     });
 
-    socket.on(ChatEvent.RECIEVE_MESSAGE, (newMessage: Message) => {
+    socket.on(ChatEvent.RECIEVE_MESSAGE, (newMessage: IMessage) => {
       receiveMessage(newMessage);
     });
     socket.emit(ChatEvent.ENTER, { chatRoomId, userId: user.id });
@@ -39,7 +34,7 @@ export default function useChat(chatRoomId: number) {
     };
   }, []);
 
-  const sendMessage = (message: Partial<SendChat>) => {
+  const sendMessage = (message: Partial<SendChatDto>) => {
     socket.emit(ChatEvent.SEND_MESSAGE, { ...message, chatRoomId });
   };
 

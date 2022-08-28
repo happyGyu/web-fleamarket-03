@@ -6,7 +6,7 @@ import TransitionPage from '@components/TransitionPage';
 export default function ChattingPage() {
   return (
     <TransitionPage depth={2}>
-      <NavigationBar title="유저이름" />
+      <NavigationBar title="채팅" />
       <ChattingProductInfo />
       <Chatting />
     </TransitionPage>
