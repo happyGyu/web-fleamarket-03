@@ -5,8 +5,11 @@ import mixin from '@style/mixin';
 import TransitionPage from '@components/TransitionPage';
 import GithubIcon from '@assets/icons/Github';
 import { Text } from '@components/common/Text';
+import useLogin from '@hooks/useLogin';
 
 export default function LoginPage() {
+  const { testerLogin } = useLogin();
+
   return (
     <TransitionPage
       depth={2}
@@ -31,6 +34,9 @@ export default function LoginPage() {
               Github로 시작
             </Text>
           </LogoButton>
+          <Button type="button" size="large" onClick={testerLogin}>
+            테스트 유저로 시작
+          </Button>
         </StartButtonWrapper>
       </LoginPageWrapper>
     </TransitionPage>

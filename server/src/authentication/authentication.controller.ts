@@ -34,6 +34,20 @@ export class AuthenticationController {
     return res.status(HttpStatus.OK).json({ isRegistered, ...loginResult });
   }
 
+  @Post('login/tester')
+  async testLogin(@Res() res: Response) {
+    const { isRegistered, refreshToken, ...loginResult } =
+      await this.authenticationService.testerLogin();
+    if (isRegistered) {
+      res.cookie('Refresh', refreshToken, {
+        httpOnly: true,
+        path: '/',
+      });
+    }
+
+    return res.status(HttpStatus.OK).json({ isRegistered, ...loginResult });
+  }
+
   @Post('logout')
   logOut(@Res() res: Response) {
     try {
