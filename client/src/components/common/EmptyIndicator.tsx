@@ -10,7 +10,7 @@ interface EmptyIndicatorProps {
 export default function EmptyIndicator({ message }: EmptyIndicatorProps) {
   return (
     <Container>
-      <img src="/empty.png" alt="텅 비어있음" />
+      <img src="/images/empty.png" alt="텅 비어있음" />
       <Message size="small">{message}</Message>
     </Container>
   );

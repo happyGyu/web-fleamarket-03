@@ -20,7 +20,7 @@ export default function LoginPage() {
       keyframeOption={{ easing: 'cubic-bezier(0.33, 1, 0.68, 1)', duration: 1000 }}
     >
       <LoginPageWrapper>
-        <Logo src="./goldmarket-logo.png" />
+        <Logo src="/images/goldmarket-logo.png" />
         <WelcomeMessage>간편하게 황금마켓을 시작하세요</WelcomeMessage>
         <StartButtonWrapper>
           <LogoButton
