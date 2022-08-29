@@ -17,8 +17,8 @@ export default function CategoryGrid() {
 }
 
 const Container = styled(PageContainer)`
-  margin-top: 1.5rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   place-items: center;
+  overflow: auto;
 `;
