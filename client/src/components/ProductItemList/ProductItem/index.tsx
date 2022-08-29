@@ -48,14 +48,14 @@ export default function ProductItem({ productId, utilButtonInfo }: ProductItemPr
     <Container onClick={moveToDetailPage}>
       <Thumbnail src={thumbnails[0]} size="medium" />
       <ProductInfoContainer>
-        <ProductName size="medium" weight="bold">
+        <ProductName size="small" weight="bold">
           {name}
         </ProductName>
         <Caption
-          size="small"
+          size="xSmall"
           captions={[getLastAddress(region.address), getPassedTimeString(createdAt)]}
         />
-        <Text size="small" weight="bold">
+        <Text size="small" weight="bolder">
           {getPriceString(price)}
         </Text>
       </ProductInfoContainer>
@@ -77,7 +77,7 @@ const Container = styled.div`
 `;
 
 const ProductName = styled(Text)`
-  width: 9rem;
+  width: 80%;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -85,8 +85,9 @@ const ProductName = styled(Text)`
 
 const ProductInfoContainer = styled.div`
   ${mixin.flexMixin({ direction: 'column' })}
-  gap: 0.5rem;
+  gap: 0.625rem;
   margin-top: 0.5rem;
+  flex-grow: 1;
 `;
 
 const UtilButtonWrapper = styled.div`
