@@ -1,3 +1,4 @@
+import LoadingIndicator from '@components/common/LoadingIndicator';
 import colors from '@constants/colors';
 import { padding } from '@constants/padding';
 import { PagedResponseDto } from '@customTypes/common';
@@ -20,10 +21,14 @@ export default function ProductItemList({
 }: ProductItemListProps) {
   return (
     <MainPageWrapper>
-      {products?.pages.map((page) =>
-        page.data.map((product) => (
-          <ProductItem key={product.id} productId={product.id} utilButtonInfo={utilButtonInfo} />
-        )),
+      {products ? (
+        products.pages.map((page) =>
+          page.data.map((product) => (
+            <ProductItem key={product.id} productId={product.id} utilButtonInfo={utilButtonInfo} />
+          )),
+        )
+      ) : (
+        <LoadingIndicator />
       )}
       {scrollTriger}
     </MainPageWrapper>

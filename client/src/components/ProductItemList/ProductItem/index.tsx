@@ -56,7 +56,7 @@ export default function ProductItem({ productId, utilButtonInfo }: ProductItemPr
           captions={[getLastAddress(region.address), getPassedTimeString(createdAt)]}
         />
         <Text size="small" weight="bolder">
-          {getPriceString(price)}
+          {price ? getPriceString(price) : '가격제시❤️'}
         </Text>
       </ProductInfoContainer>
       <UtilButtonWrapper>{UtilButton}</UtilButtonWrapper>
@@ -101,5 +101,5 @@ const CountIndicatorWrapper = styled.div`
   bottom: 1rem;
   right: 1rem;
   ${mixin.flexMixin({ align: 'center' })}
-  gap: 1rem;
+  gap: 0.5rem;
 `;
