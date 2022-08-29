@@ -2,7 +2,7 @@ import RegionModal from '@components/RegionModal.tsx';
 import useRegionModal from '@hooks/useRegionModal';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { IOAuthUserInfo } from '@customTypes/auth';
+import { IOAuthUserInfo, OAuthOriginType } from '@customTypes/auth';
 import React, { useState } from 'react';
 import Input from '@components/common/Input';
 import NavigationBar from '@components/common/NavigationBar';
@@ -13,6 +13,8 @@ import colors from '@constants/colors';
 import mixin from '@style/mixin';
 import { fontSize } from '@constants/fonts';
 import { redirectToOAuthUrl } from '@utils/oAuth';
+import { getQueryValue } from '@utils/queryParser';
+import { padding } from '@constants/padding';
 import { checkDuplicatedUser, requestSignUp } from '../apis/user';
 
 export default function SignUpPage() {
@@ -22,6 +24,8 @@ export default function SignUpPage() {
   const { state } = useLocation();
   const oAuthInfo = state as IOAuthUserInfo;
 
+  const oAuthId = getQueryValue('oAuthId');
+  const oAuthOrigin = getQueryValue('origin') as OAuthOriginType;
   const [isDuplicated, setIsDuplicated] = useState<boolean | null>(null);
   const [signUpErrorMessage, setSignUpErrorMessage] = useState<string | null>(null);
   const validateSet = [
@@ -43,10 +47,19 @@ export default function SignUpPage() {
       return;
     }
     if (!selectedRegion) return;
+    if (!oAuthId || !oAuthOrigin) {
+      navigate('/error');
+      return;
+    }
     try {
-      await requestSignUp({ name: userName, regionId: selectedRegion.id, oAuthInfo });
-      redirectToOAuthUrl(oAuthInfo.oAuthOrigin);
+      await requestSignUp({
+        name: userName,
+        regionId: selectedRegion.id,
+        oAuthInfo: { oAuthId, oAuthOrigin },
+      });
+      redirectToOAuthUrl(oAuthOrigin);
     } catch (error) {
+      console.log(error);
       navigate('/error');
     }
   };
@@ -120,6 +133,7 @@ export default function SignUpPage() {
 
 const SignUpPageWrapper = styled(PageContainer)`
   position: relative;
+  padding-top: 5rem;
   width: 100%;
   height: 100%;
   background-color: white;

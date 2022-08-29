@@ -14,7 +14,7 @@ export default function useLogin() {
   const handleLoginResult = (loginResult: LoginResponseDto, error: unknown) => {
     const { isRegistered, oAuthInfo, accessToken } = loginResult;
     if (!isRegistered) {
-      navigate('/signUp', { state: { ...oAuthInfo } });
+      window.location.href = `/signUp?oAuthId=${oAuthInfo?.oAuthId}&origin=${oAuthInfo?.oAuthOrigin}`;
     }
 
     if (isRegistered && accessToken) {
