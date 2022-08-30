@@ -118,14 +118,12 @@ REACT_APP_PROD_SERVER_URL=<string>
 <table>
   <tr>
   <td align="center">
-      <a href="https://github.com/happyGyu">
        <img  height="450" alt="image" src="https://user-images.githubusercontent.com/78121870/187331645-dc39e6c8-7c46-4bc1-ab3b-24da8eb9abb2.png">
        </br> 
        <sub><b>상품 글 작성 페이지</b></sub>
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/youngkyo0504">
        <img  height="450" alt="image" src="https://user-images.githubusercontent.com/78121870/187331742-d5e05f38-da12-4fe2-b8d8-6f85562461b1.png">
        <br/> <sub><b>상품 글 수정 페이지</b><br></sub>
       </a>
@@ -140,14 +138,12 @@ REACT_APP_PROD_SERVER_URL=<string>
 <table>
   <tr>
   <td align="center">
-      <a href="https://github.com/happyGyu">
        <img  height="450" alt="image" src="https://user-images.githubusercontent.com/78121870/187332589-3c224703-b4ae-4af9-acc4-efde2957b2b4.png">
        </br> 
        <sub><b>상품 글 작성 페이지</b></sub>
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/youngkyo0504">
       <img  height="450" alt="image" src="https://user-images.githubusercontent.com/78121870/187332845-c188b2b8-444e-46ff-a3a4-eec69aa691fb.png">
        <br/> <sub><b>상품 글 수정 페이지</b><br></sub>
       </a>
@@ -161,14 +157,12 @@ REACT_APP_PROD_SERVER_URL=<string>
 <table>
   <tr>
   <td align="center">
-      <a href="https://github.com/happyGyu">
 <img  height="450" alt="image" src="https://user-images.githubusercontent.com/78121870/187333132-b716c0ff-ae9e-4287-b5cc-e39917e9038f.png">
        </br> 
        <sub><b>동네 선택 페이지</b></sub>
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/youngkyo0504">
 <img  height="450" alt="image" src="https://user-images.githubusercontent.com/78121870/187333185-ebee0e29-0bf8-4bb5-9c2c-b0de44f69060.png">
        <br/> <sub><b>동네 검색 페이지</b><br></sub>
       </a>
