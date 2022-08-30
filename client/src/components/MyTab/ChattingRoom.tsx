@@ -6,9 +6,10 @@ interface ChattingRoomInfoProps {
   chattingRoomsInfo: IChatRoom[];
 }
 export default function ChattingRoom({ chattingRoomsInfo }: ChattingRoomInfoProps) {
-  return chattingRoomsInfo.length ? (
+  const filteredChatRooms = chattingRoomsInfo.filter((chatRoom) => chatRoom.messages.length);
+  return filteredChatRooms.length ? (
     <ul>
-      {chattingRoomsInfo.map((chatRoomInfo) => {
+      {filteredChatRooms.map((chatRoomInfo) => {
         const { productId, id, peer, messages } = chatRoomInfo;
         const latestMessage = messages[0];
         const latestMessageTime = new Date(latestMessage?.createdAt);

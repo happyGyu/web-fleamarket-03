@@ -35,7 +35,9 @@ export default function useChat(chatRoomId: number, initialMessages: IMessage[])
   }, []);
 
   const sendMessage = (message: Partial<SendChatDto>) => {
-    socket.emit(ChatEvent.SEND_MESSAGE, { ...message, chatRoomId });
+    if (message.content?.length) {
+      socket.emit(ChatEvent.SEND_MESSAGE, { ...message, chatRoomId });
+    }
   };
 
   return { sendMessage, messages };
