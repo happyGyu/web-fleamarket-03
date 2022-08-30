@@ -42,6 +42,18 @@ export const requestLogin = async (code: string, oAuthOrigin: string) => {
   return loginResponse;
 };
 
+// 데모용 테스트 유저를 위한 로그인 함수
+export const requestTesterLogin = async () => {
+  const { data: loginResponse } = await myAxios.post<LoginResponseDto>(
+    '/auth/login/tester',
+    {},
+    {
+      withCredentials: true,
+    },
+  );
+  return loginResponse;
+};
+
 export const requestLogout = async () => {
   const { data: logoutResponse } = await myAxios.post(
     '/auth/logout',

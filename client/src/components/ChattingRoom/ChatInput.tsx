@@ -1,6 +1,6 @@
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { useUser } from '@queries/useUser';

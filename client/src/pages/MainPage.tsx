@@ -9,13 +9,14 @@ import portalUtil from '@utils/portal';
 import ProductItemList from '@components/ProductItemList';
 import React from 'react';
 import TransitionPage from '@components/TransitionPage';
+import LoadingIndicator from '@components/common/LoadingIndicator';
 import { useUser } from '../queries/useUser';
 
 export default function MainPage() {
   const { user } = useUser();
   const primaryRegion = user.regions.find((region) => region.isPrimary) || user.regions[0];
   const queryKey = ['products', primaryRegion.id];
-  const { data, Trigger } = useInfiniteScroll<IProductItem>({
+  const { data, Trigger, isLoading } = useInfiniteScroll<IProductItem>({
     queryKey,
     fetchFunction: (pageParam?: number) =>
       getRegionProducts({ regionId: primaryRegion.id, start: pageParam }),
@@ -24,16 +25,22 @@ export default function MainPage() {
   return (
     <TransitionPage depth={0}>
       <MainPageNavigationBar />
-      <ProductItemList
-        products={data}
-        utilButtonInfo={{ type: 'like' }}
-        scrollTriger={<Trigger />}
-      />
-      <Portal>
-        <RegisterNewProductLink to="/product/post">
-          <CircleButton />
-        </RegisterNewProductLink>
-      </Portal>
+      {isLoading ? (
+        <LoadingIndicator />
+      ) : (
+        <>
+          <ProductItemList
+            products={data}
+            utilButtonInfo={{ type: 'like' }}
+            scrollTriger={<Trigger />}
+          />
+          <Portal>
+            <RegisterNewProductLink to="/product/post">
+              <CircleButton />
+            </RegisterNewProductLink>
+          </Portal>
+        </>
+      )}
     </TransitionPage>
   );
 }

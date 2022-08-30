@@ -55,11 +55,12 @@ function PostForm() {
     try {
       if (isEdit) {
         await updateProduct(product, Number(productId));
+        queryClient.invalidateQueries(['product', Number(productId)]);
       } else {
         await createProduct(product);
-        toastSuccess('상품 등록이 완료되었습니다.');
         queryClient.refetchQueries(['products']);
       }
+      toastSuccess('상품 등록이 완료되었습니다.');
       navigate('/');
     } catch (error) {
       navigate('error');

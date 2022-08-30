@@ -23,7 +23,9 @@ export default function CountIndicator({ type, count }: CountIndicatorProps) {
   return (
     <CountIndicatorWrapper>
       <Icon />
-      <Text color={colors.grey1}>{count}</Text>
+      <Text color={colors.grey1} size="small">
+        {count}
+      </Text>
     </CountIndicatorWrapper>
   );
 }
@@ -33,7 +35,7 @@ const CountIndicatorWrapper = styled.div`
   width: 2rem;
 
   svg {
-    scale: 0.9;
+    scale: 0.8;
     stroke: ${colors.grey1};
   }
 `;

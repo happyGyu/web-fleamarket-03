@@ -1,13 +1,7 @@
 import { useUser } from '@queries/useUser';
-import {
-  createNewChatRoom,
-  getAllChatRoom,
-  getChatRoom,
-  getMyProductChatRoom,
-} from '@apis/chatRoom';
-import { useToast } from '@components/common/CommonToast/ToastContext';
+import { getAllChatRoom, getChatRoom, getMyProductChatRoom } from '@apis/chatRoom';
 import { IChatRoom, IChatRoomResponse } from '@customTypes/chat';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 export function useChatRoom(chatRoomId: number) {
@@ -53,18 +47,4 @@ function selectPeer(userId: number, originalChatRoom: IChatRoomResponse) {
   const { buyer, seller, ...restData } = originalChatRoom;
   const peer = buyer.id === userId ? seller : buyer;
   return { ...restData, peer };
-}
-
-export function useCreateChatRoom() {
-  const { toastError } = useToast();
-  const { mutate: createChatRoom } = useMutation(
-    (productId: number) => createNewChatRoom(productId),
-    {
-      onError: () => {
-        toastError(new Error('채팅방 생성에 실패했습니다.'));
-      },
-    },
-  );
-
-  return { createChatRoom };
 }

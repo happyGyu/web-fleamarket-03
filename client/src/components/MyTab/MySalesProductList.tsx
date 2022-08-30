@@ -1,5 +1,5 @@
+import EmptyIndicator from '@components/common/EmptyIndicator';
 import MySaleProductItem from '@components/MySaleProductItem';
-import ProductItem from '@components/ProductItemList/ProductItem';
 import colors from '@constants/colors';
 import { useMySalesProducts } from '@queries/useMySalesProducts';
 
@@ -8,7 +8,7 @@ export default function MySalesProductList() {
 
   return (
     <div>
-      {data &&
+      {data?.length ? (
         data.map((product) => (
           <MySaleProductItem
             product={product}
@@ -16,7 +16,10 @@ export default function MySalesProductList() {
             productId={product.id}
             utilButtonInfo={{ type: 'more', color: colors.grey2 }}
           />
-        ))}
+        ))
+      ) : (
+        <EmptyIndicator message="판매중인 상품이 없습니다" />
+      )}
     </div>
   );
 }

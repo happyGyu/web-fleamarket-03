@@ -16,25 +16,19 @@ export default function App() {
   }, []);
 
   return (
-    <AppWrapper>
-      <Display ref={displayRef}>
-        <GlobalStyle />
-        <Routes />
-        <Toast />
-      </Display>
-    </AppWrapper>
+    <Display ref={displayRef}>
+      <GlobalStyle />
+      <Routes />
+      <Toast />
+    </Display>
   );
 }
 
-const AppWrapper = styled.div`
-  ${mixin.flexMixin({ justify: 'center', align: 'center' })};
-  height: 100vh;
-`;
-
 const Display = styled.div`
   position: relative;
-  width: 26rem;
-  height: 56rem;
+  max-width: 26rem;
+  height: 100%;
+  margin: 0 auto;
   background-color: ${colors.white};
   overflow-x: hidden;
   overflow-y: hidden;

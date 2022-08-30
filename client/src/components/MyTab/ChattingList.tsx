@@ -41,7 +41,7 @@ export default function ChattingList({
         <FlexRowContainer>
           <FlexColumnContainer>
             <Text color={colors.grey1} size="xSmall">
-              {latestMessage && calculatePassedTime(latestMessageTime)} 전
+              {latestMessage && `${calculatePassedTime(latestMessageTime)}전`}
             </Text>
             {/* <Notification>
             <Text size="xSmall" color={colors.white}>

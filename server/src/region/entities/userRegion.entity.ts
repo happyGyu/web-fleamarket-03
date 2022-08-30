@@ -1,5 +1,11 @@
 import { User } from 'src/user/entities/user.entity';
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+} from 'typeorm';
 import { Region } from './region.entity';
 
 @Entity()
@@ -12,6 +18,9 @@ export class UserRegion {
 
   @Column({ type: 'boolean' })
   isPrimary: boolean;
+
+  @CreateDateColumn()
+  createdAt: Date;
 
   @ManyToOne(() => Region, (region) => region.users)
   @JoinColumn({ name: 'region_id' })

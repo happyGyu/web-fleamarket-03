@@ -17,7 +17,7 @@ export default function CategoryItem({ category }: CategoryItemProps) {
   };
   return (
     <Container>
-      <CategoryImage onClick={moveToCategoryProductPage} />
+      <CategoryImage onClick={moveToCategoryProductPage} src={categoryIcons[id - 1]} />
       <Text size="small">{name}</Text>
     </Container>
   );
@@ -30,11 +30,25 @@ const Container = styled.div`
   margin-top: 2rem;
 `;
 
-const CategoryImage = styled.div`
+const CategoryImage = styled.img`
   width: 3.5rem;
   height: 3.5rem;
   margin: 0 auto;
-  border-radius: 0.5rem;
-  border: 1px solid ${colors.grey1};
-  background-color: ${colors.grey3};
 `;
+
+const categoryIcons = [
+  '/Icons/digital.png',
+  '/Icons/appliance.png',
+  '/Icons/furniture.png',
+  '/Icons/game.png',
+  '/Icons/life.png',
+  '/Icons/sports.png',
+  '/Icons/female-fashion.png',
+  '/Icons/male-fashion.png',
+  '/Icons/baby.png',
+  '/Icons/beauty.png',
+  '/Icons/pet.png',
+  '/Icons/book.png',
+  '/Icons/plant.png',
+  '/Icons/gold.png',
+];
