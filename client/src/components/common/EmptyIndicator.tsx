@@ -19,7 +19,7 @@ export default function EmptyIndicator({ message }: EmptyIndicatorProps) {
 const Container = styled.div`
   ${mixin.flexMixin({ direction: 'column', align: 'center' })}
   width: 50%;
-  padding-top: 3rem;
+  padding-top: 6rem;
   margin: 0 auto;
 
   & img {
