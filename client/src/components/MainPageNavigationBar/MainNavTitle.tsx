@@ -37,8 +37,12 @@ export default function MainNavTitle() {
         setIsDropDownOpen((prev) => !prev);
       }}
     >
-      <MapPinIcon />
-      <Text color={colors.white}>{getLastAddress(primaryRegion.address)}</Text>
+      {primaryRegion.address && (
+        <>
+          <MapPinIcon />
+          <Text color={colors.white}>{getLastAddress(primaryRegion.address)}</Text>
+        </>
+      )}
       {isDropDownOpen && (
         <DropDown dropDownItems={dropdownItems} top="85%" transform="translate(-25%,0)" />
       )}

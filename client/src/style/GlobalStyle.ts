@@ -10,6 +10,17 @@ const GlobalStyle = createGlobalStyle`
   *{
     box-sizing: border-box;
   }
+  html {
+    height: 100%;
+  }
+  body{
+    background-color: ${colors.grey3};
+    color: ${colors.black};
+    height: 100%;
+  }
+  #root {
+    height: 100%;
+  }
   button{
     margin:0;
     padding:0;
@@ -51,10 +62,6 @@ const GlobalStyle = createGlobalStyle`
   a{
     color:inherit;
     text-decoration:none;
-  }
-  body{
-    background-color: ${colors.grey3};
-    color: ${colors.black};
   }
 `;
 

@@ -71,4 +71,15 @@ export class AuthenticationService {
     const newAccessToken = this.tokenService.getToken(userId, 'access');
     return newAccessToken;
   }
+
+  async testerLogin() {
+    const testUser = await this.userService.getOneByOAuthId('0000');
+    const { id: userId } = testUser;
+    const jwtTokenSet = this.tokenService.getTokenSet(userId);
+
+    return {
+      isRegistered: true,
+      ...jwtTokenSet,
+    };
+  }
 }

@@ -13,7 +13,7 @@ export default function LogOutPage() {
     <TransitionPage depth={2}>
       <NavigationBar shadowColor="transparent" title="로그아웃" />
       <LogoutPageContainer>
-        <LogoutPageImage src="/sadBadal.png" alt="슬픈배달이" />
+        <LogoutPageImage src="/images/sadBaedal.png" alt="슬픈배달이" />
         <h2>{`"${user.name}"`} 님, 벌써 가시나요?</h2>
         <LogOutButton />
       </LogoutPageContainer>

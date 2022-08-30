@@ -1,4 +1,4 @@
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import DetailPageNavigationBar from '@components/DetailPageNavigationBar';
 import SaleStateSelector from '@components/SaleStateSelector';
 import LoadingIndicator from '@components/common/LoadingIndicator';
@@ -91,6 +91,7 @@ const Container = styled.div`
   ${mixin.flexMixin({ direction: 'column' })}
   height: 100%;
   gap: 1.5rem;
+  overflow: auto;
 `;
 
 const DetailPageBody = styled.div`
@@ -99,6 +100,7 @@ const DetailPageBody = styled.div`
   padding: 0 ${padding.pageSide};
   ${mixin.flexMixin({ direction: 'column' })}
   gap: 1.5rem;
+  flex-grow: 1;
 `;
 
 const DetailContent = styled.section`
@@ -108,6 +110,7 @@ const DetailContent = styled.section`
 
 const Description = styled(Text)`
   margin: 0.5rem 0;
+  flex-grow: 1;
   max-height: 7rem;
   overflow: auto;
 `;
@@ -125,8 +128,6 @@ const SellerInfo = styled.div`
 `;
 
 const DetailPageFooter = styled.div`
-  position: absolute;
-  bottom: 0;
   ${mixin.flexMixin({ align: 'center' })}
   gap: 1rem;
   padding: 1rem;
