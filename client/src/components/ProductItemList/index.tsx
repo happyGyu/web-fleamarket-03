@@ -1,3 +1,4 @@
+import EmptyIndicator from '@components/common/EmptyIndicator';
 import LoadingIndicator from '@components/common/LoadingIndicator';
 import colors from '@constants/colors';
 import { padding } from '@constants/padding';
@@ -19,16 +20,15 @@ export default function ProductItemList({
   utilButtonInfo,
   scrollTriger,
 }: ProductItemListProps) {
-  return (
+  const isEmpty = products && !products?.pages[0].data.length;
+  return isEmpty ? (
+    <EmptyIndicator message="가락동 디지털단지에 좋은 물건이 많다는 소문이 있던데...." />
+  ) : (
     <MainPageWrapper>
-      {products ? (
-        products.pages.map((page) =>
-          page.data.map((product) => (
-            <ProductItem key={product.id} productId={product.id} utilButtonInfo={utilButtonInfo} />
-          )),
-        )
-      ) : (
-        <LoadingIndicator />
+      {products?.pages.map((page) =>
+        page.data.map((product) => (
+          <ProductItem key={product.id} productId={product.id} utilButtonInfo={utilButtonInfo} />
+        )),
       )}
       {scrollTriger}
     </MainPageWrapper>
