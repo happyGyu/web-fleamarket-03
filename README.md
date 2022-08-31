@@ -98,6 +98,9 @@ REACT_APP_TOKEN_REFRESH_INTERVAL=<string>
 REACT_APP_DEV_SERVER_URL=<string>
 REACT_APP_PROD_SERVER_URL=<string>
 ```
+## ERD
+
+<img height="700" alt="image" src="https://user-images.githubusercontent.com/78121870/187648241-c2f22cb2-c1ac-4015-b64a-467808aa90cd.png">
 
 ## DETAIL OF PROJECT
 
