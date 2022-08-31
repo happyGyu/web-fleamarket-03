@@ -102,23 +102,41 @@ REACT_APP_PROD_SERVER_URL=<string>
 ## DETAIL OF PROJECT
 
 ### 로그인 페이지
-<img height="450" alt="image" src="https://user-images.githubusercontent.com/78121870/187330962-f0e39bee-bdd2-4a5c-ba1e-828ed0955656.png">
+<table>
+  <tr>
+  <td align="center">
+       <img height="450" alt="image" src="https://user-images.githubusercontent.com/78121870/187644652-543d45a3-5e00-4085-94ca-228b1ad81751.png">
+       </br> 
+       <sub><b>로그인 페이지</b></sub>
+      </a>
+    </td>
+    <td align="center">
+       <img height="450" alt="image" src="https://user-images.githubusercontent.com/78121870/187645061-cb1bdb67-35d0-4c3a-a10d-8a5742ad7665.png">
+       <br/> <sub><b>로그아웃 페이지</b><br></sub>
+      </a>
+    </td>
+  </tr>
+</table>
+
+
+
 
 - oAuth 로그인과 테스트 유저로그인을 지원
 
 ### 메인 페이지
-<img height="450" alt="image" src="https://user-images.githubusercontent.com/78121870/187331083-cf9c498e-3114-4aad-b6ef-fb38abf04460.png">
+<img height="450" src="https://user-images.githubusercontent.com/78121870/187644501-6291ee7d-f9b5-44f6-9cb7-e57ec9f17b53.png">
 
 - 무한 스크롤을 통해서 상품 목록을 볼 수 있음
 - 동네를 바꿔서 다른 동네의 상품 목록을 볼 수 있음
 - FAB클릭시 새글 작성 
+- 좋아요 기능 `optimistic update`적용
 
 ### 글 작성 및 수정 
 
 <table>
   <tr>
   <td align="center">
-       <img  height="450" alt="image" src="https://user-images.githubusercontent.com/78121870/187331645-dc39e6c8-7c46-4bc1-ab3b-24da8eb9abb2.png">
+       <img  height="450" alt="image" src="https://user-images.githubusercontent.com/78121870/187645423-1f8c5aa4-7f4c-43f2-9e40-44fcdff59dd0.png">
        </br> 
        <sub><b>상품 글 작성 페이지</b></sub>
       </a>
@@ -131,6 +149,7 @@ REACT_APP_PROD_SERVER_URL=<string>
   </tr>
 </table>
 
+
 - s3에 이미지 업로드 기능
 - input 유효성 검증 기능 
 
@@ -138,7 +157,7 @@ REACT_APP_PROD_SERVER_URL=<string>
 <table>
   <tr>
   <td align="center">
-       <img  height="450" alt="image" src="https://user-images.githubusercontent.com/78121870/187332589-3c224703-b4ae-4af9-acc4-efde2957b2b4.png">
+       <img  height="450" alt="image" src="https://user-images.githubusercontent.com/78121870/187645632-2fd97836-c0b8-4163-ad5d-71b9d739b514.png">
        </br> 
        <sub><b>상품 글 작성 페이지</b></sub>
       </a>
@@ -172,3 +191,29 @@ REACT_APP_PROD_SERVER_URL=<string>
 
 - 검색을 통해 내 동네 추가
 - 선택 동네 변경 가능 (내 동네 최대 두개까지 가능합니다.)
+
+
+### 마이 페이지 
+<table>
+  <tr>
+  <td align="center">
+<img  height="450" alt="image" src="https://user-images.githubusercontent.com/78121870/187645951-e3326459-b402-40f3-9fcb-693bb06a2831.png">
+       </br> 
+       <sub><b>판매목록</b></sub>
+      </a>
+    </td>
+    <td align="center">
+<img  height="450" alt="image" src="https://user-images.githubusercontent.com/78121870/187646027-96e7d8d9-1651-46c3-80c5-8fc1827b6c40.png">
+       <br/> <sub><b>채팅목록</b><br></sub>
+      </a>
+    </td>
+        <td align="center">
+<img  height="450" alt="image" src="https://user-images.githubusercontent.com/78121870/187646060-3a570d37-18af-474a-ae5c-44afdb2b5fe1.png">
+       <br/> <sub><b>관심목록</b><br></sub>
+      </a>
+    </td>
+  </tr>
+</table>
+
+
+
