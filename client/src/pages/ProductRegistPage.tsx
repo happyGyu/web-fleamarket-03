@@ -46,10 +46,11 @@ function PostForm() {
       return;
     }
 
+    const primaryRegion = user.regions.find((region) => region.isPrimary) || user.regions[0];
     const product = {
       ...formInputMap,
       price: Number(getNumber(formInputMap.price)),
-      regionId: user.regions[0].id,
+      regionId: primaryRegion.id,
     } as CreateProductAPIDto;
 
     try {
